@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ndylens Photography</title>
+    <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo-icon.png" />
+    <meta
+      name="description"
+      content="Ndylens helps photographers turn one-time clients into repeat customers."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site-noise" aria-hidden="true"></div>
+    <header class="topbar container">
+      <a href="#home" class="brand" aria-label="Ndylens home">
+        <span class="logo-mark" aria-hidden="true"></span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav">
+        <a href="#home" class="is-active">HOME</a>
+        <a href="#benefits">BENEFITS</a>
+        <a href="#get-started">GET STARTED</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="btn btn-light desktop-cta" href="#get-started">SCHEDULE A CALL</a>
+    </header>
+
+    <main>
+      <section class="hero section container" id="home">
+        <div class="hero-copy">
+          <h1>
+            STOP LOOSING
+            <span>CLIENTS</span>
+            AFTER ONE SHOOT
+          </h1>
+          <p>
+            Ndylens predicts your clients' next big event so you never miss
+            another booking opportunity. We turn your clients into repeat
+            customers.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#get-started">SCHEDULE A CALL</a>
+            <a class="btn btn-secondary mobile-only" href="#benefits">OUR BENEFIT</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="star-shape" aria-hidden="true">*</div>
+          <div class="photo-card" id="hero-slider">
+            <div class="hero-art-frame">
+              <img
+                class="hero-slide is-active"
+                src="assets/images/hero-slide-1.png"
+                alt="Hero photographer portrait slide one"
+                fetchpriority="high"
+                decoding="async"
+              />
+              <img
+                class="hero-slide"
+                src="assets/images/hero-slide-2.png"
+                alt="Hero photographer portrait slide two"
+                decoding="async"
+              />
+              <img
+                class="hero-slide"
+                src="assets/images/hero-slide-3.png"
+                alt="Hero photographer portrait slide three"
+                decoding="async"
+              />
+              <img
+                class="hero-slide"
+                src="assets/images/hero-slide-4.png"
+                alt="Hero photographer portrait slide four"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <div class="hero-slider-controls">
+            <button
+              type="button"
+              class="slide-btn"
+              id="hero-prev"
+              aria-label="Previous home slide"
+            >
+              &lsaquo;
+            </button>
+            <button
+              type="button"
+              class="slide-btn"
+              id="hero-next"
+              aria-label="Next home slide"
+            >
+              &rsaquo;
+            </button>
+          </div>
+          <div class="hero-dots" id="hero-dots" aria-label="Home slider dots">
+            <button type="button" class="hero-dot is-on" data-slide="0" aria-label="Go to slide 1"></button>
+            <button type="button" class="hero-dot" data-slide="1" aria-label="Go to slide 2"></button>
+            <button type="button" class="hero-dot" data-slide="2" aria-label="Go to slide 3"></button>
+            <button type="button" class="hero-dot" data-slide="3" aria-label="Go to slide 4"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="problem section container">
+        <div class="problem-copy">
+          <h2>
+            Are you having clients that never return back for another
+            <span>photoshoot?</span>
+          </h2>
+          <p>
+            Most photographers are leaking millions in repeat revenue simply
+            because they do not follow up consistently.
+          </p>
+          <ul class="check-list">
+            <li>50 plus bookings</li>
+            <li>More photoshoots</li>
+            <li>2M plus lost revenue</li>
+            <li>Tracking clients calendar</li>
+          </ul>
+          <a class="btn btn-light" href="#get-started">GET STARTED NOW</a>
+        </div>
+
+        <div class="problem-art">
+          <img
+            class="calendar-image"
+            src="assets/images/calendar.png"
+            alt="Client booking calendar"
+          />
+          <p class="problem-note">MISSED CLIENTS = N MILLIONS LOST!</p>
+          <img
+            class="money-image"
+            src="assets/images/coins-and-naira.png"
+            alt="Coins and naira cash stack"
+          />
+        </div>
+      </section>
+
+      <section class="benefits section" id="benefits">
+        <div class="container">
+          <p class="eyebrow">
+            <img
+              class="eyebrow-icon"
+              src="assets/images/thumbs-up.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>Our Benefit</span>
+          </p>
+          <h2>WHAT WE HELP YOU DO</h2>
+          <p class="benefits-lead">
+            Three core services to turn one-time clients into predictable repeat
+            customers and repeat revenue.
+          </p>
+          <p class="benefit-swipe-hint">Swipe to view all services</p>
+
+          <div class="benefit-grid">
+            <article class="benefit-card">
+              <img
+                class="benefit-image"
+                src="assets/images/client-retention-automation.png"
+                alt="Client retention automation dashboard"
+              />
+              <h3>Client Retention Automation</h3>
+              <p class="benefit-summary">
+                We predict your clients next big event based on past shoot and
+                automatically remind them before it happens.
+              </p>
+              <ul class="benefit-quick-list">
+                <li>More repeat bookings</li>
+                <li>Less forgotten clients</li>
+                <li>Consistent revenue flow</li>
+              </ul>
+              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
+              <button type="button" class="benefit-more-toggle" aria-expanded="false">
+                See details
+              </button>
+              <div class="benefit-more-content">
+                <h4>If they booked:</h4>
+                <ul>
+                  <li>Birthday reminder</li>
+                  <li>Maternity reminder</li>
+                  <li>Proposal reminder</li>
+                </ul>
+                <h4>Outcome:</h4>
+                <ul>
+                  <li>More repeat bookings</li>
+                  <li>Less forgotten clients</li>
+                  <li>Consistent revenue flow</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="benefit-card">
+              <img
+                class="benefit-image"
+                src="assets/images/automated-follow-up.png"
+                alt="Automated follow-up messages on mobile apps"
+              />
+              <h3>Follow Up Messages</h3>
+              <p class="benefit-summary">
+                Instead of manually chasing clients, we send automated and
+                branded reminder messages.
+              </p>
+              <ul class="benefit-quick-list">
+                <li>Client receives reminders</li>
+                <li>Less forgotten clients</li>
+                <li>Consistent revenue flow</li>
+              </ul>
+              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
+              <button type="button" class="benefit-more-toggle" aria-expanded="false">
+                See details
+              </button>
+              <div class="benefit-more-content">
+                <h4>We send:</h4>
+                <ul>
+                  <li>Branded email reminders</li>
+                  <li>Automated chat follow ups</li>
+                  <li>Timed WhatsApp prompts</li>
+                </ul>
+                <h4>Outcome:</h4>
+                <ul>
+                  <li>Client receives reminders</li>
+                  <li>Less forgotten clients</li>
+                  <li>Consistent revenue flow</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="benefit-card">
+              <img
+                class="benefit-image"
+                src="assets/images/revenue.png"
+                alt="Revenue and payment automation view"
+              />
+              <h3>Revenue and Payment Automation</h3>
+              <p class="benefit-summary">
+                You track payments automatically and identify top-performing
+                events that bring in most revenue.
+              </p>
+              <ul class="benefit-quick-list">
+                <li>Improved cash flow</li>
+                <li>Faster payment collection</li>
+                <li>Clear growth decisions</li>
+              </ul>
+              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
+              <button type="button" class="benefit-more-toggle" aria-expanded="false">
+                See details
+              </button>
+              <div class="benefit-more-content">
+                <h4>How we do it:</h4>
+                <ul>
+                  <li>Automatic payment reminders</li>
+                  <li>Simple payment links</li>
+                  <li>Revenue tracking reports</li>
+                  <li>Book-keeping support</li>
+                </ul>
+                <h4>Outcome:</h4>
+                <ul>
+                  <li>Improved cash flow</li>
+                  <li>Faster payment collection</li>
+                  <li>Clear growth decisions</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="lead section container" id="get-started">
+        <div class="lead-form-wrap">
+          <div class="logo-mini logo-mark" aria-hidden="true"></div>
+          <h2>GET STARTED WITH US</h2>
+          <p>Let's help upscale your business</p>
+
+          <form class="lead-form" id="lead-form">
+            <div class="field-row">
+              <label>
+                First name
+                <input type="text" name="firstName" placeholder="Type here" required />
+              </label>
+              <label>
+                Last name
+                <input type="text" name="lastName" placeholder="Type here" required />
+              </label>
+            </div>
+            <label>
+              Phone number
+              <input type="tel" name="phoneNumber" placeholder="Type here" inputmode="tel" required />
+            </label>
+            <label>
+              Email address
+              <input type="email" name="email" placeholder="Type here" required />
+            </label>
+            <label>
+              Photography business name
+              <input type="text" name="businessName" placeholder="Type here" />
+            </label>
+            <label>
+              Business location
+              <input type="text" name="businessLocation" placeholder="Type here" />
+            </label>
+            <label>
+              What do you want Ndylens to do for you?
+              <textarea name="message" placeholder="Describe here" maxlength="500" required></textarea>
+            </label>
+            <input
+              type="text"
+              name="website"
+              autocomplete="off"
+              tabindex="-1"
+              aria-hidden="true"
+              class="honeypot"
+            />
+            <button class="btn btn-primary" type="submit" id="lead-submit">
+              SUBMIT REQUEST
+            </button>
+            <p id="lead-form-status" class="lead-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="testimonial-wrap">
+          <div class="testimonial-photo" aria-hidden="true"></div>
+          <div class="testimonial-copy">
+            <p id="testimonial-quote">
+              "Ndylens helped me get more photoshoot bookings and I do not have
+              to message my clients one after the other."
+            </p>
+            <h3 id="testimonial-role">Photographer</h3>
+            <span id="testimonial-location">Lagos, Nigeria</span>
+            <div class="stars" id="testimonial-stars">*****</div>
+            <div class="testimonial-controls">
+              <button
+                type="button"
+                class="slide-btn"
+                id="testimonial-prev"
+                aria-label="Previous testimonial"
+              >
+                &lsaquo;
+              </button>
+              <button
+                type="button"
+                class="slide-btn"
+                id="testimonial-next"
+                aria-label="Next testimonial"
+              >
+                &rsaquo;
+              </button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="faq section" id="faq">
+        <div class="container faq-wrap">
+          <h2>Frequently asked question <span>?</span></h2>
+          <p>Everything you need to know about Ndylens</p>
+
+          <div class="faq-list">
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                Is this payment monthly?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>
+                  We offer a one-time set up after which you have full ownership of the system. You can choose to pay for ongoing support and updates or manage it yourself.
+                </p>
+              </div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                Do I need technical skills?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>
+                  No. The service is built for non-technical photographers, and
+                  we handle setup and onboarding with you.
+                </p>
+              </div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                Will you access my client database?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>
+                  Access is permission based. You choose what tools are connected
+                  and can revoke access at any time.
+                </p>
+              </div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                Can I upgrade later?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>
+                  Yes. You can start with a smaller package and upgrade when your
+                  studio needs more automation.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="support section container">
+        <div class="support-mark" aria-hidden="true">
+          <img
+            class="support-mark-icon"
+            src="assets/images/question-mark.png"
+            alt=""
+          />
+          <img
+            class="support-mark-icon is-green"
+            src="assets/images/question-mark.png"
+            alt=""
+          />
+          <img
+            class="support-mark-icon"
+            src="assets/images/question-mark.png"
+            alt=""
+          />
+        </div>
+        <h2>Still have more questions?</h2>
+        <p>If you cannot find the answer you are looking for, please chat with us.</p>
+        <a class="btn btn-primary" href="#get-started">REACH OUT TO US</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-logo-block">
+          <div class="logo-mark large" aria-hidden="true"></div>
+        </div>
+        <div class="footer-links">
+          <div class="logo-mark tiny" aria-hidden="true"></div>
+          <a href="#home">HOME</a>
+          <a href="#benefits">BENEFITS</a>
+          <a href="#get-started">GET STARTED</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-contact">
+          <h3>CONTACT</h3>
+          <a class="footer-contact-item" href="tel:+2347014624100">
+            <img
+              class="footer-contact-icon"
+              src="assets/images/phone-icon.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>+234 701 462 4100</span>
+          </a>
+          <a
+            class="footer-contact-item"
+            href="https://wa.me/2347014624100"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="footer-contact-icon footer-contact-icon-whatsapp"
+              aria-hidden="true"
+            ></span>
+            <span>+234 701 462 4100</span>
+          </a>
+          <a
+            class="footer-contact-item"
+            href="https://instagram.com/ndylens_global"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              class="footer-contact-icon"
+              src="assets/images/ig-icon.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <span>@ndylens_global</span>
+          </a>
+          <a class="footer-contact-item" href="mailto:ndylens@gmail.com">
+            <span class="footer-contact-icon footer-contact-icon-email" aria-hidden="true"></span>
+            <span>ndylens@gmail.com</span>
+          </a>
+        </div>
+        <div class="footer-camera" aria-hidden="true">
+          <img class="footer-camera-image" src="assets/images/camera-hand.png" alt="" />
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
