@@ -1031,6 +1031,118 @@ img {
   color: var(--muted);
 }
 
+.policy-hero {
+  max-width: 860px;
+  padding-top: 4.7rem;
+  padding-bottom: 2.25rem;
+  text-align: center;
+}
+
+.policy-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 6vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.policy-updated {
+  margin-top: 0.8rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.policy-lead {
+  max-width: 68ch;
+  margin: 1rem auto 0;
+  color: #c8d7d5;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.68;
+}
+
+.policy-section {
+  padding-bottom: 4.8rem;
+}
+
+.policy-content {
+  max-width: 860px;
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: clamp(1.25rem, 3.4vw, 2.5rem);
+  background: linear-gradient(155deg, rgba(4, 10, 11, 0.86), rgba(3, 7, 8, 0.96));
+}
+
+.policy-content h2 {
+  margin-top: 2.1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.12rem, 2vw, 1.45rem);
+  letter-spacing: -0.01em;
+}
+
+.policy-content h2:first-child {
+  margin-top: 0;
+}
+
+.policy-content p,
+.policy-content li {
+  color: #d5e2e1;
+  line-height: 1.76;
+}
+
+.policy-content p {
+  margin-top: 0.65rem;
+}
+
+.policy-content ul {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.58rem;
+}
+
+.policy-content li {
+  position: relative;
+  padding-left: 1.35rem;
+}
+
+.policy-content li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.policy-content strong {
+  color: #ffffff;
+}
+
+.policy-content a {
+  color: var(--accent);
+}
+
+.policy-content a:hover {
+  text-decoration: underline;
+}
+
+.policy-callout {
+  margin-top: 1rem;
+  border: 1px solid rgba(44, 236, 214, 0.3);
+  border-radius: 0.8rem;
+  padding: 1rem;
+  background: linear-gradient(150deg, rgba(24, 81, 75, 0.72), rgba(8, 42, 39, 0.82));
+}
+
+.policy-callout p {
+  margin: 0;
+}
+
 .footer {
   border-top: 1px solid var(--line);
   padding: 0 0 1.6rem;
@@ -1438,6 +1550,23 @@ img {
 
   .field-row {
     grid-template-columns: 1fr;
+  }
+
+  .policy-hero {
+    padding-top: 3rem;
+    text-align: left;
+  }
+
+  .policy-hero .eyebrow {
+    margin-inline: 0;
+  }
+
+  .policy-section {
+    padding-bottom: 3rem;
+  }
+
+  .policy-content {
+    border-radius: 0;
   }
 
   .footer-grid {
