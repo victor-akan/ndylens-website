@@ -278,7 +278,8 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .tier-for{color:var(--fog);font-size:13.5px;margin:8px 0 20px;min-height:38px}
 .tier-price{font-family:var(--body);font-weight:800;font-size:36px;line-height:1;margin-bottom:6px}
 .tier-price span{font-family:var(--body);font-size:15px;font-weight:500;color:var(--fog)}
-.tier-sub{font-size:12.5px;color:var(--fog-2);margin:0 0 20px}
+.tier-sub{font-size:13.5px;color:#a6bab5;margin:0 0 20px}
+.tier-sub b{color:var(--cream);font-weight:600}
 .tier .ticks{margin-bottom:26px}
 .tier-hot{border-color:var(--teal);background:linear-gradient(180deg,rgba(42,191,170,.08),var(--ink-1));
   box-shadow:0 30px 70px -30px rgba(42,191,170,.35)}
