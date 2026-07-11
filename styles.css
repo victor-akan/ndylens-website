@@ -110,6 +110,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:var(--fog);font-size:15px;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--cream)}
+.nav-signin-m{display:none}   /* mobile-menu only — desktop shows Sign in in the top bar */
 .nav-cta{display:flex;align-items:center;gap:18px}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
 .burger span{width:24px;height:2px;background:var(--cream);border-radius:2px;transition:.25s}
@@ -126,11 +127,11 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .hero-sub em{color:var(--cream);font-style:normal;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
 .hero-proof{display:flex;align-items:center;gap:14px;margin-top:36px}
-.avatars{display:flex}
+.avatars{display:flex;flex-shrink:0}
 .avatars img{width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:top;
   border:2px solid var(--ink-0);margin-left:-12px;background:var(--ink-2)}
 .avatars img:first-child{margin-left:0}
-.hero-proof p{margin:0;font-size:13.5px;color:var(--fog)}
+.hero-proof p{margin:0;font-size:13.5px;color:var(--fog);min-width:0}
 .hero-proof strong{color:var(--cream);font-weight:600}
 
 /* hero visual */
@@ -368,6 +369,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
     transform:translateY(-140%);transition:transform .35s;z-index:99}
   .nav-links a{padding:12px 4px;font-size:17px;border-bottom:1px solid var(--line)}
   .nav-links.open{transform:none}
+  .nav-signin-m{display:block;color:var(--teal);font-weight:600;border-bottom:none}
   .burger{display:flex}
   .nav-cta .ghost-link{display:none}
 }
@@ -377,6 +379,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
   .feat,.feat-lg,.tier,.start-form-card{padding:24px}
   .stat-chip{right:0;top:12px}
   .wa-float{left:0}
+  .hero-proof{flex-direction:column;align-items:flex-start;gap:12px}
   .lead-form .fr{grid-template-columns:1fr}
   .quote-by{flex-direction:column;gap:8px}
   .foot-grid{grid-template-columns:1fr;gap:30px}
