@@ -1,519 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ndylens Photography</title>
-    <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
-    <link rel="apple-touch-icon" href="assets/images/logo-icon.png" />
-    <meta
-      name="description"
-      content="Ndylens helps photographers turn one-time clients into repeat customers."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="site-noise" aria-hidden="true"></div>
-    <header class="topbar container">
-      <a href="#home" class="brand" aria-label="Ndylens home">
-        <span class="logo-mark" aria-hidden="true"></span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NDYLens — the studio that never forgets a client</title>
+  <meta name="description" content="NDYLens remembers every client's next big moment — birthdays, anniversaries, weddings — and sends the branded WhatsApp & email reminder for you. Built for Nigerian photography studios." />
+  <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo-icon.png" />
+
+  <meta property="og:title" content="NDYLens — the studio that never forgets a client" />
+  <meta property="og:description" content="Turn one-time shoots into repeat bookings. NDYLens predicts your clients' next event and sends the reminder for you, on WhatsApp." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ───────────── NAV ───────────── -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand" aria-label="NDYLens home">
+        <img src="assets/images/logo-icon.png" alt="" class="brand-mark" />
+        <span class="brand-word">NDYLens</span>
       </a>
-
-      <button
-        class="menu-toggle"
-        id="menu-toggle"
-        aria-expanded="false"
-        aria-controls="site-nav"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav class="site-nav" id="site-nav">
-        <a href="#home" class="is-active">HOME</a>
-        <a href="#benefits">BENEFITS</a>
-        <a href="#get-started">GET STARTED</a>
+      <nav class="nav-links" id="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </nav>
+      <div class="nav-cta">
+        <a href="https://app.ndylens.com" class="ghost-link">Sign in</a>
+        <a href="#start" class="btn btn-primary btn-sm">Start free trial</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
 
-      <a class="btn btn-light desktop-cta" href="#get-started">SCHEDULE A CALL</a>
-    </header>
+  <main id="top">
 
-    <main>
-      <section class="hero section container" id="home">
-        <div class="hero-copy">
-          <h1>
-            STOP LOOSING
-            <span>CLIENTS</span>
-            AFTER ONE SHOOT
+    <!-- ───────────── HERO ───────────── -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow"><i class="dot"></i> For Nigerian photography studios</span>
+          <h1 class="hero-title">
+            Never lose a client<br />after <span class="ink-teal">one shoot.</span>
           </h1>
-          <p>
-            Ndylens predicts your clients' next big event so you never miss
-            another booking opportunity. We turn your clients into repeat
-            customers.
+          <p class="hero-sub">
+            NDYLens remembers every client's next big moment — birthdays, anniversaries,
+            weddings — and sends the branded WhatsApp &amp; email reminder <em>for you</em>.
+            You shoot. We keep them coming back.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#get-started">SCHEDULE A CALL</a>
-            <a class="btn btn-secondary mobile-only" href="#benefits">OUR BENEFIT</a>
+            <a href="#start" class="btn btn-primary">Start your free trial <span class="arr">→</span></a>
+            <a href="#how" class="btn btn-quiet">See how it works</a>
+          </div>
+          <div class="hero-proof">
+            <div class="avatars">
+              <img src="assets/images/shooter-2.png" alt="" />
+              <img src="assets/images/shooter-3.png" alt="" />
+              <img src="assets/images/shooter-1.png" alt="" />
+            </div>
+            <p>Loved by studios from <strong>Lagos</strong> to <strong>Abuja</strong> — 7 days free, no card needed.</p>
           </div>
         </div>
 
-        <div class="hero-visual">
-          <div class="star-shape" aria-hidden="true">*</div>
-          <div class="photo-card" id="hero-slider">
-            <div class="hero-art-frame">
-              <img
-                class="hero-slide is-active"
-                src="assets/images/hero-slide-1.png"
-                alt="Hero photographer portrait slide one"
-                fetchpriority="high"
-                decoding="async"
-              />
-              <img
-                class="hero-slide"
-                src="assets/images/hero-slide-2.png"
-                alt="Hero photographer portrait slide two"
-                decoding="async"
-              />
-              <img
-                class="hero-slide"
-                src="assets/images/hero-slide-3.png"
-                alt="Hero photographer portrait slide three"
-                decoding="async"
-              />
-              <img
-                class="hero-slide"
-                src="assets/images/hero-slide-4.png"
-                alt="Hero photographer portrait slide four"
-                decoding="async"
-              />
+        <div class="hero-visual reveal" data-reveal-delay="120">
+          <div class="portrait-frame">
+            <img src="assets/images/portrait-hero.jpg" alt="Nigerian studio photographer portrait" class="portrait-img" fetchpriority="high" />
+            <div class="frame-tag"><span class="live-dot"></span> Live from your studio</div>
+          </div>
+
+          <!-- Floating WhatsApp reminder card -->
+          <div class="wa-float" id="wa-float">
+            <div class="wa-head">
+              <img src="assets/images/logo-icon.png" alt="" class="wa-ava" />
+              <div><b>Your Studio</b><span>via WhatsApp Business</span></div>
+              <span class="wa-check">✓✓</span>
+            </div>
+            <div class="wa-body">
+              <p class="wa-msg">Hi Amaka! 🎂 Your daughter's 1st birthday is in 3 weeks — want to book her cake-smash shoot before your calendar fills?</p>
+              <span class="wa-time">Sent automatically · 9:02 AM</span>
             </div>
           </div>
-          <div class="hero-slider-controls">
-            <button
-              type="button"
-              class="slide-btn"
-              id="hero-prev"
-              aria-label="Previous home slide"
-            >
-              &lsaquo;
-            </button>
-            <button
-              type="button"
-              class="slide-btn"
-              id="hero-next"
-              aria-label="Next home slide"
-            >
-              &rsaquo;
-            </button>
+
+          <div class="stat-chip stat-chip-a">
+            <b data-count="312">0</b><span>reminders sent this month</span>
           </div>
-          <div class="hero-dots" id="hero-dots" aria-label="Home slider dots">
-            <button type="button" class="hero-dot is-on" data-slide="0" aria-label="Go to slide 1"></button>
-            <button type="button" class="hero-dot" data-slide="1" aria-label="Go to slide 2"></button>
-            <button type="button" class="hero-dot" data-slide="2" aria-label="Go to slide 3"></button>
-            <button type="button" class="hero-dot" data-slide="3" aria-label="Go to slide 4"></button>
-          </div>
-        </div>
-      </section>
-
-      <section class="problem section container">
-        <div class="problem-copy">
-          <h2>
-            Are you having clients that never return back for another
-            <span>photoshoot?</span>
-          </h2>
-          <p>
-            Most photographers are leaking millions in repeat revenue simply
-            because they do not follow up consistently.
-          </p>
-          <ul class="check-list">
-            <li>50 plus bookings</li>
-            <li>More photoshoots</li>
-            <li>2M plus lost revenue</li>
-            <li>Tracking clients calendar</li>
-          </ul>
-          <a class="btn btn-light" href="#get-started">GET STARTED NOW</a>
-        </div>
-
-        <div class="problem-art">
-          <img
-            class="calendar-image"
-            src="assets/images/calendar.png"
-            alt="Client booking calendar"
-          />
-          <p class="problem-note">MISSED CLIENTS = N MILLIONS LOST!</p>
-          <img
-            class="money-image"
-            src="assets/images/coins-and-naira.png"
-            alt="Coins and naira cash stack"
-          />
-        </div>
-      </section>
-
-      <section class="benefits section" id="benefits">
-        <div class="container">
-          <p class="eyebrow">
-            <img
-              class="eyebrow-icon"
-              src="assets/images/thumbs-up.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <span>Our Benefit</span>
-          </p>
-          <h2>WHAT WE HELP YOU DO</h2>
-          <p class="benefits-lead">
-            Three core services to turn one-time clients into predictable repeat
-            customers and repeat revenue.
-          </p>
-          <p class="benefit-swipe-hint">Swipe to view all services</p>
-
-          <div class="benefit-grid">
-            <article class="benefit-card">
-              <img
-                class="benefit-image"
-                src="assets/images/client-retention-automation.png"
-                alt="Client retention automation dashboard"
-              />
-              <h3>Client Retention Automation</h3>
-              <p class="benefit-summary">
-                We predict your clients next big event based on past shoot and
-                automatically remind them before it happens.
-              </p>
-              <ul class="benefit-quick-list">
-                <li>More repeat bookings</li>
-                <li>Less forgotten clients</li>
-                <li>Consistent revenue flow</li>
-              </ul>
-              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
-              <button type="button" class="benefit-more-toggle" aria-expanded="false">
-                See details
-              </button>
-              <div class="benefit-more-content">
-                <h4>If they booked:</h4>
-                <ul>
-                  <li>Birthday reminder</li>
-                  <li>Maternity reminder</li>
-                  <li>Proposal reminder</li>
-                </ul>
-                <h4>Outcome:</h4>
-                <ul>
-                  <li>More repeat bookings</li>
-                  <li>Less forgotten clients</li>
-                  <li>Consistent revenue flow</li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="benefit-card">
-              <img
-                class="benefit-image"
-                src="assets/images/automated-follow-up.png"
-                alt="Automated follow-up messages on mobile apps"
-              />
-              <h3>Follow Up Messages</h3>
-              <p class="benefit-summary">
-                Instead of manually chasing clients, we send automated and
-                branded reminder messages.
-              </p>
-              <ul class="benefit-quick-list">
-                <li>Client receives reminders</li>
-                <li>Less forgotten clients</li>
-                <li>Consistent revenue flow</li>
-              </ul>
-              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
-              <button type="button" class="benefit-more-toggle" aria-expanded="false">
-                See details
-              </button>
-              <div class="benefit-more-content">
-                <h4>We send:</h4>
-                <ul>
-                  <li>Branded email reminders</li>
-                  <li>Automated chat follow ups</li>
-                  <li>Timed WhatsApp prompts</li>
-                </ul>
-                <h4>Outcome:</h4>
-                <ul>
-                  <li>Client receives reminders</li>
-                  <li>Less forgotten clients</li>
-                  <li>Consistent revenue flow</li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="benefit-card">
-              <img
-                class="benefit-image"
-                src="assets/images/revenue.png"
-                alt="Revenue and payment automation view"
-              />
-              <h3>Revenue and Payment Automation</h3>
-              <p class="benefit-summary">
-                You track payments automatically and identify top-performing
-                events that bring in most revenue.
-              </p>
-              <ul class="benefit-quick-list">
-                <li>Improved cash flow</li>
-                <li>Faster payment collection</li>
-                <li>Clear growth decisions</li>
-              </ul>
-              <a class="btn btn-primary benefit-cta" href="#get-started">GET STARTED</a>
-              <button type="button" class="benefit-more-toggle" aria-expanded="false">
-                See details
-              </button>
-              <div class="benefit-more-content">
-                <h4>How we do it:</h4>
-                <ul>
-                  <li>Automatic payment reminders</li>
-                  <li>Simple payment links</li>
-                  <li>Revenue tracking reports</li>
-                  <li>Book-keeping support</li>
-                </ul>
-                <h4>Outcome:</h4>
-                <ul>
-                  <li>Improved cash flow</li>
-                  <li>Faster payment collection</li>
-                  <li>Clear growth decisions</li>
-                </ul>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="lead section container" id="get-started">
-        <div class="lead-form-wrap">
-          <div class="logo-mini logo-mark" aria-hidden="true"></div>
-          <h2>GET STARTED WITH US</h2>
-          <p>Let's help upscale your business</p>
-
-          <form class="lead-form" id="lead-form">
-            <div class="field-row">
-              <label>
-                First name
-                <input type="text" name="firstName" placeholder="Type here" required />
-              </label>
-              <label>
-                Last name
-                <input type="text" name="lastName" placeholder="Type here" required />
-              </label>
-            </div>
-            <label>
-              Phone number
-              <input type="tel" name="phoneNumber" placeholder="Type here" inputmode="tel" required />
-            </label>
-            <label>
-              Email address
-              <input type="email" name="email" placeholder="Type here" required />
-            </label>
-            <label>
-              Photography business name
-              <input type="text" name="businessName" placeholder="Type here" />
-            </label>
-            <label>
-              Business location
-              <input type="text" name="businessLocation" placeholder="Type here" />
-            </label>
-            <label>
-              What do you want Ndylens to do for you?
-              <textarea name="message" placeholder="Describe here" maxlength="500" required></textarea>
-            </label>
-            <input
-              type="text"
-              name="website"
-              autocomplete="off"
-              tabindex="-1"
-              aria-hidden="true"
-              class="honeypot"
-            />
-            <button class="btn btn-primary" type="submit" id="lead-submit">
-              SUBMIT REQUEST
-            </button>
-            <p id="lead-form-status" class="lead-form-status" role="status" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <aside class="testimonial-wrap">
-          <div class="testimonial-photo" aria-hidden="true"></div>
-          <div class="testimonial-copy">
-            <p id="testimonial-quote">
-              "Ndylens helped me get more photoshoot bookings and I do not have
-              to message my clients one after the other."
-            </p>
-            <h3 id="testimonial-role">Photographer</h3>
-            <span id="testimonial-location">Lagos, Nigeria</span>
-            <div class="stars" id="testimonial-stars">*****</div>
-            <div class="testimonial-controls">
-              <button
-                type="button"
-                class="slide-btn"
-                id="testimonial-prev"
-                aria-label="Previous testimonial"
-              >
-                &lsaquo;
-              </button>
-              <button
-                type="button"
-                class="slide-btn"
-                id="testimonial-next"
-                aria-label="Next testimonial"
-              >
-                &rsaquo;
-              </button>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="faq section" id="faq">
-        <div class="container faq-wrap">
-          <h2>Frequently asked question <span>?</span></h2>
-          <p>Everything you need to know about Ndylens</p>
-
-          <div class="faq-list">
-            <article class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                Is this payment monthly?
-                <span>+</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  We offer a one-time set up after which you have full ownership of the system. You can choose to pay for ongoing support and updates or manage it yourself.
-                </p>
-              </div>
-            </article>
-            <article class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                Do I need technical skills?
-                <span>+</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  No. The service is built for non-technical photographers, and
-                  we handle setup and onboarding with you.
-                </p>
-              </div>
-            </article>
-            <article class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                Will you access my client database?
-                <span>+</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  Access is permission based. You choose what tools are connected
-                  and can revoke access at any time.
-                </p>
-              </div>
-            </article>
-            <article class="faq-item">
-              <button class="faq-question" aria-expanded="false">
-                Can I upgrade later?
-                <span>+</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  Yes. You can start with a smaller package and upgrade when your
-                  studio needs more automation.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="support section container">
-        <div class="support-mark" aria-hidden="true">
-          <img
-            class="support-mark-icon"
-            src="assets/images/question-mark.png"
-            alt=""
-          />
-          <img
-            class="support-mark-icon is-green"
-            src="assets/images/question-mark.png"
-            alt=""
-          />
-          <img
-            class="support-mark-icon"
-            src="assets/images/question-mark.png"
-            alt=""
-          />
-        </div>
-        <h2>Still have more questions?</h2>
-        <p>If you cannot find the answer you are looking for, please chat with us.</p>
-        <a class="btn btn-primary" href="#get-started">REACH OUT TO US</a>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container footer-grid">
-        <div class="footer-logo-block">
-          <div class="logo-mark large" aria-hidden="true"></div>
-        </div>
-        <div class="footer-links">
-          <div class="logo-mark tiny" aria-hidden="true"></div>
-          <a href="#home">HOME</a>
-          <a href="#benefits">BENEFITS</a>
-          <a href="#get-started">GET STARTED</a>
-          <a href="#faq">FAQ</a>
-          <a href="privacy.html">PRIVACY</a>
-        </div>
-        <div class="footer-contact">
-          <h3>CONTACT</h3>
-          <a class="footer-contact-item" href="tel:+2347014624100">
-            <img
-              class="footer-contact-icon"
-              src="assets/images/phone-icon.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <span>+234 701 462 4100</span>
-          </a>
-          <a
-            class="footer-contact-item"
-            href="https://wa.me/2347014624100"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span
-              class="footer-contact-icon footer-contact-icon-whatsapp"
-              aria-hidden="true"
-            ></span>
-            <span>+234 701 462 4100</span>
-          </a>
-          <a
-            class="footer-contact-item"
-            href="https://instagram.com/ndylens_global"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              class="footer-contact-icon"
-              src="assets/images/ig-icon.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <span>@ndylens_global</span>
-          </a>
-          <a class="footer-contact-item" href="mailto:ndylens@gmail.com">
-            <span class="footer-contact-icon footer-contact-icon-email" aria-hidden="true"></span>
-            <span>ndylens@gmail.com</span>
-          </a>
-        </div>
-        <div class="footer-camera" aria-hidden="true">
-          <img class="footer-camera-image" src="assets/images/camera-hand.png" alt="" />
         </div>
       </div>
-    </footer>
 
-    <script src="script.js"></script>
-  </body>
+      <!-- Event-type marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Birthdays</span><i>✦</i><span>Anniversaries</span><i>✦</i><span>Weddings</span><i>✦</i>
+          <span>Maternity</span><i>✦</i><span>Proposals</span><i>✦</i><span>Graduations</span><i>✦</i>
+          <span>Naming ceremonies</span><i>✦</i><span>Birthdays</span><i>✦</i><span>Anniversaries</span><i>✦</i>
+          <span>Weddings</span><i>✦</i><span>Maternity</span><i>✦</i><span>Proposals</span><i>✦</i>
+          <span>Graduations</span><i>✦</i><span>Naming ceremonies</span><i>✦</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── PROBLEM / STAKES ───────────── -->
+    <section class="stakes">
+      <div class="wrap">
+        <div class="stakes-head reveal">
+          <span class="eyebrow"><i class="dot gold"></i> The quiet leak</span>
+          <h2 class="section-title">You shoot. You deliver.<br />Then… <span class="ink-fade">silence.</span></h2>
+          <p class="section-lead">
+            Most clients don't leave because they're unhappy. They leave because
+            <strong>no one reminded them</strong> that their next moment is coming.
+            Every forgotten client is a booking — and real naira — walking out the door.
+          </p>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card reveal">
+            <b><span data-count="73">0</span>%</b>
+            <p>of clients never rebook — simply because follow-up never happened.</p>
+          </div>
+          <div class="stat-card reveal" data-reveal-delay="90">
+            <b>₦<span data-count="2">0</span>M+</b>
+            <p>in repeat revenue the average studio leaks in a year.</p>
+          </div>
+          <div class="stat-card reveal" data-reveal-delay="180">
+            <b><span data-count="5">0</span>×</b>
+            <p>cheaper to rebook a past client than to win a brand-new one.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── HOW IT WORKS ───────────── -->
+    <section class="how" id="how">
+      <div class="wrap how-grid">
+        <div class="how-copy reveal">
+          <span class="eyebrow"><i class="dot"></i> How it works</span>
+          <h2 class="section-title">Set it once.<br />It books for you forever.</h2>
+
+          <ol class="steps">
+            <li class="step" data-step="1">
+              <div class="step-num">01</div>
+              <div>
+                <h3>Add a client once</h3>
+                <p>Name, a date, the shoot you did. That's it — from a booking form, a CSV, or a tap.</p>
+              </div>
+            </li>
+            <li class="step" data-step="2">
+              <div class="step-num">02</div>
+              <div>
+                <h3>NDYLens predicts what's next</h3>
+                <p>It reads each client's story and knows the next moment worth capturing — a birthday, an anniversary, a new baby.</p>
+              </div>
+            </li>
+            <li class="step" data-step="3">
+              <div class="step-num">03</div>
+              <div>
+                <h3>The reminder sends itself</h3>
+                <p>A branded WhatsApp &amp; email nudge lands at the perfect time — in your voice, with your name. You just take the booking.</p>
+              </div>
+            </li>
+          </ol>
+          <a href="#start" class="btn btn-primary">Start free — 7 days <span class="arr">→</span></a>
+        </div>
+
+        <!-- Animated phone -->
+        <div class="how-visual reveal" data-reveal-delay="120">
+          <div class="phone" id="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="chat-top">
+                <img src="assets/images/logo-icon.png" alt="" />
+                <div><b>Chidi Photography</b><span>online</span></div>
+              </div>
+              <div class="chat-body" id="chat-body">
+                <div class="c-day">Today</div>
+                <!-- bubbles injected/animated by JS -->
+                <div class="bubble in" data-seq="1">It's almost time again 👀</div>
+                <div class="bubble in" data-seq="2">Amara, your wedding anniversary is in 2 weeks 💍 Want to lock in your date-night shoot?</div>
+                <div class="typing" data-seq="3"><span></span><span></span><span></span></div>
+                <div class="bubble out" data-seq="4">Yes!! Book us for the 14th 😍</div>
+              </div>
+              <div class="chat-input"><span>Message</span><i class="send">➤</i></div>
+            </div>
+          </div>
+          <div class="how-badge"><span class="live-dot"></span> Sent &amp; booked — automatically</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── FEATURES ───────────── -->
+    <section class="features" id="features">
+      <div class="wrap">
+        <div class="features-head reveal">
+          <span class="eyebrow"><i class="dot"></i> Everything your studio needs</span>
+          <h2 class="section-title">One quiet system, running your whole client life.</h2>
+        </div>
+
+        <div class="feat-grid">
+          <!-- Big feature: retention automation w/ dashboard mock -->
+          <article class="feat feat-lg reveal">
+            <div class="feat-copy">
+              <h3>Client retention, on autopilot</h3>
+              <p>NDYLens watches every client's calendar and fires the right message at the right moment — birthdays, anniversaries, maternity, proposals — so your studio stays booked without you lifting a finger.</p>
+              <ul class="ticks">
+                <li>Predictive event reminders</li>
+                <li>Staggered, human-feeling follow-ups</li>
+                <li>Zero forgotten clients</li>
+              </ul>
+            </div>
+            <div class="feat-mock">
+              <div class="mock-card">
+                <div class="mock-row">
+                  <span class="mock-label">WhatsApp usage · this month</span>
+                  <span class="pill pill-teal">Live from Meta</span>
+                </div>
+                <div class="mock-amount">₦<b>0</b><small>practically free</small></div>
+                <div class="mock-bar"><i style="width:82%"></i></div>
+                <div class="mock-legend"><span><i class="sw teal"></i>Utility</span><span><i class="sw gold"></i>Marketing</span></div>
+              </div>
+              <div class="mock-mini">
+                <span class="live-dot"></span> Number health: <b class="ink-good">High quality</b>
+              </div>
+            </div>
+          </article>
+
+          <article class="feat reveal" data-reveal-delay="80">
+            <div class="feat-ic">💬</div>
+            <h3>WhatsApp &amp; email that's actually <em>yours</em></h3>
+            <p>Official WhatsApp Business API + branded email. Your name, your logo, your voice — never a generic blast.</p>
+          </article>
+
+          <article class="feat reveal" data-reveal-delay="160">
+            <div class="feat-ic">🔗</div>
+            <h3>A booking page that converts</h3>
+            <p>Every studio gets a beautiful page — your portfolio, your brand colour — that turns ad clicks into real bookings.</p>
+          </article>
+
+          <article class="feat reveal" data-reveal-delay="80">
+            <div class="feat-ic">₦</div>
+            <h3>Payments &amp; revenue, tracked</h3>
+            <p>See what you're owed, which events earn most, and where the money's really coming from — no spreadsheets.</p>
+          </article>
+
+          <article class="feat reveal" data-reveal-delay="160">
+            <div class="feat-ic">📅</div>
+            <h3>Campaigns for the whole calendar</h3>
+            <p>Valentine's, Sallah, Christmas, back-to-school — launch a seasonal campaign to the right clients in minutes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── GALLERY / FOR YOU ───────────── -->
+    <section class="gallery">
+      <div class="wrap">
+        <div class="gallery-head reveal">
+          <span class="eyebrow"><i class="dot gold"></i> Built for you</span>
+          <h2 class="section-title">Made for the way Nigerian studios really work.</h2>
+          <p class="section-lead">WhatsApp-first. Naira-native. Built around the moments your clients actually celebrate — not a foreign template bent to fit.</p>
+        </div>
+        <div class="shooters">
+          <figure class="shooter reveal"><img src="assets/images/shooter-1.png" alt="Photographer with camera" /></figure>
+          <figure class="shooter reveal" data-reveal-delay="90"><img src="assets/images/shooter-2.png" alt="Smiling photographer" /></figure>
+          <figure class="shooter reveal" data-reveal-delay="180"><img src="assets/images/shooter-3.png" alt="Photographer in teal" /></figure>
+          <figure class="shooter reveal" data-reveal-delay="270"><img src="assets/images/shooter-4.png" alt="Photographer in profile" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── PRICING ───────────── -->
+    <section class="pricing" id="pricing">
+      <div class="wrap">
+        <div class="pricing-head reveal">
+          <span class="eyebrow"><i class="dot"></i> Simple plans</span>
+          <h2 class="section-title">Pick your studio's speed.</h2>
+          <p class="section-lead">Start with a <strong>7-day free trial</strong>, then pay <strong>yearly or quarterly</strong> — whatever suits your cash flow. A one-time setup &amp; onboarding fee applies in your first term, and we get you fully live.</p>
+        </div>
+
+        <div class="tiers">
+          <article class="tier reveal">
+            <h3>Starter</h3>
+            <p class="tier-for">For solo photographers finding their rhythm.</p>
+            <div class="tier-price">₦130,000<span>/year</span></div>
+            <p class="tier-sub">or ₦39,000/quarter · ₦40,000 one-time setup</p>
+            <ul class="ticks">
+              <li>Automated event &amp; seasonal reminders</li>
+              <li>Branded WhatsApp + email</li>
+              <li>Your own booking page</li>
+              <li>Up to 150 clients</li>
+            </ul>
+            <a href="#start" class="btn btn-quiet full">Start free</a>
+          </article>
+
+          <article class="tier tier-hot reveal" data-reveal-delay="90">
+            <div class="tier-flag">Most popular</div>
+            <h3>Studio Pro</h3>
+            <p class="tier-for">For growing studios that never want to miss a booking.</p>
+            <div class="tier-price">₦210,000<span>/year</span></div>
+            <p class="tier-sub">or ₦63,000/quarter · ₦80,000 one-time setup</p>
+            <ul class="ticks">
+              <li>Everything in Starter</li>
+              <li>Custom message templates</li>
+              <li>Two-way WhatsApp inbox</li>
+              <li>Up to 1,000 clients</li>
+            </ul>
+            <a href="#start" class="btn btn-primary full">Start free</a>
+          </article>
+
+          <article class="tier reveal" data-reveal-delay="180">
+            <h3>Elite</h3>
+            <p class="tier-for">For established studios running like a machine.</p>
+            <div class="tier-price">₦320,000<span>/year</span></div>
+            <p class="tier-sub">or ₦96,000/quarter · ₦120,000 one-time setup</p>
+            <ul class="ticks">
+              <li>Everything in Studio Pro</li>
+              <li>Payment &amp; revenue tracking</li>
+              <li>Priority support</li>
+              <li>Up to 8,000 clients</li>
+            </ul>
+            <a href="#start" class="btn btn-quiet full">Start free</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── TESTIMONIAL ───────────── -->
+    <section class="quote-sec">
+      <div class="wrap quote-wrap reveal">
+        <div class="quote-mark" aria-hidden="true">”</div>
+        <blockquote>
+          NDYLens helped me get more photoshoot bookings — and I don't have to message
+          my clients one after the other anymore. It just… remembers for me.
+        </blockquote>
+        <div class="quote-by">
+          <div>
+            <b>A studio owner</b>
+            <span>Lagos, Nigeria</span>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── GET STARTED / LEAD FORM ───────────── -->
+    <section class="start" id="start">
+      <div class="wrap start-grid">
+        <div class="start-copy reveal">
+          <span class="eyebrow"><i class="dot"></i> Get started</span>
+          <h2 class="section-title">Your next booking is a client you <span class="ink-teal">already have.</span></h2>
+          <p class="section-lead">Tell us about your studio and we'll set you up. Seven days free — see the bookings come back before you pay a naira.</p>
+          <ul class="start-points">
+            <li><i>✓</i> Free 7-day trial, no card required</li>
+            <li><i>✓</i> We help you import your clients</li>
+            <li><i>✓</i> Live in a day, not a month</li>
+          </ul>
+        </div>
+
+        <div class="start-form-card reveal" data-reveal-delay="120">
+          <form class="lead-form" id="lead-form" novalidate>
+            <div class="fr">
+              <label>First name<input type="text" name="firstName" placeholder="Ada" required /></label>
+              <label>Last name<input type="text" name="lastName" placeholder="Okafor" required /></label>
+            </div>
+            <label>Phone (WhatsApp)<input type="tel" name="phoneNumber" placeholder="+234 801 234 5678" inputmode="tel" required /></label>
+            <label>Email<input type="email" name="email" placeholder="you@studio.com" required /></label>
+            <div class="fr">
+              <label>Studio name<input type="text" name="businessName" placeholder="Ada Studios" /></label>
+              <label>Location<input type="text" name="businessLocation" placeholder="Lagos" /></label>
+            </div>
+            <label>What should NDYLens do for you?<textarea name="message" rows="3" maxlength="500" placeholder="I want to stop forgetting my past clients…" required></textarea></label>
+            <input type="text" name="website" class="hpot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button type="submit" class="btn btn-primary full" id="lead-submit">Start my free trial <span class="arr">→</span></button>
+            <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
+            <p class="form-fine">Already have an account? <a href="https://app.ndylens.com">Sign in →</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── FAQ ───────────── -->
+    <section class="faq" id="faq">
+      <div class="wrap faq-wrap">
+        <div class="faq-head reveal">
+          <span class="eyebrow"><i class="dot"></i> Good to know</span>
+          <h2 class="section-title">Questions, answered.</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details class="qa"><summary>Do I need any tech skills?<i>+</i></summary><p>None. NDYLens is built for photographers, not developers — and we help you set up and import your clients personally.</p></details>
+          <details class="qa"><summary>How does it send WhatsApp messages?<i>+</i></summary><p>Through the official WhatsApp Business API, connected to your own studio number — so messages are branded, reliable, and fully compliant. No grey tools.</p></details>
+          <details class="qa"><summary>Is my client data safe?<i>+</i></summary><p>Yes. Your clients are yours — never shared, never sold. Access is permission-based and you can export or leave at any time.</p></details>
+          <details class="qa"><summary>What does it cost?<i>+</i></summary><p>Plans start at ₦130,000/year (or ₦39,000/quarter), billed yearly or quarterly, with a 7-day free trial and a one-time setup fee in your first term. WhatsApp message fees are billed by Meta directly and are usually just a few naira per message — you see exactly what you use.</p></details>
+          <details class="qa"><summary>Can I upgrade or cancel later?<i>+</i></summary><p>Anytime. Start on Starter and move up as your studio grows, or cancel whenever — no lock-in.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── FINAL CTA ───────────── -->
+    <section class="final">
+      <div class="wrap final-wrap reveal">
+        <img src="assets/images/camera-hand.png" alt="" class="final-cam" aria-hidden="true" />
+        <h2>Stop chasing clients.<br />Let them come back to <span class="ink-teal">you.</span></h2>
+        <a href="#start" class="btn btn-primary btn-lg">Start your free trial <span class="arr">→</span></a>
+        <p class="final-fine">7 days free · no card needed · live in a day</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><img src="assets/images/logo-icon.png" alt="" class="brand-mark" /><span class="brand-word">NDYLens</span></a>
+        <p>The studio that never forgets a client.</p>
+      </div>
+      <nav class="foot-links">
+        <h4>Explore</h4>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <div class="foot-contact">
+        <h4>Talk to us</h4>
+        <a href="https://wa.me/2347014624100"><img src="assets/images/whatsapp-icon.png" alt="" />+234 701 462 4100</a>
+        <a href="tel:+2347014624100"><img src="assets/images/phone-icon.png" alt="" />+234 701 462 4100</a>
+        <a href="https://instagram.com/ndylens_global" target="_blank" rel="noopener"><img src="assets/images/ig-icon.png" alt="" />@ndylens_global</a>
+        <a href="mailto:connect@ndylens.com"><img src="assets/images/email-icon.png" alt="" />connect@ndylens.com</a>
+      </div>
+    </div>
+    <div class="wrap foot-base">
+      <span>© <span id="yr">2026</span> NDYLens. Built for photographers, in Nigeria. 🇳🇬</span>
+      <a href="https://app.ndylens.com" class="ghost-link">Go to app →</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
