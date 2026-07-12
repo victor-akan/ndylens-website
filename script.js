@@ -156,6 +156,33 @@ function getLeadAttribution() {
 }
 
 /* =================================================================
+   REFERRAL PREFILL — ?ref=<slug> shows "Referred by <studio>" + tags the lead
+   ================================================================= */
+const NDY_PUBLIC_API =
+  "https://ndylens-api-157638103135.europe-west1.run.app/api/v1/studios/public/";
+const referralData = { slug: "", name: "" };
+(function initReferral() {
+  const raw = new URLSearchParams(window.location.search).get("ref");
+  if (!raw) return; // just landed, no referral → no prefill
+  const slug = raw.toLowerCase().replace(/[^a-z0-9-]/g, "");
+  if (!slug) return;
+  fetch(NDY_PUBLIC_API + encodeURIComponent(slug))
+    .then((r) => (r.ok ? r.json() : null))
+    .then((s) => {
+      if (!s || !s.name) return; // unknown slug → stay silent
+      referralData.slug = slug;
+      referralData.name = s.name;
+      const note = document.getElementById("ref-note");
+      const nameEl = document.getElementById("ref-name");
+      if (note && nameEl) {
+        nameEl.textContent = s.name;
+        note.hidden = false;
+      }
+    })
+    .catch(() => {});
+})();
+
+/* =================================================================
    LEAD FORM SUBMIT (Google Apps Script) — preserved payload shape
    ================================================================= */
 const leadFormEl = document.getElementById("lead-form");
@@ -204,6 +231,8 @@ if (leadFormEl) {
       lastTouchUtmTerm: attribution.lastTouch.utmTerm,
       referrer: attribution.lastTouch.referrer,
       landingPage: attribution.firstTouch.landingPage,
+      referredByName: referralData.name,
+      referredBySlug: referralData.slug,
     };
 
     leadSubmitEl.disabled = true;
