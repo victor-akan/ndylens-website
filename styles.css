@@ -669,3 +669,8 @@ body.spots-sold-out .live-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(2
   .wa-typing span{animation:none}
   .wa-msg{transition:none}
 }
+
+/* The headline accent moves with the scene, so it needs to fade rather than
+   snap — a hard colour change on type the eye is mid-sentence on is jarring. */
+.hero-title [data-hl]{transition:color .8s cubic-bezier(.4,0,.2,1)}
+@media (prefers-reduced-motion:reduce){ .hero-title [data-hl]{transition:none} }

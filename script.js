@@ -62,24 +62,34 @@ if ("IntersectionObserver" in window) {
    what the product does.
    =================================================================== */
 
+/* Accent index: which part of the headline turns teal for each scene.
+   Set ROTATE_ACCENT to false to leave it fixed on the last phrase. */
+const ROTATE_ACCENT = true;
+
 const SCENES = [
+  {
+    key: "cake",
+    tag: "His birthday is coming up",
+    msg: "Hi Amaka! 🎂 Your son\u2019s birthday is coming up. Would you like to book a birthday shoot to celebrate?",
+    time: "Sent automatically · 9:02 AM",
+    accent: 2,
+  },
   {
     key: "wedding",
     tag: "One year on today",
-    msg: "Hi Amaka! ❤️ It’s almost a year since we shot your wedding. Would you like to book an anniversary shoot to celebrate?",
-    time: "Sent automatically · 9:02 AM",
+    msg: "Hi Amaka! ❤️ It\u2019s almost a year since we shot your wedding. Would you like to book an anniversary shoot to celebrate?",
+    time: "Sent automatically · 8:15 AM",
+    accent: 0,
   },
   {
+    // The picture is the maternity session already shot; the message is the
+    // next booking it leads to. Newborn sessions happen in the first two
+    // weeks — exactly the window a photographer misses without tracking.
     key: "maternity",
-    tag: "A new chapter to capture",
-    msg: "Hi Amaka! 🤍 Congratulations again! Shall we plan your maternity shoot before the baby comes?",
+    tag: "Baby has arrived",
+    msg: "Hi Amaka! 🤍 Congratulations on your baby! Newborn shoots are best in the first two weeks — shall we book yours?",
     time: "Sent automatically · 8:40 AM",
-  },
-  {
-    key: "birthday",
-    tag: "Her day is coming up",
-    msg: "Hi Amaka! 🎂 Your birthday is coming up on the 14th. Would you like to book a birthday shoot to celebrate?",
-    time: "Sent automatically · 9:15 AM",
+    accent: 1,
   },
 ];
 
@@ -126,6 +136,13 @@ const SCENES = [
     );
 
     const scene = SCENES[next] || SCENES[0];
+
+    if (ROTATE_ACCENT) {
+      const parts = document.querySelectorAll(".hero-title [data-hl]");
+      parts.forEach((el, i) =>
+        el.classList.toggle("ink-teal", i === (SCENES[next] || {}).accent)
+      );
+    }
 
     if (tagWrap && tagEl) {
       tagWrap.classList.add("is-swapping");
