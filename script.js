@@ -75,9 +75,13 @@ const SCENES = [
     accent: 2,
   },
   {
+    // Zainab, not Amaka: this is a Northern/Hausa ceremony, and an Igbo name
+    // on it would read wrong to the audience this page is for. The three
+    // scenes are three clients on one photographer's list, which is closer to
+    // how the product is actually used.
     key: "wedding",
     tag: "One year on today",
-    msg: "Hi Amaka! ❤️ It\u2019s almost a year since we shot your wedding. Would you like to book an anniversary shoot to celebrate?",
+    msg: "Hi Zainab! ❤️ It\u2019s almost a year since we shot your wedding. Would you like to book an anniversary shoot to celebrate?",
     time: "Sent automatically · 8:15 AM",
     accent: 0,
   },
