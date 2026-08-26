@@ -7,9 +7,7 @@
   <title>Terms of Service · NDYLens</title>
   <meta name="description" content="NDYLens Terms of Service — the agreement governing use of our WhatsApp and email messaging and CRM platform for photographers." />
   <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-var.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,13 +21,15 @@
       <nav class="nav-links" id="nav-links">
         <a href="index.html#how">How it works</a>
         <a href="index.html#features">Features</a>
-        <a href="index.html#pricing">Pricing</a>
+        <!-- Points at early access during beta. Reverts to index.html#pricing
+           once beta testing ends and the pricing section returns. -->
+          <a href="index.html#early-access">Early access</a>
         <a href="index.html#faq">FAQ</a>
         <a href="https://app.ndylens.com" class="nav-signin-m">Sign in &rarr;</a>
       </nav>
       <div class="nav-cta">
         <a href="https://app.ndylens.com" class="ghost-link">Sign in</a>
-        <a href="index.html#start" class="btn btn-primary btn-sm">Start free trial</a>
+        <a href="early-access.html" class="btn btn-primary btn-sm" data-track-cta="nav">Get early access</a>
       </div>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
     </div>

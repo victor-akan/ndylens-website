@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get early access | NDYLens</title>
+  <meta name="description" content="Join 450 photographers getting six months of NDYLens early access for ₦15,600." />
+  <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
+  <!-- Only the display face is preloaded. It renders the H1, which is the LCP
+       element; Inter is fetched by styles.css at normal priority. Preloading
+       both measurably slowed LCP on a throttled mobile connection because the
+       two high-priority font requests competed with the stylesheet. -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-var.woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="form-page">
+  <div class="grain" aria-hidden="true"></div>
+  <header class="nav scrolled" id="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="brand" aria-label="NDYLens home"><img src="assets/images/logo-icon.png" alt="" class="brand-mark" /><span class="brand-word">NDYLens</span></a>
+      <a href="index.html" class="ghost-link">← Back to website</a>
+    </div>
+  </header>
+
+  <main class="application-main">
+    <section class="application-hero">
+      <div class="wrap application-layout">
+        <aside class="application-offer reveal">
+          <span class="eyebrow"><i class="dot gold"></i> Early access</span>
+          <h1>Get 6 months of NDYLens for ₦15,600</h1>
+          <p>NDYLens helps you keep track of your clients, know when they need another shoot and follow up with them automatically on WhatsApp. Plus everything you need to run a successful photography business — from bookings to portfolio and gallery delivery — all in one place.</p>
+          <div class="offer-price"><b>₦15,600</b><span>for 6 months</span></div>
+          <p class="offer-compare"><s>₦39,000 for 3 months</s> · 60% off</p>
+          <div class="spots-note"><span class="live-dot"></span> <span data-spots="long">450 early-access spots available.</span></div>
+          <div class="spots-bar" data-spots-bar role="progressbar" aria-label="Early-access spots taken" aria-valuemin="0" aria-valuenow="0" aria-valuemax="450"><i></i></div>
+          <ul class="ticks compact"><li>Full product access</li><li>Guided onboarding</li><li>WhatsApp credits</li><li>Direct support from the team</li></ul>
+        </aside>
+
+        <div class="application-card reveal" data-reveal-delay="100">
+          <div class="form-heading"><span class="eyebrow"><i class="dot"></i> Ready to get started?</span><h2>Tell us about your studio.</h2><p>Fields marked * are required.</p></div>
+          <form class="lead-form application-form" id="lead-form">
+            <fieldset>
+              <legend><span>1</span> Tell us about you</legend>
+              <div class="fr"><label>First name*<input type="text" name="firstName" autocomplete="given-name" required /></label><label>Last name*<input type="text" name="lastName" autocomplete="family-name" required /></label></div>
+              <div class="fr"><label>Email address*<input type="email" name="email" autocomplete="email" required /></label><label>WhatsApp number*<input type="tel" name="phoneNumber" autocomplete="tel" placeholder="+234 801 234 5678" required /></label></div>
+            </fieldset>
+
+            <fieldset>
+              <legend><span>2</span> Tell us about your photography business</legend>
+              <label>Studio / business name*<input type="text" name="businessName" required /></label>
+              <label>Where are you based?*<input type="text" name="businessLocation" placeholder="City + State" required /></label>
+              <label>How long have you been running your photography business?<select name="businessAge"><option value="">Select one</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>5+ years</option></select></label>
+              <div class="field-group"><p class="field-label">What type of photography do you offer? Select all that apply.</p><div class="check-grid"><label><input type="checkbox" name="photographyType" value="Weddings" /> Weddings</label><label><input type="checkbox" name="photographyType" value="Birthdays & events" /> Birthdays &amp; events</label><label><input type="checkbox" name="photographyType" value="Portraits" /> Portraits</label><label><input type="checkbox" name="photographyType" value="Maternity / family" /> Maternity / family</label><label><input type="checkbox" name="photographyType" value="Newborn / baby" /> Newborn / baby</label><label><input type="checkbox" name="photographyType" value="Commercial / corporate" /> Commercial / corporate</label><label><input type="checkbox" name="photographyType" value="Other" /> Other</label></div></div>
+              <label>About how many clients do you currently have?<select name="clientCount"><option value="">Select one</option><option>Under 20</option><option>20–50</option><option>51–100</option><option>101–250</option><option>250+</option></select></label>
+            </fieldset>
+
+            <fieldset>
+              <legend><span>3</span> About your current workflow</legend>
+              <label>How do you currently manage your clients and bookings?*<select name="currentWorkflow" required><option value="">Select one</option><option>WhatsApp + phone contacts</option><option>Google Sheets / Excel</option><option>Notebook / manual records</option><option>CRM or photography software</option><option>A combination of these</option><option>Other</option></select></label>
+              <div class="field-group"><p class="field-label">What would you most like NDYLens to help you with?*</p><div class="check-grid"><label><input type="checkbox" name="needs" value="Managing client information" /> Managing client information</label><label><input type="checkbox" name="needs" value="Managing bookings" /> Managing bookings</label><label><input type="checkbox" name="needs" value="Gallery delivery" /> Gallery delivery</label><label><input type="checkbox" name="needs" value="Following up with past clients" /> Following up with past clients</label><label><input type="checkbox" name="needs" value="Getting more repeat bookings" /> Getting more repeat bookings</label><label><input type="checkbox" name="needs" value="WhatsApp automation" /> WhatsApp automation</label><label><input type="checkbox" name="needs" value="Tracking payments and revenue" /> Tracking payments and revenue</label><label><input type="checkbox" name="needs" value="Managing my photography business in one place" /> Managing my photography business in one place</label><label><input type="checkbox" name="needs" value="Other" /> Other</label></div></div>
+              <label>How interested are you in using NDYLens with your existing clients?*<select name="interestLevel" required><option value="">Select one</option><option>Very interested</option><option>Interested</option><option>I’m curious but want to learn more</option></select></label>
+            </fieldset>
+
+            <div class="next-step"><small>Next step</small><b>Early access: ₦15,600 for 6 months</b><p>You’re joining a limited group of photographers getting early access to NDYLens before the wider launch.</p></div>
+            <input type="text" name="website" class="hpot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button type="submit" class="btn btn-primary full" id="lead-submit">Continue to payment <span class="arr">→</span></button>
+            <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
+            <p class="form-fine">By continuing, you agree that the NDYLens team may contact you about early access. Read our <a href="privacy.html">privacy policy</a>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

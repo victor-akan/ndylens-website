@@ -7,9 +7,11 @@
   <title>Privacy Policy · NDYLens</title>
   <meta name="description" content="NDYLens Privacy Policy — how we collect, use, and protect data for our messaging and CRM platform for photographers." />
   <link rel="icon" type="image/png" href="assets/images/logo-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Only the display face is preloaded. It renders the H1, which is the LCP
+       element; Inter is fetched by styles.css at normal priority. Preloading
+       both measurably slowed LCP on a throttled mobile connection because the
+       two high-priority font requests competed with the stylesheet. -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-var.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,13 +25,13 @@
       <nav class="nav-links" id="nav-links">
         <a href="index.html#how">How it works</a>
         <a href="index.html#features">Features</a>
-        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#early-access">Early access</a>
         <a href="index.html#faq">FAQ</a>
         <a href="https://app.ndylens.com" class="nav-signin-m">Sign in &rarr;</a>
       </nav>
       <div class="nav-cta">
         <a href="https://app.ndylens.com" class="ghost-link">Sign in</a>
-        <a href="index.html#start" class="btn btn-primary btn-sm">Start free trial</a>
+        <a href="early-access.html" class="btn btn-primary btn-sm">Get early access</a>
       </div>
       <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
     </div>
@@ -39,13 +41,11 @@
     <div class="wrap legal-wrap">
       <span class="eyebrow"><i class="dot"></i> Privacy</span>
       <h1 class="section-title">Privacy Policy</h1>
-      <p class="legal-updated">Last updated: 29 July 2026</p>
+      <p class="legal-updated">Last updated: 26 June 2026</p>
       <p class="section-lead">
         NDYLens ("NDYLens", "we", "us") provides a client-relationship and messaging platform that helps
-        professional photographers and studios stay in touch with their clients over two equally important
-        channels: <strong>WhatsApp</strong> and <strong>email</strong>. Studios can send email from their own
-        connected mailbox — including their Gmail or Google Workspace account. This Privacy Policy explains
-        what information we collect, how we use it, how we handle your email connection, and the choices you have.
+        professional photographers and studios stay in touch with their clients through WhatsApp and email.
+        This Privacy Policy explains what information we collect, how we use it, and the choices you have.
       </p>
 
       <article class="legal-body">
@@ -58,15 +58,13 @@
           <li><strong>Client contact information</strong> entered by studios — client names, phone numbers, email addresses, and key dates (e.g. birthdays, wedding/shoot dates) used to schedule reminders.</li>
           <li><strong>Photos and media</strong> a studio uploads to attach to messages or galleries.</li>
           <li><strong>Messaging data</strong> — the content, status (sent, delivered, read), and timestamps of WhatsApp and email messages sent or received through the platform, including replies from End Clients.</li>
-          <li><strong>Email &amp; WhatsApp connection credentials</strong> — when a studio connects a mailbox so it can send from its own address, we store the connection securely: for a Google connection, an encrypted authorisation token limited to <em>sending</em> email (never the studio's password, and never access to its inbox); for an SMTP connection, the mail-server settings and an encrypted password. WhatsApp connection tokens are stored the same way. See section 5.</li>
           <li><strong>Billing information</strong> — subscription plan and payment status. Card details are handled by our payment processor and are not stored by NDYLens.</li>
-          <li><strong>Usage and device data</strong> — log data, IP address, browser type, and basic analytics used to operate and secure the service.</li>
+          <li><strong>Usage and device data</strong> — log data, IP address, browser type, and basic analytics used to operate and secure the service. On our website we record anonymous usage events (pages viewed, buttons clicked, how far a form was completed) to understand how people move through the site. These are tied to a randomly generated identifier stored in your browser&rsquo;s own local storage, not to a cookie, and are not linked to your identity unless you submit the early-access form. Clearing your browser storage removes the identifier.</li>
         </ul>
 
         <h2>3. How we use information</h2>
         <ul>
           <li>To provide the service — sending the automated and manual WhatsApp and email messages a studio configures for its clients.</li>
-          <li>To send a studio's client emails <strong>from the studio's own connected email address</strong> (via Gmail or its SMTP provider) when the studio has connected a mailbox, so messages come from a name its clients recognise.</li>
           <li>To schedule reminders around the dates a studio records (e.g. birthdays, anniversaries, upcoming or past sessions).</li>
           <li>To show studios the delivery and reply status of their messages.</li>
           <li>To process subscriptions and manage account access.</li>
@@ -82,31 +80,29 @@
         <p>When a studio connects with Google, NDYLens requests <strong>only the ability to send</strong> email on the studio's behalf (the <code>gmail.send</code> scope). We do <strong>not</strong> request — and are technically unable — to read, search, download, or delete the messages in the studio's inbox or mailbox. We receive a secure authorisation ("refresh") token, which we store <strong>encrypted</strong> and use solely to send the emails a studio has set up for its own clients. We never see or store the studio's Google password.</p>
         <p><strong>Limited Use.</strong> NDYLens's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including its Limited Use requirements. We use Google account data only to provide and improve the email-sending feature described here; we do not use it for advertising; we do not allow humans to read it except with the studio's consent, for security, or to comply with the law; and we do not sell it, or transfer it to others, except as necessary to provide the feature, for security, or where the law requires.</p>
         <p>A studio can disconnect its mailbox at any time in its NDYLens settings, and can additionally revoke NDYLens's access from its <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account permissions</a>. Disconnecting stops NDYLens from sending any further email from that address.</p>
-
         <h2>6. How we share information</h2>
         <p>We do not sell personal information. We share data only as needed to run the service:</p>
         <ul>
           <li><strong>Meta / WhatsApp</strong> — to transmit WhatsApp messages and receive their delivery status.</li>
-          <li><strong>Google &amp; email delivery providers</strong> — to send email from a studio's connected mailbox (e.g. Gmail through the Google API, the studio's own SMTP provider, or our platform email provider) and, where applicable, to record whether it was delivered.</li>
+          <li><strong>Email delivery providers</strong> — to send email messages on a studio's behalf.</li>
           <li><strong>Payment processors</strong> — to handle subscription billing.</li>
           <li><strong>Cloud infrastructure providers</strong> — to host the application and store data securely.</li>
           <li><strong>Legal</strong> — where required by law, or to protect the rights, safety, and security of NDYLens, our Customers, or others.</li>
         </ul>
 
         <h2>7. Data retention</h2>
-        <p>We retain account and client data for as long as a studio's account is active and as needed to provide the service. A studio may delete individual client records at any time, and may request deletion of its account and associated data by contacting us. When a studio disconnects an email mailbox or WhatsApp number, the associated credentials and authorisation tokens are removed. We may retain limited records where required for legal, accounting, or security purposes.</p>
+        <p>We retain account and client data for as long as a studio's account is active and as needed to provide the service. A studio may delete individual client records at any time, and may request deletion of its account and associated data by contacting us. We may retain limited records where required for legal, accounting, or security purposes.</p>
 
         <h2>8. Your choices and rights</h2>
         <ul>
           <li><strong>Access &amp; correction</strong> — studios can view and edit the client information they store in NDYLens.</li>
           <li><strong>Opt-out</strong> — studios can disable messaging for any client, and End Clients can ask the studio that messages them to stop.</li>
-          <li><strong>Disconnect</strong> — studios can disconnect a connected WhatsApp number or email mailbox at any time, and revoke Google access from their Google Account.</li>
           <li><strong>Deletion</strong> — you can request deletion of your account or specific data by emailing us.</li>
           <li>Depending on your location, you may have additional rights over your personal data under applicable law.</li>
         </ul>
 
         <h2>9. Data security</h2>
-        <p>We use industry-standard measures to protect data, including encryption in transit, access controls, and secure secret storage. Sensitive credentials — email passwords and Google authorisation tokens — are <strong>encrypted at rest</strong>, and access to them is restricted to the systems that send messages on a studio's behalf. No method of transmission or storage is completely secure, but we work to protect your information and to limit access to it.</p>
+        <p>We use industry-standard measures to protect data, including encryption in transit, access controls, and secure secret storage for credentials and tokens. No method of transmission or storage is completely secure, but we work to protect your information and to limit access to it.</p>
 
         <h2>10. Children</h2>
         <p>NDYLens is a business tool intended for use by photography professionals and is not directed to children. We do not knowingly collect personal information directly from children.</p>
@@ -125,10 +121,7 @@
   <footer class="foot">
     <div class="wrap foot-base" style="border-top:1px solid var(--line);padding-top:28px">
       <span>© <span id="yr">2026</span> NDYLens. Built for photographers, in Nigeria. 🇳🇬</span>
-      <span style="display:flex;gap:18px;align-items:center">
-        <a href="terms.html" class="ghost-link">Terms</a>
-        <a href="index.html" class="ghost-link">← Back to home</a>
-      </span>
+      <a href="index.html" class="ghost-link">← Back to home</a>
     </div>
   </footer>
 

@@ -1,3 +1,50 @@
+/* ===================================================================
+   TYPEFACES — self-hosted, variable, subset
+   Fraunces (display) · Inter (text)
+
+   Subset to Latin-1 plus the punctuation and currency this site
+   actually uses: naira (U+20A6), arrow (U+2192), check (U+2713),
+   curly quotes, en/em dashes, ellipsis.
+   64 KB + 66 KB, served same-origin — no third-party DNS + TLS
+   round trip, which is the expensive part on a slow mobile network.
+
+   The *Fallback faces below are metric-matched to the real fonts
+   (values computed from the actual font tables, not eyeballed), so
+   the swap from fallback to webfont causes no layout shift.
+   =================================================================== */
+@font-face{
+  font-family:'Fraunces';
+  src:url('assets/fonts/fraunces-var.woff2') format('woff2');
+  font-weight:400 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Inter';
+  src:url('assets/fonts/inter-var.woff2') format('woff2');
+  font-weight:400 700;
+  font-style:normal;
+  font-display:swap;
+}
+/* Fraunces x-height .4820 vs Georgia .4814 → size-adjust 100.1% */
+@font-face{
+  font-family:'Fraunces Fallback';
+  src:local('Georgia'),local('Times New Roman'),local('Times');
+  size-adjust:100.1%;
+  ascent-override:97.7%;
+  descent-override:25.5%;
+  line-gap-override:0%;
+}
+/* Inter x-height .5459 vs Arial .5186 → size-adjust 105.3% */
+@font-face{
+  font-family:'Inter Fallback';
+  src:local('Arial'),local('Helvetica Neue'),local('Liberation Sans');
+  size-adjust:105.3%;
+  ascent-override:92.0%;
+  descent-override:22.9%;
+  line-gap-override:0%;
+}
+
 /* legal page (privacy) */
 .legal{padding:120px 0 80px}
 .legal-wrap{max-width:820px;margin:0 auto}
@@ -14,7 +61,7 @@
 /* ===================================================================
    NDYLens — landing v2
    A dark, cinematic "gallery" for a WhatsApp client-retention product.
-   Teal brand + gold-hour warmth. Syne (display) · Inter (body).
+   Teal brand + gold-hour warmth. Fraunces (display) · Inter (text).
    =================================================================== */
 
 :root{
@@ -24,6 +71,7 @@
   --ink-3:#132724;      /* hover raise */
   --line:#1d302c;
   --line-2:#264039;
+  --fog-hi:#a4b9b3;     /* lead / intro copy — the brightest muted tone */
   --fog:#8ba39d;        /* muted body */
   --fog-2:#6d827c;      /* fainter */
   --cream:#eef4f1;      /* headline ink */
@@ -36,8 +84,8 @@
   --radius-sm:12px;
   --shadow:0 30px 80px -30px rgba(0,0,0,.7);
   --maxw:1200px;
-  --disp:'Syne',ui-sans-serif,system-ui,sans-serif;
-  --body:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --disp:'Fraunces','Fraunces Fallback',Georgia,'Times New Roman',serif;
+  --body:'Inter','Inter Fallback',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 
 *{box-sizing:border-box}
@@ -45,14 +93,17 @@ html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   margin:0;background:var(--ink-0);color:var(--cream);
   font-family:var(--body);line-height:1.6;
+  font-optical-sizing:auto;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;width:100%;max-width:100%;position:relative;
   overflow-wrap:break-word;word-wrap:break-word;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spacing:-.02em;margin:0;text-wrap:balance}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:600;font-optical-sizing:auto;
+  line-height:1.12;letter-spacing:-.014em;margin:0;text-wrap:balance}
+p{text-wrap:pretty}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:24px;padding-right:24px;width:100%}
 
 /* film grain overlay */
 .grain{
@@ -64,14 +115,14 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 /* ── shared bits ── */
 .eyebrow{
   display:inline-flex;align-items:center;gap:9px;
-  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   color:var(--fog);margin:0 0 20px;
 }
 .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);
   box-shadow:0 0 0 4px rgba(42,191,170,.16)}
 .eyebrow .dot.gold{background:var(--gold);box-shadow:0 0 0 4px rgba(231,183,95,.16)}
-.section-title{font-size:clamp(30px,5vw,54px)}
-.section-lead{color:var(--fog);font-size:clamp(15px,1.5vw,18px);max-width:56ch;margin:18px 0 0}
+.section-title{font-family:var(--disp);font-size:clamp(32px,4.7vw,56px);font-weight:600;line-height:1.1;letter-spacing:-.016em}
+.section-lead{color:var(--fog-hi);font-size:clamp(16px,1.5vw,18px);line-height:1.65;letter-spacing:0;max-width:62ch;margin:20px 0 0}
 .ink-teal{color:var(--teal)}
 .ink-good{color:var(--good)}
 .ink-fade{color:var(--fog-2)}
@@ -106,7 +157,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
 .brand{display:inline-flex;align-items:center;gap:10px}
 .brand-mark{width:30px;height:30px;border-radius:7px}
-.brand-word{font-family:var(--body);font-weight:800;font-size:19px;letter-spacing:-.01em}
+.brand-word{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:-.012em}
 .nav-links{display:flex;gap:30px}
 .nav-links a{color:var(--fog);font-size:15px;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--cream)}
@@ -122,8 +173,8 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .hero-glow{position:absolute;top:-10%;right:-5%;width:60vw;height:60vw;max-width:800px;max-height:800px;
   background:radial-gradient(circle,rgba(42,191,170,.18),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding-bottom:70px}
-.hero-title{font-family:var(--disp);font-size:clamp(40px,6.6vw,76px);letter-spacing:-.035em}
-.hero-sub{color:var(--fog);font-size:clamp(16px,1.6vw,19px);max-width:52ch;margin:26px 0 34px}
+.hero-title{font-family:var(--disp);font-size:clamp(40px,5.6vw,68px);font-weight:600;line-height:1.06;letter-spacing:-.018em;max-width:16ch}
+.hero-sub{color:var(--fog-hi);font-size:clamp(17px,1.6vw,19px);line-height:1.65;letter-spacing:0;max-width:54ch;margin:28px 0 36px}
 .hero-sub em{color:var(--cream);font-style:normal;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
 .hero-proof{display:flex;align-items:center;gap:14px;margin-top:36px}
@@ -138,12 +189,33 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .hero-visual{position:relative}
 .portrait-frame{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line-2);
   box-shadow:var(--shadow);aspect-ratio:4/5}
-.portrait-img{width:100%;height:100%;object-fit:cover;animation:kenburns 18s ease-in-out infinite alternate}
-@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
+/* Ken Burns. The zoom was cut to 1.03 back when the source was a landscape
+   photo forced into this 4:5 frame, where any scale swung the crop around and
+   pushed the cake topper in and out. The source is a native 4:5 now, so that
+   reason is gone and the travel is restored.
+   The origin is deliberately off-centre, on the child's face. Scaling from the
+   centre moves the centre least, so a centred zoom on a smooth gradient
+   backdrop is almost invisible — there are no edges near the middle for the
+   eye to track. Anchoring on the face turns it into a slow push-in: the face
+   holds still and the frame creeps in around it. */
+.portrait-img{width:100%;height:100%;object-fit:cover;
+  transform-origin:48% 34%;animation:kenburns 18s linear infinite alternate;
+  will-change:transform}
+/* Zoom AND pan, not zoom alone. A pure scale moves the centre least, and the
+   centre is where the sharpest detail sits — so the child, the one thing the
+   eye tracks, was barely translating. Adding drift moves the whole frame.
+   Timing is linear on purpose: ease-in-out spends most of the cycle at the
+   slow ends, which is exactly when motion is hardest to perceive.
+   Scale never drops below 1.04, which leaves 2% overflow per side — more than
+   the 1.1% the pan ever asks for, so no edge is exposed. */
+@keyframes kenburns{
+  from{transform:scale(1.04) translate3d(1.1%,0.9%,0)}
+  to{transform:scale(1.13) translate3d(-1.1%,-0.9%,0)}
+}
 .frame-tag{position:absolute;top:16px;left:16px;display:inline-flex;align-items:center;gap:7px;
   font-size:12px;font-weight:600;background:rgba(7,16,14,.7);backdrop-filter:blur(8px);
   border:1px solid var(--line-2);border-radius:100px;padding:6px 12px;color:var(--cream)}
-.wa-float{position:absolute;bottom:-26px;left:-34px;width:min(300px,78%);background:var(--ink-2);
+.wa-float{position:absolute;bottom:-34px;left:-92px;width:min(286px,74%);background:var(--ink-2);
   border:1px solid var(--line-2);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;
   animation:bob 6s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
@@ -158,7 +230,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .wa-time{display:block;font-size:10px;color:var(--fog-2);margin-top:6px;text-align:right}
 .stat-chip{position:absolute;top:24px;right:-22px;background:var(--ink-1);border:1px solid var(--line-2);
   border-radius:14px;padding:12px 15px;box-shadow:var(--shadow);text-align:center;animation:bob 7s ease-in-out infinite .5s}
-.stat-chip b{font-family:var(--body);font-size:26px;color:var(--teal);display:block;line-height:1}
+.stat-chip b{font-family:var(--body);font-size:26px;color:var(--teal);display:block;line-height:1;font-variant-numeric:tabular-nums}
 .stat-chip span{font-size:10.5px;color:var(--fog);display:block;margin-top:3px;max-width:88px}
 
 /* marquee */
@@ -186,7 +258,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .steps{list-style:none;margin:34px 0 34px;padding:0;display:flex;flex-direction:column;gap:8px}
 .step{display:flex;gap:20px;padding:20px;border-radius:var(--radius-sm);border:1px solid transparent;transition:.3s}
 .step:hover{background:var(--ink-1);border-color:var(--line)}
-.step-num{font-family:var(--body);font-weight:800;font-size:15px;color:var(--teal);
+.step-num{font-family:var(--body);font-weight:700;font-size:15px;color:var(--teal);
   border:1px solid var(--teal-deep);border-radius:9px;padding:8px 11px;height:max-content;background:rgba(42,191,170,.06)}
 .step h3{font-size:20px;margin-bottom:5px}
 .step p{margin:0;color:var(--fog);font-size:15px}
@@ -227,15 +299,17 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .feat{background:var(--ink-1);border:1px solid var(--line);border-radius:var(--radius);padding:32px;
   transition:transform .3s,border-color .3s,background .3s}
 .feat:hover{transform:translateY(-4px);border-color:var(--line-2);background:var(--ink-2)}
-.feat h3{font-size:21px;margin-bottom:10px}
+.feat h3{font-family:var(--disp);font-size:21px;font-weight:600;line-height:1.28;letter-spacing:-.008em;margin-bottom:11px}
 .feat h3 em{color:var(--teal);font-style:normal}
 .feat p{margin:0;color:var(--fog);font-size:15px}
-.feat-ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;
-  background:rgba(42,191,170,.09);border:1px solid var(--teal-deep);margin-bottom:18px;font-family:var(--body);color:var(--teal)}
+.feat-ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  background:rgba(42,191,170,.09);border:1px solid var(--teal-deep);margin-bottom:18px;color:var(--teal)}
+.feat-ic svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .feat-lg{grid-column:span 2;display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;padding:38px}
 .ticks{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
 .ticks li{position:relative;padding-left:28px;color:var(--fog);font-size:15px}
-.ticks li::before{content:"✓";position:absolute;left:0;top:0;color:var(--teal);font-weight:800;
+.ticks li::before{content:"✓";position:absolute;left:0;top:0;color:var(--teal);font-weight:700;
   background:rgba(42,191,170,.1);width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px}
 
 /* dashboard mock */
@@ -246,7 +320,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .mock-label{font-size:12px;color:var(--fog);font-weight:500}
 .pill{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:100px}
 .pill-teal{background:rgba(42,191,170,.12);color:var(--teal)}
-.mock-amount{font-family:var(--body);font-size:38px;font-weight:800;line-height:1;display:flex;align-items:baseline;gap:8px}
+.mock-amount{font-family:var(--body);font-size:38px;font-weight:700;line-height:1;display:flex;align-items:baseline;gap:8px}
 .mock-amount small{font-family:var(--body);font-size:12px;font-weight:500;color:var(--good)}
 .mock-bar{height:9px;border-radius:6px;background:rgba(139,163,157,.18);margin:16px 0 10px;overflow:hidden}
 .mock-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-2))}
@@ -276,9 +350,9 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .tier:hover{transform:translateY(-5px);border-color:var(--line-2)}
 .tier h3{font-size:22px}
 .tier-for{color:var(--fog);font-size:13.5px;margin:8px 0 20px;min-height:38px}
-.tier-price{font-family:var(--body);font-weight:800;font-size:36px;line-height:1;margin-bottom:6px}
+.tier-price{font-family:var(--body);font-weight:700;font-size:36px;line-height:1;margin-bottom:6px}
 .tier-price span{font-family:var(--body);font-size:15px;font-weight:500;color:var(--fog)}
-.tier-sub{font-size:13.5px;color:#a6bab5;margin:0 0 20px}
+.tier-sub{font-size:13.5px;color:var(--fog-hi);margin:0 0 20px}
 .tier-sub b{color:var(--cream);font-weight:600}
 .tier .ticks{margin-bottom:26px}
 .tier-hot{border-color:var(--teal);background:linear-gradient(180deg,rgba(42,191,170,.08),var(--ink-1));
@@ -304,7 +378,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .start-points{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
 .start-points li{display:flex;align-items:center;gap:12px;color:var(--fog);font-size:15px}
-.start-points i{color:var(--teal);font-style:normal;font-weight:800;background:rgba(42,191,170,.1);
+.start-points i{color:var(--teal);font-style:normal;font-weight:700;background:rgba(42,191,170,.1);
   width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px}
 .start-form-card{background:var(--ink-1);border:1px solid var(--line-2);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
 .lead-form{display:flex;flex-direction:column;gap:14px}
@@ -328,7 +402,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .faq-head .eyebrow{justify-content:center}
 .qa{border:1px solid var(--line);border-radius:var(--radius-sm);margin-bottom:12px;background:var(--ink-0);overflow:hidden;transition:border-color .2s}
 .qa[open]{border-color:var(--line-2)}
-.qa summary{list-style:none;cursor:pointer;padding:20px 22px;font-family:var(--body);font-weight:700;font-size:17px;
+.qa summary{list-style:none;cursor:pointer;padding:20px 22px;font-family:var(--disp);font-weight:600;font-size:18px;letter-spacing:-.004em;
   display:flex;justify-content:space-between;align-items:center;gap:16px}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary i{font-style:normal;color:var(--teal);font-size:22px;transition:transform .25s;flex-shrink:0}
@@ -340,7 +414,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
   radial-gradient(700px 420px at 50% 0%,rgba(42,191,170,.14),transparent 62%),var(--ink-0)}
 .final-wrap{position:relative}
 .final-cam{position:absolute;right:-10px;top:-60px;width:180px;opacity:.16;transform:rotate(-8deg);pointer-events:none}
-.final h2{font-size:clamp(30px,5.5vw,58px);margin-bottom:32px}
+.final h2{font-size:clamp(32px,5vw,58px);font-weight:600;line-height:1.08;letter-spacing:-.016em;margin-bottom:32px}
 .final-fine{margin:18px 0 0;color:var(--fog);font-size:14px}
 
 /* ===================== FOOTER ===================== */
@@ -351,7 +425,8 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
 .foot-links,.foot-contact{display:flex;flex-direction:column;gap:11px}
 .foot-links a,.foot-contact a{color:var(--cream);font-size:14.5px;display:inline-flex;align-items:center;gap:9px;transition:color .2s}
 .foot-links a:hover,.foot-contact a:hover{color:var(--teal)}
-.foot-contact a img{width:17px;height:17px;object-fit:contain}
+.foot-contact a svg{width:17px;height:17px;flex:0 0 auto;fill:currentColor;color:var(--fog)}
+.foot-contact a:hover svg{color:var(--teal)}
 .foot-base{display:flex;justify-content:space-between;align-items:center;padding-top:24px;color:var(--fog-2);font-size:13px;gap:16px;flex-wrap:wrap}
 
 /* ===================== REVEAL ===================== */
@@ -375,7 +450,7 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
   .nav-cta .ghost-link{display:none}
 }
 @media (max-width:560px){
-  .wrap{padding:0 18px}
+  .wrap{padding-left:18px;padding-right:18px}
   .hero{padding-top:100px}
   .feat,.feat-lg,.tier,.start-form-card{padding:24px}
   .stat-chip{right:0;top:12px}
@@ -392,9 +467,111 @@ h1,h2,h3,h4{font-family:var(--body);font-weight:800;line-height:1.04;letter-spac
   section,.foot,.nav{max-width:100vw;overflow-x:clip}
 }
 
+/* The grain is a fixed, full-viewport mix-blend layer — cheap to look at,
+   not cheap to composite. Drop it where the effect is invisible anyway. */
+@media (max-width:960px){ .grain{display:none} }
+
+/* The chat card overhangs far to the left on desktop so it clears the cake.
+   Once the hero stacks to one column there is no gutter to overhang into,
+   so bring it back to a modest offset rather than relying on section clipping. */
+@media (min-width:561px) and (max-width:960px){ .wa-float{left:-24px} }
+
 /* ===================== MOTION-SAFE ===================== */
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none;transition:none}
   .portrait-img{animation:none}
 }
+
+/* ===================== REVIEWED EARLY-ACCESS SITE ===================== */
+.hero-trust{margin:28px 0 0;color:var(--fog);font-size:14px}
+.journey-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-1);padding:18px 0}
+.journey-strip .wrap{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;color:var(--fog);font-size:14px;font-weight:600;text-align:center}
+.journey-strip i{font-style:normal;color:var(--teal)}
+
+.opportunity{padding:110px 0;background:var(--ink-1);border-bottom:1px solid var(--line)}
+.opportunity-grid{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:68px}
+.client-dashboard{background:#f7faf9;color:#10201c;border-radius:22px;padding:24px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.18)}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:20px;border-bottom:1px solid #dce8e4}
+.dash-top>span:first-child{display:flex;flex-direction:column}.dash-top b{font-size:16px}.dash-top small{color:#668078}
+.dash-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.dash-summary div{background:#eaf2ef;border-radius:12px;padding:14px;display:flex;flex-direction:column}.dash-summary small{color:#668078;font-size:10px}.dash-summary b{font-size:22px;margin-top:3px;font-variant-numeric:tabular-nums}
+.dash-list{display:flex;flex-direction:column;gap:8px}.dash-list>div{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #e0e9e6;border-radius:12px;background:white}
+.dash-avatar{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#c9f0e7;color:#116455;font-size:11px;font-weight:700;flex:0 0 auto}.gold-bg{background:#f7e7c4;color:#78561b}.muted-bg{background:#e5e9e8;color:#52625d}
+.dash-list p{margin:0;display:flex;flex-direction:column;line-height:1.35;min-width:0}.dash-list p b{font-size:12px}.dash-list p small{font-size:10px;color:#71847e}.dash-action{margin-left:auto;color:#168a77;font-size:10px;font-weight:700;white-space:nowrap}
+
+.section-intro{max-width:780px}.help-grid{list-style:none;margin:50px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.help-card{background:var(--ink-1);border:1px solid var(--line);border-radius:var(--radius);padding:30px}.help-card>span{display:inline-grid;place-items:center;color:var(--teal);font-weight:700;font-size:13px;width:38px;height:38px;border-radius:10px;background:rgba(42,191,170,.1);border:1px solid var(--teal-deep);margin-bottom:22px}.help-card h3{font-family:var(--disp);font-size:22px;font-weight:600;line-height:1.28;letter-spacing:-.008em;margin-bottom:11px}.help-card p{margin:0;color:var(--fog);font-size:15px;line-height:1.65}.center-cta{text-align:center;margin-top:36px}
+
+.product-story{padding:110px 0;background:var(--ink-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.product-story-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center}
+.message-card{max-width:500px;margin-left:auto;background:#e7f1ed;color:#10201c;border-radius:22px;padding:18px;box-shadow:var(--shadow);background-image:radial-gradient(rgba(26,90,77,.08) 1px,transparent 1px);background-size:12px 12px}
+.message-photo{border-radius:14px;overflow:hidden;aspect-ratio:4/5;background:#dfe9e5}
+.message-photo img{width:100%;height:100%;object-fit:cover}
+.message-copy{margin-top:12px;background:white;border-radius:4px 14px 14px 14px;padding:13px 15px;max-width:89%;font-size:13px;box-shadow:0 6px 18px rgba(10,45,38,.08)}.message-copy p{margin:0 0 8px}.message-copy p:last-child{margin:0}
+.message-reply{margin:12px 0 0 auto;width:max-content;max-width:78%}.message-reply small{display:block;color:#668078;margin:0 0 4px 8px}.message-reply p{margin:0;background:#d0f3e8;border-radius:14px 4px 14px 14px;padding:11px 14px;font-size:13px}
+
+.feat-grid{grid-template-columns:repeat(3,1fr)}
+.pricing{background:linear-gradient(180deg,var(--ink-0),var(--ink-1));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.early-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.pricing-head{max-width:none;margin:0}.early-card{position:relative;background:linear-gradient(180deg,rgba(42,191,170,.09),var(--ink-1));border:1px solid var(--teal);border-radius:22px;padding:36px;box-shadow:0 30px 80px -36px rgba(42,191,170,.5)}
+.early-label{text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--teal);font-weight:600;margin:0 0 14px}.early-price{font-family:var(--disp);font-weight:600;font-size:clamp(36px,5vw,54px);line-height:1;letter-spacing:-.02em;font-variant-numeric:lining-nums}.early-price span{font-family:var(--body);font-size:15px;letter-spacing:0;color:var(--fog);font-weight:500}.old-price{color:var(--fog);text-decoration:line-through;margin:10px 0 24px}.early-card .ticks{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:28px}.early-card .ticks li{font-size:13px}
+
+/* Dedicated early-access form */
+.form-page{background:var(--ink-0)}.application-main{padding-top:70px}.application-hero{padding:70px 0 100px}.application-layout{display:grid;grid-template-columns:.72fr 1.28fr;align-items:start;gap:64px}.application-offer{position:sticky;top:110px}.application-offer h1{font-family:var(--disp);font-size:clamp(36px,4.6vw,56px);font-weight:600;line-height:1.07;letter-spacing:-.018em}.application-offer>p{color:var(--fog-hi);font-size:16px;line-height:1.65}.offer-price{margin-top:30px;display:flex;flex-direction:column}.offer-price b{font-family:var(--disp);font-weight:600;font-size:44px;line-height:1;letter-spacing:-.018em;color:var(--teal);font-variant-numeric:lining-nums}.offer-price span{color:var(--fog);margin-top:5px}.offer-compare{margin:8px 0 20px!important}.spots-note{display:flex;align-items:center;gap:10px;font-weight:700;margin:20px 0}.ticks.compact{margin-top:26px}
+.application-card{background:var(--ink-1);border:1px solid var(--line-2);border-radius:24px;padding:38px;box-shadow:var(--shadow)}.form-heading{padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:28px}.form-heading .eyebrow{margin-bottom:10px}.form-heading h2{font-family:var(--disp);font-size:32px;font-weight:600;letter-spacing:-.014em}.form-heading p{margin:8px 0 0;color:var(--fog);font-size:13px}
+.application-form{gap:26px}.application-form fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:15px}.application-form fieldset+fieldset{border-top:1px solid var(--line);padding-top:26px}.application-form legend{font-family:var(--disp);font-size:20px;font-weight:600;margin-bottom:18px}.application-form legend span{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(42,191,170,.12);color:var(--teal);font-size:13px;margin-right:8px}.lead-form select{background:var(--ink-0);border:1px solid var(--line-2);border-radius:11px;padding:12px 14px;color:var(--cream);font:inherit;font-size:14px;outline:none}.lead-form select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,191,170,.14)}.field-group{display:flex;flex-direction:column;gap:9px}.field-label{font-size:13px;font-weight:500;color:var(--fog);margin:0}.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check-grid label{display:flex;flex-direction:row;align-items:flex-start;gap:9px;background:var(--ink-0);border:1px solid var(--line);border-radius:10px;padding:11px;color:var(--cream);font-size:12px;line-height:1.4}.check-grid input{accent-color:var(--teal);margin-top:2px;flex:0 0 auto}.next-step{background:rgba(42,191,170,.08);border:1px solid var(--teal-deep);border-radius:14px;padding:18px}.next-step small{display:block;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;font-weight:700}.next-step b{display:block;font-size:18px;margin-top:4px}.next-step p{color:var(--fog);font-size:13px;margin:5px 0 0}
+
+@media (max-width:960px){
+  .opportunity-grid,.product-story-grid,.early-grid,.application-layout{grid-template-columns:1fr}
+  .opportunity-grid,.product-story-grid,.early-grid,.application-layout{gap:42px}
+  .application-offer{position:static}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:620px){
+  .help-grid,.feat-grid,.early-card .ticks,.check-grid{grid-template-columns:1fr}
+  .dash-summary{grid-template-columns:1fr 1fr}.dash-summary div:last-child{grid-column:span 2}
+  .client-dashboard,.early-card,.application-card{padding:22px}
+  .journey-strip .wrap{gap:9px;font-size:12px}
+  .application-hero{padding-top:42px}
+}
+
+/* ===================== PICTURE WRAPPERS ===================== */
+/* <picture> is inline by default, which would collapse the fixed-ratio
+   frames it now sits inside. */
+.portrait-frame picture,.message-photo picture{display:block;width:100%;height:100%}
+
+/* ===================== LIVE SPOTS COUNTER ===================== */
+/* The number is written by script.js from the Apps Script "spots"
+   endpoint. The markup ships with the static text as a fallback, so a
+   failed fetch or a blocked script degrades to the old wording. */
+.spots-bar{--fill:0%;height:6px;border-radius:100px;background:rgba(139,163,157,.16);
+  overflow:hidden;margin:0 0 22px;border:1px solid var(--line);display:none}
+.spots-bar[data-spots-live]{display:block}
+.spots-bar i{display:block;height:100%;width:var(--fill);border-radius:100px;
+  background:linear-gradient(90deg,var(--teal),var(--teal-2));
+  transition:width .9s cubic-bezier(.2,.8,.2,1)}
+[data-spots-live]{font-variant-numeric:tabular-nums}
+body.spots-sold-out .spots-bar i{background:linear-gradient(90deg,var(--gold),#f2d49a)}
+body.spots-sold-out .tier-flag{background:var(--gold);color:#3a2a06}
+body.spots-sold-out .live-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(231,183,95,.2);animation:none}
+
+/* ===================== COPY REVISION ===================== */
+/* The how-it-works list went from four steps to five. Five items in a
+   two-column grid would leave a hole, so the final step — the payoff —
+   spans the full width instead of sitting next to a gap. */
+.help-card-last{grid-column:1 / -1}
+
+/* "Only 25 spots available" moved out of the top flag to sit under the
+   button, which is where the eye lands after reading the price. */
+.early-spots{display:flex;align-items:center;justify-content:center;gap:9px;
+  margin:16px 0 0;font-size:13.5px;font-weight:600;color:var(--fog-hi)}
+
+@media (max-width:620px){
+  .help-card-last{grid-column:auto}
+}
+
+/* The story section lost its lead paragraph in the copy rewrite, leaving a
+   two-line column beside a very tall card. Centring it stranded the heading
+   in mid-air, so it now aligns to the top of the photo instead. */
+.product-story-grid{align-items:start}
+.story-copy{padding-top:8px}
+@media (max-width:960px){ .story-copy{padding-top:0} }
