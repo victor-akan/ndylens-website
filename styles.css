@@ -198,11 +198,12 @@ p{text-wrap:pretty}
    that measurement — the widest word needs ~11.8x the font-size in px.
    Two rules because the hero goes single-column at 960 and the text column
    suddenly doubles in width, so one clamp cannot serve both layouts. */
-/* The size ceiling is set by the longest single word, not the total length.
-   "photographer?" alone capped this at 48px; without it the longest word is
-   "them?" and the headline can run at full display size again. */
-.hero-title{font-family:var(--disp-hero);font-size:clamp(38px,6.4vw,72px);font-weight:800;
-  line-height:1.02;letter-spacing:-.03em;max-width:13ch}
+/* Back on Fraunces for the full sentence. Syne is roughly twice as wide per
+   character, so "photographer?" capped it at 48px there; Fraunces allows 94px
+   for the same word. Using it also means one display face on the page instead
+   of two, and it is already loaded, so the headline costs no extra bytes. */
+.hero-title{font-family:var(--disp);font-size:clamp(33px,4.6vw,58px);font-weight:600;
+  font-optical-sizing:auto;line-height:1.06;letter-spacing:-.02em;max-width:17ch}
 /* Above 1200px the wrap stops growing, so the text column is fixed at about
    578px no matter how wide the window gets. 578 / 11.8 caps the font at 48px;
    anything larger and "photographer?" runs past the column and under the
