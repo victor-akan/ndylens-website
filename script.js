@@ -62,9 +62,11 @@ if ("IntersectionObserver" in window) {
    what the product does.
    =================================================================== */
 
-/* Accent index: which part of the headline turns teal for each scene.
-   Set ROTATE_ACCENT to false to leave it fixed on the last phrase. */
-const ROTATE_ACCENT = true;
+/* The teal stays fixed on "to another photographer?" — the question is the
+   line that has to land, and moving the colour off it every 12 seconds took
+   the emphasis away from it. Each scene still carries an `accent` index, so
+   flipping this back to true restores the rotation. */
+const ROTATE_ACCENT = false;
 
 const SCENES = [
   {
