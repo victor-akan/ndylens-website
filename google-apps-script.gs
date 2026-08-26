@@ -73,6 +73,13 @@ const HEADERS = [
   "notes",
 ];
 
+/* sourceBucket/sourceDetail are FIRST touch — where this visitor originally
+   came from, held in localStorage across visits. The utm* columns are LAST
+   touch, read from the URL of the page the event fired on. Mixing the two
+   without saying so was confusing, hence the explicit lastTouch* pair.
+
+   New columns are appended at the END on purpose: inserting them mid-list
+   would shift every event row already written. */
 const EVENT_HEADERS = [
   "timestamp",
   "event",
@@ -80,15 +87,21 @@ const EVENT_HEADERS = [
   "visitorId",
   "isNewVisitor",
   "page",
-  "sourceBucket",
-  "sourceDetail",
-  "utmSource",
-  "utmMedium",
-  "utmCampaign",
+  "sourceBucket",        // first touch
+  "sourceDetail",        // first touch
+  "utmSource",           // last touch, from this page's URL
+  "utmMedium",           // last touch
+  "utmCampaign",         // last touch
   "referrer",
   "device",
   "viewport",
   "detail",
+  "lastTouchBucket",
+  "lastTouchDetail",
+  "firstTouchUtmSource",
+  "firstTouchUtmMedium",
+  "firstTouchUtmCampaign",
+  "landingPage",
 ];
 
 /* ===================================================================

@@ -390,7 +390,11 @@ p{text-wrap:pretty}
 .lead-form input::placeholder,.lead-form textarea::placeholder{color:var(--fog-2)}
 .lead-form input:focus,.lead-form textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,191,170,.14)}
 .hpot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.form-status{margin:2px 0 0;font-size:13.5px;text-align:center;min-height:1.2em}
+.form-status{margin:2px 0 0;font-size:13.5px;line-height:1.55;text-align:center;min-height:1.2em;max-width:46ch;margin-left:auto;margin-right:auto;text-wrap:pretty}
+/* The success message names the address the confirmation went to, so it runs
+   to two or three lines. Give it a measure rather than letting it span the
+   full card width. */
+.form-status.ok{padding:12px 16px;background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.22);border-radius:12px;max-width:none}
 .form-status.ok{color:var(--good)}.form-status.err{color:#ff8f7a}
 .form-fine{margin:4px 0 0;font-size:13px;color:var(--fog);text-align:center}
 .form-fine a{color:var(--teal);font-weight:600}

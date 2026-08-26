@@ -173,6 +173,12 @@ const Track = (function () {
       const stored = localStorage.getItem("ndy_first_touch");
       if (stored) first = JSON.parse(stored);
     } catch {}
+    // sourceBucket/sourceDetail are FIRST touch, from localStorage, so every
+    // event a visitor ever fires is attributed to where they originally came
+    // from. lastTouch* is where they came from on THIS visit. Both are kept:
+    // first touch answers "which channel found this person", last touch
+    // answers "which channel brought them back today", and for a campaign
+    // they are usually different.
     return {
       sessionId,
       visitorId,
@@ -186,6 +192,12 @@ const Track = (function () {
       referrer: t.referrer,
       device: device(),
       viewport: (window.innerWidth || 0) + "x" + (window.innerHeight || 0),
+      lastTouchBucket: t.sourceBucket,
+      lastTouchDetail: t.sourceDetail,
+      firstTouchUtmSource: first.utmSource || "",
+      firstTouchUtmMedium: first.utmMedium || "",
+      firstTouchUtmCampaign: first.utmCampaign || "",
+      landingPage: first.landingPage || "",
     };
   }
 
@@ -548,8 +560,16 @@ if (leadForm && leadSubmit) {
 
     const previousLabel = leadSubmit.innerHTML;
     leadSubmit.disabled = true;
-    leadSubmit.textContent = "Saving your application…";
-    setLeadStatus("Saving your details…");
+    leadSubmit.textContent = "Sending…";
+    setLeadStatus("Sending your application…");
+
+    // Apps Script cold-starts, and the first request after an idle period can
+    // take 20-30 seconds. A status line frozen on "Sending…" for that long
+    // reads as a hung page, so acknowledge the wait rather than leave them
+    // guessing. Cleared in `finally` whichever way the request ends.
+    const slowNotice = window.setTimeout(() => {
+      setLeadStatus("Still sending — this can take a few seconds. Please don’t close the page.");
+    }, 6000);
 
     const send = (mode) =>
       fetch(SHEETS_WEB_APP_URL, {
@@ -562,8 +582,11 @@ if (leadForm && leadSubmit) {
     const succeed = () => {
       formSubmitted = true;
       Track.send("form_submit_ok", payload.photographyType || "(not stated)");
+      const inbox = payload.email ? " to " + payload.email : "";
       setLeadStatus(
-        "Application received. The NDYLens team will contact you with the payment step.",
+        "Application received. We’ve sent a confirmation" + inbox +
+          " — check your inbox, and your spam folder if it isn’t there. " +
+          "The NDYLens team will follow up on WhatsApp or by email.",
         "ok"
       );
       leadForm.reset();
@@ -580,9 +603,10 @@ if (leadForm && leadSubmit) {
         succeed();
       } catch {
         Track.send("form_submit_error", "network");
-        setLeadStatus("We couldn’t submit your application. Please contact us on WhatsApp.", "err");
+        setLeadStatus("We couldn’t send your application. Please try again, or message us on WhatsApp at +234 701 462 4100.", "err");
       }
     } finally {
+      window.clearTimeout(slowNotice);
       leadSubmit.disabled = false;
       leadSubmit.innerHTML = previousLabel;
     }
