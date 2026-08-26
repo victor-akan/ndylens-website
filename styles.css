@@ -19,6 +19,16 @@
   font-style:normal;
   font-display:swap;
 }
+/* Syne, kept from the previously published site, for the hero headline only.
+   Subset the same way as the others; it has no naira glyph, which is fine
+   because the only naira on the page is in the price, set in Fraunces. */
+@font-face{
+  font-family:'Syne';
+  src:url('assets/fonts/syne-var.woff2') format('woff2');
+  font-weight:400 800;
+  font-style:normal;
+  font-display:swap;
+}
 @font-face{
   font-family:'Inter';
   src:url('assets/fonts/inter-var.woff2') format('woff2');
@@ -33,6 +43,15 @@
   size-adjust:100.1%;
   ascent-override:97.7%;
   descent-override:25.5%;
+  line-gap-override:0%;
+}
+/* Syne x-height .5000 vs Arial .5186 → size-adjust 96.4% */
+@font-face{
+  font-family:'Syne Fallback';
+  src:local('Arial'),local('Helvetica Neue'),local('Liberation Sans');
+  size-adjust:96.4%;
+  ascent-override:95.9%;
+  descent-override:28.5%;
   line-gap-override:0%;
 }
 /* Inter x-height .5459 vs Arial .5186 → size-adjust 105.3% */
@@ -85,6 +104,7 @@
   --shadow:0 30px 80px -30px rgba(0,0,0,.7);
   --maxw:1200px;
   --disp:'Fraunces','Fraunces Fallback',Georgia,'Times New Roman',serif;
+  --disp-hero:'Syne','Syne Fallback',Arial,sans-serif;
   --body:'Inter','Inter Fallback',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 
@@ -173,7 +193,16 @@ p{text-wrap:pretty}
 .hero-glow{position:absolute;top:-10%;right:-5%;width:60vw;height:60vw;max-width:800px;max-height:800px;
   background:radial-gradient(circle,rgba(42,191,170,.18),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding-bottom:70px}
-.hero-title{font-family:var(--disp);font-size:clamp(40px,5.6vw,68px);font-weight:600;line-height:1.06;letter-spacing:-.018em;max-width:16ch}
+/* Syne is a wide face: at 64px the word "photographer?" measures 756px
+   against a 738px column, so it overflowed. Sizes below are derived from
+   that measurement — the widest word needs ~11.8x the font-size in px.
+   Two rules because the hero goes single-column at 960 and the text column
+   suddenly doubles in width, so one clamp cannot serve both layouts. */
+/* Restored to the settings from commit 171c7c8 so this can be compared
+   against the previously published version like for like. The line breaks
+   come from a <br> in the markup, as they did there, so no max-width. */
+.hero-title{font-family:var(--disp-hero);font-size:clamp(40px,6.6vw,76px);font-weight:800;
+  line-height:1.02;letter-spacing:-.035em}
 .hero-sub{color:var(--fog-hi);font-size:clamp(17px,1.6vw,19px);line-height:1.65;letter-spacing:0;max-width:54ch;margin:28px 0 36px}
 .hero-sub em{color:var(--cream);font-style:normal;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
