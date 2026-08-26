@@ -585,3 +585,87 @@ body.spots-sold-out .live-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(2
 .product-story-grid{align-items:start}
 .story-copy{padding-top:8px}
 @media (max-width:960px){ .story-copy{padding-top:0} }
+
+/* ===================== ROTATING HERO SCENES ===================== */
+/* Three client moments — wedding anniversary, maternity, birthday — sharing
+   one frame. The images were graded to a common exposure and warmth so the
+   cross-fade dissolves rather than flashes.
+
+   Each scene is absolutely stacked; only opacity and transform animate, so
+   the whole thing stays on the compositor and never triggers layout. */
+.portrait-frame .scene{
+  position:absolute;inset:0;display:block;
+  opacity:0;transform:scale(1.06);
+  transition:opacity 1.5s cubic-bezier(.4,0,.2,1),transform 1.5s cubic-bezier(.4,0,.2,1);
+  will-change:opacity,transform;
+}
+.portrait-frame .scene.is-on{opacity:1;transform:scale(1)}
+/* The outgoing frame drifts further in as it leaves, so the change reads as
+   the camera moving rather than one picture swapping for another. */
+.portrait-frame .scene.is-out{opacity:0;transform:scale(1.1)}
+/* Ken Burns runs on whichever scene is showing, and restarts with it — so
+   every scene gets the full push-in rather than joining one already in
+   progress. Held still on the scenes waiting off-screen. */
+.portrait-frame .scene .portrait-img{animation:none}
+.portrait-frame .scene.is-on .portrait-img{
+  animation:kenburns 13s linear infinite alternate;
+}
+
+/* the frame label changes with the scene */
+.frame-tag [data-frame-tag]{
+  display:inline-block;transition:opacity .45s,transform .45s;
+}
+.frame-tag.is-swapping [data-frame-tag]{opacity:0;transform:translateY(-6px)}
+
+/* ── WhatsApp typing indicator ────────────────────────────────────
+   The message does not simply change: the bubble shows the three dots
+   first, the way a real chat does, and then the new text lands. That beat
+   is what sells it as a message arriving rather than a slideshow. */
+.wa-typing{
+  display:none;align-items:center;gap:5px;
+  background:var(--teal-deep);border-radius:4px 12px 12px 12px;
+  padding:12px 14px;width:max-content;
+}
+.wa-body.is-typing .wa-typing{display:flex}
+.wa-body.is-typing .wa-msg,
+.wa-body.is-typing .wa-time{display:none}
+.wa-typing span{
+  width:6px;height:6px;border-radius:50%;background:#7fe8d8;
+  animation:waDot 1.15s infinite;
+}
+.wa-typing span:nth-child(2){animation-delay:.16s}
+.wa-typing span:nth-child(3){animation-delay:.32s}
+@keyframes waDot{
+  0%,60%,100%{opacity:.32;transform:translateY(0)}
+  30%{opacity:1;transform:translateY(-3px)}
+}
+/* the new message lands with a small rise, like a bubble being delivered */
+.wa-msg{transition:opacity .32s,transform .32s}
+.wa-body.is-arriving .wa-msg{opacity:0;transform:translateY(6px)}
+
+/* ── progress dots ───────────────────────────────────────────────── */
+.scene-dots{
+  position:absolute;right:16px;bottom:16px;z-index:3;
+  display:flex;gap:7px;list-style:none;margin:0;padding:6px 9px;
+  background:rgba(7,16,14,.55);backdrop-filter:blur(8px);
+  border:1px solid var(--line-2);border-radius:100px;
+}
+.scene-dots button{
+  display:block;width:7px;height:7px;padding:0;cursor:pointer;
+  border:0;border-radius:50%;background:rgba(238,244,241,.34);
+  transition:background .3s,width .3s;
+}
+.scene-dots button:hover{background:rgba(238,244,241,.6)}
+.scene-dots button[aria-current="true"]{background:var(--teal);width:18px;border-radius:100px}
+.scene-dots button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+@media (max-width:560px){
+  .scene-dots{right:12px;bottom:12px}
+}
+
+/* Someone who has asked for less motion gets the first scene, held still. */
+@media (prefers-reduced-motion:reduce){
+  .portrait-frame .scene{transition:none}
+  .wa-typing span{animation:none}
+  .wa-msg{transition:none}
+}

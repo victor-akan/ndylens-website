@@ -51,6 +51,154 @@ if ("IntersectionObserver" in window) {
 }
 
 /* ===================================================================
+   ROTATING HERO SCENES
+   -------------------------------------------------------------------
+   One client, three moments a photographer could be re-booked for. The
+   picture and the WhatsApp message change together every 12 seconds.
+
+   The message does not just swap text: the bubble shows a typing indicator
+   first, then the new message lands. That beat is the whole point — it reads
+   as a message arriving rather than a carousel advancing, which is exactly
+   what the product does.
+   =================================================================== */
+
+const SCENES = [
+  {
+    key: "wedding",
+    tag: "One year on today",
+    msg: "Hi Amaka! ❤️ It’s almost a year since we shot your wedding. Would you like to book an anniversary shoot to celebrate?",
+    time: "Sent automatically · 9:02 AM",
+  },
+  {
+    key: "maternity",
+    tag: "A new chapter to capture",
+    msg: "Hi Amaka! 🤍 Congratulations again! Shall we plan your maternity shoot before the baby comes?",
+    time: "Sent automatically · 8:40 AM",
+  },
+  {
+    key: "birthday",
+    tag: "Her day is coming up",
+    msg: "Hi Amaka! 🎂 Your birthday is coming up on the 14th. Would you like to book a birthday shoot to celebrate?",
+    time: "Sent automatically · 9:15 AM",
+  },
+];
+
+(function heroScenes() {
+  const frame = document.querySelector(".portrait-frame");
+  const scenes = Array.from(document.querySelectorAll(".portrait-frame .scene"));
+  const body = document.querySelector(".wa-body");
+  const msgEl = document.querySelector("[data-wa-msg]");
+  const timeEl = document.querySelector("[data-wa-time]");
+  const tagWrap = document.querySelector(".frame-tag");
+  const tagEl = document.querySelector("[data-frame-tag]");
+  const dots = Array.from(document.querySelectorAll(".scene-dots button"));
+  if (scenes.length < 2 || !body || !msgEl) return;
+
+  const HOLD = 12000;      // how long each scene rests
+  const TYPING = 1100;     // how long the dots show before the message lands
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  let index = 0;
+  let timer = null;
+  let chain = [];
+
+  const clearChain = () => {
+    chain.forEach(window.clearTimeout);
+    chain = [];
+  };
+  const later = (fn, ms) => chain.push(window.setTimeout(fn, ms));
+
+  function show(next) {
+    if (next === index) return;
+    const from = scenes[index];
+    const to = scenes[next];
+    index = next;
+
+    // picture: cross-fade, outgoing drifting further in as it leaves
+    from.classList.remove("is-on");
+    from.classList.add("is-out");
+    to.classList.remove("is-out");
+    to.classList.add("is-on");
+    later(() => from.classList.remove("is-out"), 1600);
+
+    dots.forEach((d, i) =>
+      i === next ? d.setAttribute("aria-current", "true") : d.removeAttribute("aria-current")
+    );
+
+    const scene = SCENES[next] || SCENES[0];
+
+    if (tagWrap && tagEl) {
+      tagWrap.classList.add("is-swapping");
+      later(() => {
+        tagEl.textContent = scene.tag;
+        tagWrap.classList.remove("is-swapping");
+      }, 460);
+    }
+
+    if (reduce.matches) {
+      msgEl.textContent = scene.msg;
+      if (timeEl) timeEl.textContent = scene.time;
+      return;
+    }
+
+    // typing dots, then the message lands
+    clearChainMessagesOnly();
+    body.classList.add("is-typing");
+    later(() => {
+      body.classList.remove("is-typing");
+      body.classList.add("is-arriving");
+      msgEl.textContent = scene.msg;
+      if (timeEl) timeEl.textContent = scene.time;
+      // next frame, so the browser paints the hidden state before releasing it
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => body.classList.remove("is-arriving"))
+      );
+    }, TYPING);
+  }
+
+  function clearChainMessagesOnly() {
+    body.classList.remove("is-typing", "is-arriving");
+  }
+
+  const advance = () => show((index + 1) % scenes.length);
+
+  function start() {
+    stop();
+    timer = window.setInterval(advance, HOLD);
+  }
+  function stop() {
+    if (timer) window.clearInterval(timer);
+    timer = null;
+  }
+
+  dots.forEach((d, i) =>
+    d.addEventListener("click", () => {
+      show(i);
+      start();          // a manual pick resets the clock rather than cutting it short
+    })
+  );
+
+  // Nothing rotates while the tab is hidden: the timer would keep firing into
+  // a page nobody is looking at, and the viewer would return mid-transition.
+  document.addEventListener("visibilitychange", () =>
+    document.visibilityState === "hidden" ? stop() : start()
+  );
+
+  // Pause on hover so someone reading the message is not interrupted by it
+  // changing under them.
+  if (frame) {
+    const card = document.querySelector(".wa-float");
+    [frame, card].filter(Boolean).forEach((el) => {
+      el.addEventListener("mouseenter", stop);
+      el.addEventListener("mouseleave", start);
+    });
+  }
+
+  if (!reduce.matches) start();
+  reduce.addEventListener("change", () => (reduce.matches ? stop() : start()));
+})();
+
+/* ===================================================================
    ATTRIBUTION
    =================================================================== */
 
