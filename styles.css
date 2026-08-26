@@ -198,11 +198,16 @@ p{text-wrap:pretty}
    that measurement — the widest word needs ~11.8x the font-size in px.
    Two rules because the hero goes single-column at 960 and the text column
    suddenly doubles in width, so one clamp cannot serve both layouts. */
-/* Restored to the settings from commit 171c7c8 so this can be compared
-   against the previously published version like for like. The line breaks
-   come from a <br> in the markup, as they did there, so no max-width. */
-.hero-title{font-family:var(--disp-hero);font-size:clamp(40px,6.6vw,76px);font-weight:800;
-  line-height:1.02;letter-spacing:-.035em}
+.hero-title{font-family:var(--disp-hero);font-size:clamp(29px,7.4vw,56px);font-weight:800;
+  line-height:1.08;letter-spacing:-.022em;max-width:19ch}
+/* Above 1200px the wrap stops growing, so the text column is fixed at about
+   578px no matter how wide the window gets. 578 / 11.8 caps the font at 48px;
+   anything larger and "photographer?" runs past the column and under the
+   floating chat card. The single-column layout below 961 has far more room,
+   hence the higher cap there. */
+@media (min-width:961px){
+  .hero-title{font-size:clamp(34px,3.8vw,48px)}
+}
 .hero-sub{color:var(--fog-hi);font-size:clamp(17px,1.6vw,19px);line-height:1.65;letter-spacing:0;max-width:54ch;margin:28px 0 36px}
 .hero-sub em{color:var(--cream);font-style:normal;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
