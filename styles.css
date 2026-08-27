@@ -145,6 +145,8 @@ p{text-wrap:pretty}
 .btn-quiet{background:rgba(255,255,255,.04);color:var(--cream);border-color:var(--line-2)}
 .btn-quiet:hover{background:rgba(255,255,255,.08);border-color:var(--teal);transform:translateY(-2px)}
 .btn-sm{padding:9px 16px;font-size:14px}
+/* The nav CTA carries a shorter label on phones — see the max-width:560 block. */
+.cta-short{display:none}
 .btn-lg{padding:17px 30px;font-size:17px}
 .btn.full{width:100%}
 .ghost-link{color:var(--fog);font-weight:500;font-size:14px;transition:color .2s}
@@ -461,6 +463,19 @@ p{text-wrap:pretty}
 }
 @media (max-width:560px){
   .wrap{padding-left:18px;padding-right:18px}
+  /* Header on phones: the wordmark and the teal pill were 20px apart, which
+     with the pill's glow bleeding left read as the two touching. Shorten the
+     label, tighten the type and let both ends shrink so a larger system text
+     size cannot push the burger off the edge. */
+  .nav-inner{gap:12px}
+  .brand{min-width:0;flex:0 1 auto}
+  .brand-word{font-size:19px}
+  .nav-cta{flex:0 0 auto}
+  .nav-cta .btn-sm{padding:8px 14px;font-size:13px;white-space:nowrap;
+    box-shadow:0 8px 22px -10px rgba(42,191,170,.45)}
+  .cta-long{display:none}
+  .cta-short{display:inline}
+  .burger{padding:8px 0 8px 6px}
   .hero{padding-top:100px}
   .feat,.feat-lg,.tier,.start-form-card{padding:24px}
   .stat-chip{right:0;top:12px}
