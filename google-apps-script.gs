@@ -23,6 +23,12 @@ const SPREADSHEET_ID = "1iw-9opuQ1NpW7T5o1-6sruuGHKzxPrMsaut6YUqLQR0";
 const SHEET_NAME = "Leads";
 const EVENTS_SHEET_NAME = "Events";
 const DASHBOARD_SHEET_NAME = "Dashboard";
+const VISITS_SHEET_NAME = "Visits";
+
+/* A plain visit log, mirrored from the page_view events so there is exactly
+   one visitor id and one network call per page load. Read-only convenience:
+   nothing writes here that is not already in Events. */
+const VISIT_HEADERS = ["Timestamp", "Visitor ID", "Host", "Page", "Referrer"];
 
 /* Total early-access places. This is the single source of truth — the
    emails and the website counter both read from it. */
@@ -71,6 +77,9 @@ const HEADERS = [
   "sessionId",
   "status",
   "notes",
+  "visitorId",           // appended last: row 1 is rewritten to match this
+                         // list, so inserting mid-way would relabel every
+                         // column of every lead already recorded.
 ];
 
 /* sourceBucket/sourceDetail are FIRST touch — where this visitor originally
@@ -102,6 +111,7 @@ const EVENT_HEADERS = [
   "firstTouchUtmMedium",
   "firstTouchUtmCampaign",
   "landingPage",
+  "host",                // appended last: see the note above
 ];
 
 /* ===================================================================
@@ -148,11 +158,42 @@ function getOrCreateSheet_(name, headers) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold");
+    return sheet;
+  }
+
+  /* The tab already exists, quite possibly from a build with fewer columns.
+     A row is always written at the full width of EVENT_HEADERS, and getRange()
+     throws "The coordinates or dimensions of the range are invalid" if the grid
+     is narrower than that — the one way this can actually fail. A new sheet
+     gets 26 columns, so it only bites on a tab whose columns were trimmed.
+     Widen first, then label any header cell still blank, leaving existing
+     names alone in case they were renamed by hand. */
+  const short = headers.length - sheet.getMaxColumns();
+  if (short > 0) sheet.insertColumnsAfter(sheet.getMaxColumns(), short);
+
+  const row = sheet.getRange(1, 1, 1, headers.length);
+  const current = row.getValues()[0];
+  let filled = false;
+  for (let i = 0; i < headers.length; i++) {
+    if (current[i] === "" || current[i] === null) {
+      current[i] = headers[i];
+      filled = true;
+    }
+  }
+  if (filled) {
+    row.setValues([current]).setFontWeight("bold");
+    if (sheet.getFrozenRows() < 1) sheet.setFrozenRows(1);
   }
   return sheet;
 }
 
 function ensureHeader_(sheet) {
+  /* Widen the grid before addressing it. HEADERS grows over time, and
+     getRange() throws if it runs past the last column that exists — which is
+     what a sheet sitting at exactly the old column count would do. */
+  const short = HEADERS.length - sheet.getMaxColumns();
+  if (short > 0) sheet.insertColumnsAfter(sheet.getMaxColumns(), short);
+
   const firstRowRange = sheet.getRange(1, 1, 1, HEADERS.length);
   const firstRow = firstRowRange.getValues()[0];
   const hasAnyHeaderValue = firstRow.some((cell) => String(cell || "").trim());
@@ -246,6 +287,46 @@ function appendEvents_(events) {
     lock.waitLock(10000);
     sheet
       .getRange(sheet.getLastRow() + 1, 1, rows.length, EVENT_HEADERS.length)
+      .setValues(rows);
+  } finally {
+    try { lock.releaseLock(); } catch (e) {}
+  }
+
+  appendVisits_(events);
+  return rows.length;
+}
+
+/* Mirror page_view events into a plain "Visits" tab.
+
+   Events already holds every one of these fields, but it is 22 columns wide
+   and shaped for funnel analysis. This tab is the five columns you actually
+   read down: who, which host, which page, where they came from.
+
+   It is derived, never a second source of truth. Nothing posts to it directly,
+   so there is still exactly one visitor id and one network call per page load.
+   Delete the tab any time you like — the next page_view rebuilds it. */
+function appendVisits_(events) {
+  const visits = (events || []).filter(function (e) {
+    return e && e.event === "page_view";
+  });
+  if (!visits.length) return 0;
+
+  const sheet = getOrCreateSheet_(VISITS_SHEET_NAME, VISIT_HEADERS);
+  const rows = visits.map(function (e) {
+    return [
+      e.timestamp || new Date().toISOString(),
+      e.visitorId || "",
+      e.host || "",
+      e.page || "",
+      e.referrer || "(direct)",
+    ];
+  });
+
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+    sheet
+      .getRange(sheet.getLastRow() + 1, 1, rows.length, VISIT_HEADERS.length)
       .setValues(rows);
   } finally {
     try { lock.releaseLock(); } catch (e) {}
