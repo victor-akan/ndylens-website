@@ -46,7 +46,7 @@ session id, so the funnel can be split by where people came from.
 
 ## The early-access spots
 
-`TOTAL_SPOTS` (currently 450) is set in **two** places and they must agree:
+`TOTAL_SPOTS` (currently 100) is set in **two** places and they must agree:
 `google-apps-script.gs` (authoritative) and `script.js` (fallback text only).
 
 The count is `Leads` rows with a unique email, excluding any row whose

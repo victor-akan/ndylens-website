@@ -4,7 +4,7 @@ const SHEETS_WEB_APP_URL =
 /* Total early-access places. Used only as the no-JS / offline fallback —
    the live number comes from the Apps Script "spots" endpoint. Keep it
    in step with TOTAL_SPOTS in google-apps-script.gs. */
-const TOTAL_SPOTS = 450;
+const TOTAL_SPOTS = 100;
 
 const yearEl = document.getElementById("yr");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
