@@ -175,12 +175,46 @@ p{text-wrap:pretty}
 .hero-glow{position:absolute;top:-10%;right:-5%;width:60vw;height:60vw;max-width:800px;max-height:800px;
   background:radial-gradient(circle,rgba(42,191,170,.18),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding-bottom:70px}
-/* Fraunces, not Syne: Syne is roughly twice as wide per character, so
-   "photographer?" capped the headline at 48px there. Fraunces allows 94px for
-   the same word, leaving room for 58px across four balanced lines. It is also
-   the face used by every other heading, and is already loaded. */
+/* One face, two registers. The statement is the setup and is deliberately
+   quiet; the question is the same face at nearly three times the size, with the
+   emphasis carried by colour rather than by a second typeface.
+   max-width lives on the two parts rather than the h1 because they want very
+   different measures at very different sizes. */
 .hero-title{font-family:var(--disp);font-size:clamp(33px,4.6vw,58px);font-weight:600;
-  font-optical-sizing:auto;line-height:1.06;letter-spacing:-.02em;max-width:17ch}
+  font-optical-sizing:auto;line-height:1.06;letter-spacing:-.02em}
+
+/* The setup is a different register from the question, and it has to be spaced
+   like one. At .30em the gap measured 4px — the three lines read as a single
+   undifferentiated block. It now sits about 19px clear, roughly .4x the
+   question's line height, which reads as a beat rather than a break.
+   Tracking is a touch more open than the display lines: this is the one line
+   meant to be read at conversational speed, not seen. */
+.hero-said{display:block;font-size:.46em;font-weight:500;color:var(--fog);
+  letter-spacing:.002em;line-height:1.2;max-width:26ch;margin-bottom:.55em}
+
+/* One face for the whole headline, and the emphasis carried by colour alone.
+
+   The ceiling is set by "photographer?" — the longest word, and it cannot
+   hyphenate. In Syne that word runs 11.36x the font-size, which caps the
+   headline at 51px in this column. In Fraunces it runs 6.26x, which allows 92px.
+   Same column, same word, nearly double the size: the typeface was the
+   constraint, not the layout. */
+.hero-ask{display:block;font-family:var(--disp);font-weight:700;
+  font-size:clamp(34px,9.5vw,86px);letter-spacing:-.032em;line-height:1.0}
+
+/* At 320px "photographer?" clears the column by only 3px, and a 280px folded
+   phone would not clear it at all. Ease the question down there; the statement
+   above is unaffected because it has no word anywhere near that long. */
+@media (max-width:319px){ .hero-ask{font-size:30px} }   /* 280px folded phones */   /* folded phones, 280px */
+/* 961-1240px is the tightest the two-column hero ever gets. Below 961 the hero
+   is one column and the text has the full width; above 1240 the column is wide
+   enough for the 46px cap. In between the column grows from ~455px to ~565px,
+   so the size has to grow with it — a fixed value overflows at one end or
+   looks undersized at the other. Bounded at both ends so it cannot leak into
+   the single-column layout. */
+@media (min-width:961px) and (max-width:1290px){
+  .hero-ask{font-size:clamp(52px,6.0vw,86px)}
+}
 
 .hero-sub{color:var(--fog-hi);font-size:clamp(17px,1.6vw,19px);line-height:1.65;letter-spacing:0;max-width:54ch;margin:28px 0 36px}
 .hero-sub em{color:var(--cream);font-style:normal;font-weight:600}
