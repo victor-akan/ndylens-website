@@ -32,7 +32,7 @@ const VISIT_HEADERS = ["Timestamp", "Visitor ID", "Host", "Page", "Referrer"];
 
 /* Total early-access places. This is the single source of truth — the
    emails and the website counter both read from it. */
-const TOTAL_SPOTS = 450;
+const TOTAL_SPOTS = 100;
 
 /* Statuses that free a spot back up. Anything else counts as taken. */
 const NON_COUNTING_STATUSES = ["rejected", "withdrawn", "declined", "duplicate", "test"];
@@ -435,13 +435,16 @@ const SIG_PANEL = "#2ABFAA";
 const REPLY_TO = "connect@ndylens.com";
 const SITE_URL = "https://www.ndylens.com";
 
-/* NOTE: the CRM's signature uses a different number from the one in the
-   website footer (+234 701 462 4100). This is the support line shown in the
-   app, kept separate so changing one does not silently change the other. */
+/* One number everywhere: the signature, the email body, the website footer and
+   the form's failure message. These were two different lines for a while, which
+   is how a customer ends up messaging a number nobody watches. The WhatsApp and
+   tel: forms are derived from the display value below rather than typed out
+   again, so they cannot drift apart. */
 const SUPPORT_PHONE = "+234 803 069 9700";
-const SUPPORT_PHONE_TEL = "+2348030699700";
-const WHATSAPP_NUMBER = "+234 701 462 4100";
-const WHATSAPP_LINK = "https://wa.me/2347014624100";
+const SUPPORT_PHONE_DIGITS = SUPPORT_PHONE.replace(/[^0-9]/g, "");   // 2348030699700
+const SUPPORT_PHONE_TEL = "+" + SUPPORT_PHONE_DIGITS;
+const WHATSAPP_NUMBER = SUPPORT_PHONE;
+const WHATSAPP_LINK = "https://wa.me/" + SUPPORT_PHONE_DIGITS;
 
 function brandSignature_() {
   // Matches the signature card used in the NDYLens CRM: dark slate panel,

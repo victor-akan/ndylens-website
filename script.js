@@ -776,7 +776,7 @@ if (leadForm && leadSubmit) {
         succeed();
       } catch {
         Track.send("form_submit_error", "network");
-        setLeadStatus("We couldn’t send your application. Please try again, or message us on WhatsApp at +234 701 462 4100.", "err");
+        setLeadStatus("We couldn’t send your application. Please try again, or message us on WhatsApp at +234 803 069 9700.", "err");
       }
     } finally {
       window.clearTimeout(slowNotice);
