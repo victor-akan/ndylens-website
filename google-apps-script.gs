@@ -32,7 +32,7 @@ const VISIT_HEADERS = ["Timestamp", "Visitor ID", "Host", "Page", "Referrer"];
 
 /* Total early-access places. This is the single source of truth — the
    emails and the website counter both read from it. */
-const TOTAL_SPOTS = 100;
+const TOTAL_SPOTS = 450;
 
 /* Statuses that free a spot back up. Anything else counts as taken. */
 const NON_COUNTING_STATUSES = ["rejected", "withdrawn", "declined", "duplicate", "test"];
