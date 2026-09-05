@@ -545,8 +545,8 @@ function notifyApplicant_(data) {
 
       '<div style="background:#f2f8f6;border-left:3px solid ' + BRAND_TEAL + ';padding:16px 20px;margin:0 0 20px">' +
         '<div style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#5b6b66">Your place</div>' +
-        '<div style="font-size:19px;font-weight:bold;margin-top:4px;color:#0f1f1b">&#8358;15,600 for 6 months</div>' +
-        '<div style="font-size:13px;color:#5b6b66;margin-top:2px">60% off our &#8358;39,000 quarterly price</div>' +
+        '<div style="font-size:19px;font-weight:bold;margin-top:4px;color:#0f1f1b">&#8358;15,600 for 3 months</div>' +
+        '<div style="font-size:13px;color:#5b6b66;margin-top:2px">75% off Studio Pro at &#8358;63,000 a quarter</div>' +
       '</div>' +
 
       '<p style="margin:0 0 10px"><b>What happens next</b></p>' +
@@ -567,7 +567,7 @@ function notifyApplicant_(data) {
     "Thanks for applying for NDYLens early access" + (studio ? " for " + studio : "") +
     ". We have your application.\n\n" +
     "YOUR PLACE\n" +
-    "NGN 15,600 for 6 months - 60% off our NGN 39,000 quarterly price\n\n" +
+    "NGN 15,600 for 3 months - 75% off Studio Pro at NGN 63,000 a quarter\n\n" +
     "WHAT HAPPENS NEXT\n" +
     "Someone from our team will reach out on WhatsApp or by email with the payment step " +
     "and to get your account set up. We work through applications in the order they arrive." +
