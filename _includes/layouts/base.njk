@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDescription }}" />
+  {%- if noindex %}
+  <meta name="robots" content="noindex, follow" />
+  {%- else %}
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  {%- endif %}
+  <link rel="canonical" href="{{ canonical }}" />
+  <link rel="icon" type="image/png" href="{{ '/assets/images/logo-icon.png' | assetHash }}" />
+  <link rel="apple-touch-icon" href="{{ '/assets/images/logo-icon.png' | assetHash }}" />
+  <link rel="alternate" type="application/rss+xml" title="NDYLens Blog" href="/blog/feed.xml" />
+
+  <meta property="og:site_name" content="NDYLens" />
+  <meta property="og:locale" content="{{ site.locale }}" />
+  <meta property="og:type" content="{{ ogType or 'website' }}" />
+  <meta property="og:title" content="{{ ogTitle or title or metaTitle }}" />
+  <meta property="og:description" content="{{ metaDescription }}" />
+  <meta property="og:url" content="{{ canonical }}" />
+  <meta property="og:image" content="{% ogImage featured_image %}" />
+  {%- if featured_image_alt %}
+  <meta property="og:image:alt" content="{{ featured_image_alt }}" />
+  {%- endif %}
+  <meta name="twitter:card" content="summary_large_image" />
+  {%- if ogType == 'article' %}
+  <meta property="article:published_time" content="{{ page.date | isoDate }}" />
+  {%- if updated %}<meta property="article:modified_time" content="{{ updated | isoDate }}" />{% endif %}
+  {%- if categoryData %}<meta property="article:section" content="{{ categoryData.name }}" />{% endif %}
+  {%- endif %}
+
+  <link rel="preload" as="font" type="font/woff2" href="{{ '/assets/fonts/fraunces-var.woff2' | assetHash }}" crossorigin />
+  <link rel="stylesheet" href="{{ '/styles.css' | assetHash }}" />
+  <link rel="stylesheet" href="{{ '/blog.css' | assetHash }}" />
+  {%- if jsonld %}
+  <script type="application/ld+json">{{ jsonld | jsonLd | safe }}</script>
+  {%- endif %}
+  {%- if headExtra %}{{ headExtra | safe }}{% endif %}
+</head>
+<body class="blog-page">
+  <div class="grain" aria-hidden="true"></div>
+  {% include "partials/nav.njk" %}
+  <main id="top" class="blog-main">
+    {{ content | safe }}
+  </main>
+  {% include "partials/footer.njk" %}
+  <script src="{{ '/script.js' | assetHash }}"></script>
+</body>
+</html>

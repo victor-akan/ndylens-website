@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+permalink: /404.html
+eleventyExcludeFromCollections: true
+metaTitle: Page not found | NDYLens
+metaDescription: The page you were looking for isn’t here.
+canonical: https://www.ndylens.com/404.html
+noindex: true
+---
+<section class="blog-hero not-found">
+  <div class="wrap">
+    <span class="eyebrow"><i class="dot gold"></i> 404</span>
+    <h1 class="section-title">This page isn’t here.</h1>
+    <p class="section-lead">The link may be old, or the article may have moved. Try the blog, or head back to the homepage.</p>
+    <div class="hero-actions" style="margin-top:28px">
+      <a href="/blog/" class="btn btn-primary">Browse the blog <span class="arr">→</span></a>
+      <a href="/" class="btn btn-quiet">Go to homepage</a>
+    </div>
+  </div>
+</section>
+{%- if collections.posts.length %}
+<section class="blog-list">
+  <div class="wrap">
+    <h2 class="list-title">Latest articles</h2>
+    <div class="card-grid">
+      {%- for post in collections.posts.slice(0, 3) %}{% include "partials/card.njk" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}

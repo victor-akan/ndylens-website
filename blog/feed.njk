@@ -1,0 +1,26 @@
+---
+permalink: /blog/feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NDYLens Blog</title>
+    <link>{{ site.url }}/blog/</link>
+    <atom:link href="{{ site.url }}/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>{{ blog.description }}</description>
+    <language>en-ng</language>
+    {%- if collections.posts.length %}
+    <lastBuildDate>{{ collections.posts[0].date | rfc822 }}</lastBuildDate>
+    {%- endif %}
+    {%- for post in collections.posts.slice(0, 20) %}
+    <item>
+      <title>{{ post.data.title }}</title>
+      <link>{{ site.url }}{{ post.url }}</link>
+      <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+      <pubDate>{{ post.date | rfc822 }}</pubDate>
+      <description>{{ post.data.excerpt or post.data.seo.description }}</description>
+    </item>
+    {%- endfor %}
+  </channel>
+</rss>

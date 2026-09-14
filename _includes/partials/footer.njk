@@ -1,0 +1,8 @@
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-brand"><a href="/" class="brand"><img src="{{ '/assets/images/logo-icon.png' | assetHash }}" width="30" height="30" alt="" class="brand-mark" eleventy:ignore /><span class="brand-word">NDYLens</span></a><p>The Photography CRM for Nigerian Photographers.</p></div>
+    <nav class="foot-links" aria-label="Footer"><h4>Explore</h4><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#early-access">Early access</a><a href="/blog/">Blog</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></nav>
+    <nav class="foot-links" aria-label="Blog topics"><h4>Topics</h4>{% for c in collections.activeCategories %}<a href="/blog/category/{{ c.slug }}/">{{ c.name }}</a>{% endfor %}</nav>
+  </div>
+  <div class="wrap foot-base"><span>© <span id="yr">{{ site.now.getFullYear() }}</span> NDYLens. Built for photographers in Nigeria.</span><a href="mailto:connect@ndylens.com" class="ghost-link" data-track-cta="email-footer">connect@ndylens.com</a></div>
+</footer>

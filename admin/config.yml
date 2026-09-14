@@ -1,0 +1,252 @@
+# NDYLens content manager (Sveltia CMS) — https://www.ndylens.com/admin/
+#
+# Every change made in the CMS is saved as a commit to this GitHub repo.
+# The "Build and deploy" workflow then rebuilds the site (about 1–2 minutes).
+
+backend:
+  name: github
+  repo: victor-akan/ndylens-website
+  branch: main
+  # Uncomment once the sign-in helper is deployed (see BLOG.md → "One-time
+  # setup"). Until then, editors sign in with a GitHub access token.
+  # base_url: https://ndylens-cms-auth.YOUR-SUBDOMAIN.workers.dev
+  commit_messages:
+    create: "Blog: create {{collection}} “{{slug}}”"
+    update: "Blog: update {{collection}} “{{slug}}”"
+    delete: "Blog: delete {{collection}} “{{slug}}”"
+    uploadMedia: "Blog: upload “{{path}}”"
+    deleteMedia: "Blog: delete “{{path}}”"
+
+site_url: https://www.ndylens.com
+display_url: https://www.ndylens.com/blog/
+logo_url: /assets/images/logo-icon.png
+
+# Uploaded images live here. They are also resized and compressed at build
+# time, but shrinking them on upload keeps the repository small.
+media_folder: assets/blog/uploads
+public_folder: /assets/blog/uploads
+media_libraries:
+  default:
+    config:
+      max_file_size: 15000000
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ─────────────────────────────────────────────────────────── Posts
+  - name: posts
+    label: Posts
+    label_singular: Post
+    description: >-
+      Articles on the blog. A post appears on the site only when its Status is
+      “Published” and its Publish date has arrived — set a future date to schedule it.
+    folder: blog/posts
+    extension: md
+    format: frontmatter
+    create: true
+    # The slug becomes the URL: ndylens.com/blog/<slug>/. It is suggested from
+    # the title and can be edited before the first save.
+    slug: "{{fields._slug}}"
+    identifier_field: title
+    preview_path: /blog/{{slug}}/
+    summary: "{{title}} — {{status}} · {{date | date('D MMM YYYY')}}"
+    sortable_fields:
+      fields: [date, title, status]
+      default:
+        field: date
+        direction: descending
+    view_filters:
+      filters:
+        - { name: published, label: Published, field: status, pattern: published }
+        - { name: drafts, label: Drafts, field: status, pattern: draft }
+        - { name: archived, label: Archived, field: status, pattern: archived }
+    view_groups:
+      groups:
+        - { name: status, label: Status, field: status }
+        - { name: category, label: Category, field: category }
+    fields:
+      - name: title
+        label: Title
+        widget: string
+        hint: The headline shown on the page (the H1). Aim for a clear question or promise.
+
+      - name: status
+        label: Status
+        widget: select
+        default: draft
+        options:
+          - { label: "Draft — not on the site", value: draft }
+          - { label: "Published — live (or scheduled, if the date is in the future)", value: published }
+          - { label: "Archived — removed from the site", value: archived }
+
+      - name: date
+        label: Publish date
+        widget: datetime
+        default: "{{now}}"
+        format: "YYYY-MM-DDTHH:mm:ssZ"
+        hint: Set a future date and time to schedule. Scheduled posts go live within the hour.
+
+      - name: updated
+        label: Last updated
+        widget: datetime
+        required: false
+        format: "YYYY-MM-DDTHH:mm:ssZ"
+        hint: Optional. Set this when you make a meaningful update to an older article.
+
+      - name: author
+        label: Author
+        widget: string
+        default: NDYLens Team
+
+      - name: category
+        label: Category
+        widget: relation
+        collection: categories
+        value_field: "{{slug}}"
+        search_fields: [name]
+        display_fields: [name]
+
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        hint: Optional keywords, e.g. “repeat clients”. Keep to 2–5.
+
+      - name: excerpt
+        label: Excerpt
+        widget: text
+        hint: One or two sentences shown on article cards and under the title. About 140–160 characters.
+
+      - name: featured_image
+        label: Featured image
+        widget: image
+        required: false
+        hint: Shown at the top of the article, on cards and in WhatsApp/social link previews. Landscape works best.
+
+      - name: featured_image_alt
+        label: Featured image — alt text
+        widget: string
+        required: false
+        hint: Describe what’s in the photo for screen readers and Google, e.g. “A bride smiling as her groom kisses her cheek”.
+
+      - name: body
+        label: Article
+        widget: richtext
+        hint: >-
+          Use “Heading 2” for main sections and “Heading 3” for subsections — the title is already the page’s
+          Heading 1. To add an image caption, fill in the image’s Title. Link to other articles with /blog/their-slug/.
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+        editor_components: [image]
+        linked_images: false
+
+      - name: seo
+        label: SEO
+        widget: object
+        collapsed: true
+        fields:
+          - name: title
+            label: SEO title
+            widget: string
+            required: false
+            maxlength: 70
+            hint: The title Google shows. Leave empty to use the article title. Keep under 60 characters.
+          - name: description
+            label: Meta description
+            widget: text
+            required: false
+            maxlength: 170
+            hint: The summary Google shows under the title. 140–160 characters, including the main keyword.
+          - name: canonical
+            label: Canonical URL
+            widget: string
+            required: false
+            hint: Leave empty (recommended). Only set this if the article was first published on another website.
+          - name: noindex
+            label: Hide from search engines
+            widget: boolean
+            default: false
+            required: false
+
+      - name: cta
+        label: Call to action
+        widget: relation
+        collection: ctas
+        value_field: "{{slug}}"
+        search_fields: [name, heading]
+        display_fields: [name]
+        required: false
+        hint: The box at the end of the article. Leave empty to use the default set in Blog settings.
+
+      - name: related
+        label: Related articles
+        widget: relation
+        collection: posts
+        value_field: "{{slug}}"
+        search_fields: [title]
+        display_fields: [title]
+        multiple: true
+        max: 3
+        required: false
+        hint: Optional. Picked articles show first under “You may also like”; the rest are filled automatically from the same category.
+
+  # ────────────────────────────────────────────────────── Categories
+  - name: categories
+    label: Categories
+    label_singular: Category
+    description: Keep this list short — a handful of meaningful topics, not dozens.
+    folder: _data/categories
+    extension: yml
+    format: yaml
+    create: true
+    slug: "{{fields._slug}}"
+    identifier_field: name
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: description, label: Description, widget: text, hint: Shown at the top of the category page and used as its meta description. }
+
+  # ──────────────────────────────────────────────── Calls to action
+  - name: ctas
+    label: Calls to action
+    label_singular: Call to action
+    description: Reusable boxes shown at the end of articles. Edit one here and every article using it updates.
+    folder: _data/ctas
+    extension: yml
+    format: yaml
+    create: true
+    slug: "{{fields._slug}}"
+    identifier_field: name
+    fields:
+      - { name: name, label: Internal name, widget: string, hint: Only you see this. }
+      - { name: heading, label: Heading, widget: string }
+      - { name: text, label: Text, widget: text, required: false }
+      - { name: button_label, label: Button label, widget: string, default: Get early access }
+      - { name: button_link, label: Button link, widget: string, default: /early-access.html }
+
+  # ───────────────────────────────────────────────────── Settings
+  - name: settings
+    label: Settings
+    files:
+      - name: blog
+        label: Blog settings
+        file: _data/blog.yml
+        format: yaml
+        fields:
+          - { name: title, label: Blog page title, widget: string }
+          - { name: description, label: Blog page description, widget: text, hint: Shown under the title on /blog/ and used as its meta description. }
+          - { name: posts_per_page, label: Articles per page, widget: number, value_type: int, min: 3, max: 30 }
+          - { name: default_author, label: Default author, widget: string }
+          - name: default_cta
+            label: Default call to action
+            widget: relation
+            collection: ctas
+            value_field: "{{slug}}"
+            display_fields: [name]

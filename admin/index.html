@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>NDYLens Content Manager</title>
+  <link rel="icon" type="image/png" href="/assets/images/logo-icon.png" />
+</head>
+<body>
+  <!-- Sveltia CMS reads ./config.yml. Articles are saved as Markdown files in
+       blog/posts/ on GitHub; the site rebuilds itself a minute or two later. -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <script>
+    // Make the editor's preview pane look like the real article page.
+    CMS.registerPreviewStyle("/styles.css");
+    CMS.registerPreviewStyle("/blog.css");
+    CMS.registerPreviewStyle(
+      "body{background:#07100e;color:#eef4f1;padding:24px 28px;font-family:'Inter',system-ui,sans-serif}",
+      { raw: true }
+    );
+  </script>
+</body>
+</html>

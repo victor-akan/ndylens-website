@@ -1,0 +1,83 @@
+# Builds the site (hand-written pages + blog) and publishes it to GitHub Pages.
+#
+# Runs when:
+#   - anything is pushed to main — including every save/publish in the CMS
+#   - hourly, so posts scheduled for a future date go live on time
+#   - manually, from the Actions tab ("Run workflow")
+#
+# One-time: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Resized images are keyed by a hash of their source, so reusing them
+      # between runs turns a multi-minute image step into seconds.
+      - uses: actions/cache@v4
+        with:
+          path: |
+            _site/assets/blog/img
+            _site/assets/blog/og
+          key: blog-images-${{ hashFiles('assets/blog/uploads/**') }}
+          restore-keys: blog-images-
+
+      - run: npm run build
+
+      # The hourly run only redeploys if it would actually change what's
+      # live — i.e. a scheduled post has come due. Pushes always deploy.
+      - name: Anything to publish?
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if curl -fsS "https://www.ndylens.com/sitemap.xml?nocache=$(date +%s)" -o live-sitemap.xml \
+             && cmp -s live-sitemap.xml _site/sitemap.xml; then
+            echo "Nothing newly due; skipping deploy."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.check.outputs.changed == 'true'
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: https://www.ndylens.com/blog/
+    steps:
+      - uses: actions/deploy-pages@v4

@@ -1,0 +1,20 @@
+{
+  "name": "ndylens-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "eleventy && pagefind --site _site --glob \"blog/**/*.html\"",
+    "start": "eleventy --serve",
+    "preview": "BLOG_PREVIEW=1 eleventy --serve"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy-img": "^7.0.0",
+    "js-yaml": "^5.4.2",
+    "markdown-it": "^15.0.2",
+    "pagefind": "^1.5.2"
+  }
+}

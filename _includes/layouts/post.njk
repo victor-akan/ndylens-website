@@ -1,0 +1,60 @@
+---
+layout: layouts/base.njk
+---
+{%- set minutes = content | readingMinutes -%}
+<article class="post" data-pagefind-body>
+  <header class="post-head wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-pagefind-ignore>
+      <a href="/blog/">Blog</a>{% if categoryData %}<span aria-hidden="true">/</span><a href="/blog/category/{{ category }}/">{{ categoryData.name }}</a>{% endif %}
+    </nav>
+    {%- if status != "published" %}<p class="post-draft-flag">Preview · {{ status }} — not visible on the live site</p>{% endif %}
+    <h1 class="post-title">{{ title }}</h1>
+    {%- if excerpt %}<p class="post-lede">{{ excerpt }}</p>{% endif %}
+    <p class="post-meta" data-pagefind-ignore>
+      <span>By {{ author }}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ minutes }} min read</span>
+      {%- if updated %}<span aria-hidden="true">·</span><span>Updated <time datetime="{{ updated | isoDate }}">{{ updated | readableDate }}</time></span>{% endif %}
+    </p>
+  </header>
+
+  {%- if featured_image %}
+  <figure class="post-hero wrap">
+    <img src="{{ featured_image }}" alt="{{ featured_image_alt }}" loading="eager" fetchpriority="high" sizes="(max-width: 1000px) calc(100vw - 36px), 960px" data-pagefind-meta="image[src], image_alt[alt]" />
+  </figure>
+  {%- endif %}
+
+  <div class="post-body prose wrap">
+    {{ content | safe }}
+  </div>
+
+  {%- if tags and tags.length %}
+  <ul class="post-tags wrap" aria-label="Tags" data-pagefind-ignore>
+    {%- for t in tags %}<li>{{ t }}</li>{% endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- if ctaData %}
+  <aside class="post-cta wrap" data-pagefind-ignore>
+    <div class="post-cta-card">
+      <p class="post-cta-heading">{{ ctaData.heading }}</p>
+      {%- if ctaData.text %}<p class="post-cta-text">{{ ctaData.text }}</p>{% endif %}
+      <a href="{{ ctaData.button_link }}" class="btn btn-primary" data-track-cta="blog-post · {{ page.fileSlug }}">{{ ctaData.button_label }} <span class="arr">→</span></a>
+    </div>
+  </aside>
+  {%- endif %}
+</article>
+
+{%- set relatedList = collections.posts | relatedPosts(page.url, { related: related, category: category, tags: tags }) %}
+{%- if relatedList.length %}
+<section class="related" aria-labelledby="related-title">
+  <div class="wrap">
+    <h2 class="related-title" id="related-title">You may also like</h2>
+    <div class="card-grid">
+      {%- for post in relatedList %}{% include "partials/card.njk" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}

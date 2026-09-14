@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.activeCategories
+  size: 1
+  alias: cat
+permalink: "/blog/category/{{ cat.slug }}/"
+eleventyComputed:
+  metaTitle: "{{ cat.name }} Articles for Photographers | NDYLens Blog"
+  metaDescription: "{{ cat.description }}"
+  canonical: "{{ site.url }}/blog/category/{{ cat.slug }}/"
+  ogTitle: "{{ cat.name }} · NDYLens Blog"
+---
+<section class="blog-hero">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>{{ cat.name }}</span></nav>
+    <h1 class="section-title">{{ cat.name }}</h1>
+    {%- if cat.description %}<p class="section-lead">{{ cat.description }}</p>{% endif %}
+    <nav class="chips" aria-label="Categories">
+      <a href="/blog/" class="chip">All</a>
+      {%- for c in collections.activeCategories %}<a href="/blog/category/{{ c.slug }}/" class="chip"{% if c.slug == cat.slug %} aria-current="page"{% endif %}>{{ c.name }}</a>{% endfor %}
+    </nav>
+  </div>
+</section>
+
+<section class="blog-list">
+  <div class="wrap">
+    <div class="card-grid">
+      {%- set headingLevel = 2 %}
+      {%- for post in cat.posts %}{% include "partials/card.njk" %}{% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+<header class="nav scrolled" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="NDYLens home"><img src="{{ '/assets/images/logo-icon.png' | assetHash }}" width="30" height="30" alt="" class="brand-mark" eleventy:ignore /><span class="brand-word">NDYLens</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+      <a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#early-access">Early access</a><a href="/blog/" aria-current="{{ 'page' if (page.url and page.url.startsWith('/blog/')) else 'false' }}">Blog</a><a href="https://app.ndylens.com" class="nav-signin-m">Sign in →</a>
+    </nav>
+    <div class="nav-cta"><a href="https://app.ndylens.com" class="ghost-link">Sign in</a><a href="/early-access.html" class="btn btn-primary btn-sm" data-track-cta="blog-nav" aria-label="Get early access"><span class="cta-long">Get early access</span><span class="cta-short">Early access</span></a></div>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>

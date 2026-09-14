@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+permalink: /blog/search/
+metaTitle: Search the Blog | NDYLens
+metaDescription: Search NDYLens articles on client retention, referrals, WhatsApp marketing and running a photography business.
+canonical: https://www.ndylens.com/blog/search/
+noindex: true
+headExtra: '<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />'
+---
+<section class="blog-hero blog-hero-compact">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>Search</span></nav>
+    <h1 class="section-title">Search articles</h1>
+  </div>
+</section>
+<section class="blog-list">
+  <div class="wrap search-wrap">
+    <div id="search"></div>
+    <noscript><p class="empty">Search needs JavaScript. <a href="/blog/">Browse all articles</a> instead.</p></noscript>
+  </div>
+</section>
+{#- Pagefind's index is built after Eleventy, and its scripts load only on
+    this page — the rest of the blog carries no search JavaScript at all. #}
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    if (!window.PagefindUI) return;
+    var ui = new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      showImages: true,
+      resetStyles: false,
+      translations: { placeholder: "Search articles…", zero_results: "No articles match “[SEARCH_TERM]”." },
+    });
+    var q = new URLSearchParams(window.location.search).get("q");
+    if (q) ui.triggerSearch(q);
+  });
+</script>

@@ -1,0 +1,54 @@
+{%- set first = pagination.pageNumber == 0 -%}
+<section class="blog-hero">
+  <div class="wrap">
+    <span class="eyebrow"><i class="dot"></i> The NDYLens Blog</span>
+    <h1 class="section-title">{% if first %}{{ blog.title }}{% else %}{{ blog.title }} <span class="ink-fade">· Page {{ pagination.pageNumber + 1 }}</span>{% endif %}</h1>
+    <p class="section-lead">{{ blog.description }}</p>
+    <div class="blog-tools">
+      <form class="blog-search" action="/blog/search/" method="get" role="search">
+        <label class="sr-only" for="blog-q">Search articles</label>
+        <input id="blog-q" name="q" type="search" placeholder="Search articles…" autocomplete="off" />
+        <button type="submit" class="btn btn-quiet btn-sm">Search</button>
+      </form>
+      {%- if collections.activeCategories.length %}
+      <nav class="chips" aria-label="Categories">
+        <a href="/blog/" class="chip" aria-current="page">All</a>
+        {%- for c in collections.activeCategories %}<a href="/blog/category/{{ c.slug }}/" class="chip">{{ c.name }}</a>{% endfor %}
+      </nav>
+      {%- endif %}
+    </div>
+  </div>
+</section>
+
+<section class="blog-list">
+  <div class="wrap">
+    {%- if not posts.length %}
+    <p class="empty">New articles are on the way. Check back soon.</p>
+    {%- else %}
+      {%- if first %}
+        {%- set post = posts[0] %}{% set featured = true %}{% set headingLevel = 2 %}
+        {% include "partials/card.njk" %}
+        {%- set featured = false %}
+      {%- endif %}
+      {%- set rest = posts.slice(1) if first else posts %}
+      {%- if rest.length %}
+      {%- if first %}<h2 class="list-title">Latest articles</h2>{% set headingLevel = 3 %}{% else %}{% set headingLevel = 2 %}{% endif %}
+      <div class="card-grid">
+        {%- for post in rest %}{% include "partials/card.njk" %}{% endfor %}
+      </div>
+      {%- endif %}
+    {%- endif %}
+
+    {%- if pagination.pages.length > 1 %}
+    <nav class="pager" aria-label="Pagination">
+      {%- if pagination.href.previous %}<a href="{{ pagination.href.previous }}" class="btn btn-quiet btn-sm" rel="prev">← Newer</a>{% else %}<span></span>{% endif %}
+      <ol>
+        {%- for href in pagination.hrefs %}
+        <li><a href="{{ href }}"{% if loop.index0 == pagination.pageNumber %} aria-current="page"{% endif %}>{{ loop.index }}</a></li>
+        {%- endfor %}
+      </ol>
+      {%- if pagination.href.next %}<a href="{{ pagination.href.next }}" class="btn btn-quiet btn-sm" rel="next">Older →</a>{% else %}<span></span>{% endif %}
+    </nav>
+    {%- endif %}
+  </div>
+</section>

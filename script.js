@@ -459,10 +459,12 @@ document.addEventListener(
     if (/early-access\.html/.test(href)) {
       const label = (link.textContent || "").trim().slice(0, 60);
       const section = link.closest("section");
-      Track.send(
-        "cta_click",
-        (section && section.className.split(" ")[0]) + " · " + label
-      );
+      // Links inside a blog article are named after the article, so the
+      // Events sheet shows which posts send people to the application.
+      const where = link.closest("article.post")
+        ? "blog" + window.location.pathname.replace(/^\/blog/, "").replace(/\/$/, "")
+        : section && section.className.split(" ")[0];
+      Track.send("cta_click", (where || "page") + " · " + label);
     } else if (/app\.ndylens\.com/.test(href)) {
       Track.send("cta_click", "sign-in");
     }
