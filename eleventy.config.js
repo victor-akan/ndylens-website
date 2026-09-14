@@ -32,7 +32,6 @@ export default function (eleventyConfig) {
     "assets/images",
     "assets/fonts",
     "assets/blog/uploads",
-    "admin",
   ].forEach((p) => eleventyConfig.addPassthroughCopy(p));
 
   // ── Images ─────────────────────────────────────────────────────────
@@ -81,8 +80,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addCollection("posts", livePosts);
 
-  // Categories that have at least one live post, in the order the editor
-  // sees them in the CMS (alphabetical by name).
+  // Categories that have at least one live post, alphabetical by name.
   eleventyConfig.addCollection("activeCategories", (api) => {
     const posts = livePosts(api);
     const dir = "_data/categories";
@@ -135,7 +133,6 @@ export default function (eleventyConfig) {
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("TRACKING.md");
   eleventyConfig.ignores.add("BLOG.md");
-  eleventyConfig.ignores.add("admin/**");
 
   eleventyConfig.setServerOptions({ port: 8080 });
 

@@ -1,7 +1,7 @@
 # Builds the site (hand-written pages + blog) and publishes it to GitHub Pages.
 #
 # Runs when:
-#   - anything is pushed to main — including every save/publish in the CMS
+#   - anything is pushed to main — including every new or edited article
 #   - hourly, so posts scheduled for a future date go live on time
 #   - manually, from the Actions tab ("Run workflow")
 #

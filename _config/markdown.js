@@ -1,13 +1,12 @@
 // Markdown rendering for article bodies, with three SEO/readability rules
-// enforced here rather than trusted to whoever is typing in the CMS:
+// enforced here rather than trusted to whoever writes the article:
 //
 // 1. One H1 per page. The article title is the H1, so any "# Heading" in the
 //    body is demoted to H2, and every level below shifts down with it.
 // 2. H2/H3 get stable ids, so sections can be linked to (#pricing) and a
 //    table of contents is possible later.
 // 3. An image on its own line with a title — ![alt](src "Caption") — becomes
-//    a <figure> with a <figcaption>. The CMS image dialog's "Title" box is
-//    the caption, so editors never touch HTML.
+//    a <figure> with a <figcaption>, so captions never need HTML.
 import markdownIt from "markdown-it";
 
 export const markdown = markdownIt({ html: true, linkify: true, typographer: true });

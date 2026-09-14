@@ -1,7 +1,8 @@
 # NDYLens Blog
 
-The blog lives at **ndylens.com/blog/** and is edited at **ndylens.com/admin/**.
-No code or HTML is needed to write, schedule, update or remove an article.
+The blog lives at **ndylens.com/blog/**. Each article is one Markdown file in
+`blog/posts/`, and adding or editing a file on GitHub updates the site about
+1–2 minutes later.
 
 - [Publishing an article](#publishing-an-article)
 - [One-time setup](#one-time-setup)
@@ -11,34 +12,68 @@ No code or HTML is needed to write, schedule, update or remove an article.
 
 ## Publishing an article
 
-1. Go to **ndylens.com/admin/** and sign in.
-2. Open **Posts → New Post**.
-3. Fill in the fields:
+All of this can be done in the browser on github.com.
+
+1. **Upload images (if any).** Open `assets/blog/uploads/` → **Add file → Upload files**. Use lowercase names with hyphens, e.g. `studio-family-portrait.jpg`. Upload the best-quality photo you have; the site makes small, fast versions automatically.
+2. **Create the article.** Open `blog/posts/` → **Add file → Create new file**. The file name is the URL, so `how-to-price-wedding-photography.md` becomes ndylens.com/blog/how-to-price-wedding-photography/.
+3. **Paste this template** and fill it in:
+
+```markdown
+---
+title: "How to Price Wedding Photography in Nigeria"
+status: draft
+date: 2026-10-01T09:00:00+01:00
+author: NDYLens Team
+category: bookings-sales
+tags:
+  - wedding photography pricing
+excerpt: "One or two sentences shown on article cards and under the title."
+featured_image: /assets/blog/uploads/studio-family-portrait.jpg
+featured_image_alt: "Describe what is in the photo"
+seo:
+  title: "How to Price Wedding Photography in Nigeria"
+  description: "140–160 characters for Google, including the main keyword."
+  canonical: ""
+  noindex: false
+cta: default
+related: []
+---
+
+Opening paragraph…
+
+## A main section
+
+Text…
+
+### A subsection
+
+![Describe the photo](/assets/blog/uploads/another-photo.jpg "Optional caption shown under the image")
+
+Link to [another article](/blog/how-to-ask-photography-clients-for-referrals/) or to [early access](/early-access.html).
+```
+
+4. Click **Commit changes**.
 
 | Field | What to put |
 | --- | --- |
-| **Title** | The headline. It becomes the page’s H1. |
-| **Slug** | The URL, e.g. `how-to-price-wedding-photography` → ndylens.com/blog/how-to-price-wedding-photography/. It’s suggested from the title. **Check it before the first save**, because changing it later changes the URL. |
-| **Status** | **Draft** keeps it off the site. **Published** puts it live. **Archived** takes it down. |
-| **Publish date** | When it should appear. A future date **schedules** it, and it goes live within the hour after that time. |
-| **Author** | Defaults to “NDYLens Team”. |
-| **Category** | Pick one. |
-| **Tags** | Optional, 2–5 keywords. |
-| **Excerpt** | 1–2 sentences for article cards and under the title. |
-| **Featured image** + **alt text** | The top image, also used when the link is shared on WhatsApp. Always describe the photo in the alt text. |
-| **Article** | The body (see writing tips below). |
-| **SEO** | **SEO title** (under 60 characters) and **Meta description** (140–160 characters). Leave **Canonical URL** empty unless the article first appeared on another site. |
-| **Call to action** | The box at the end. Leave empty to use the default. |
-| **Related articles** | Optional. Empty means they’re chosen automatically. |
+| `title` | The headline. It becomes the page’s H1. |
+| `status` | `draft` keeps it off the site, `published` puts it live and `archived` takes it down. |
+| `date` | When it should appear. A future date **schedules** it, and it goes live within the hour after that time. Keep the `+01:00` (Nigeria time). |
+| `category` | One of the file names in `_data/categories/`: `photography-business`, `client-retention`, `marketing`, `bookings-sales`, `whatsapp-marketing` or `business-growth`. |
+| `tags` | Optional, 2–5 keywords. |
+| `excerpt` | 1–2 sentences for cards and under the title. |
+| `featured_image` + `featured_image_alt` | The top image, also used when the link is shared on WhatsApp. Always describe the photo in the alt text. |
+| `seo.title` / `seo.description` | What Google shows. Keep the title under 60 characters and the description to 140–160. Leave `canonical` empty unless the article first appeared on another site. |
+| `cta` | Which end-of-article box to show: a file name from `_data/ctas/`. |
+| `related` | Optional list of article file names (without `.md`). Leave `[]` to choose automatically. |
 
-4. Use the **preview** pane beside the editor to check how it looks.
-5. Click **Save**. The site updates about **1–2 minutes** later.
+Anything in quotes that contains a colon must stay in quotes.
 
 ### Writing tips for SEO
 
-- **Headings:** use **Heading 2** for main sections and **Heading 3** for subsections. Don’t use Heading 1, because the title already is one. If you do, it’s demoted automatically.
-- **Images:** click the image button, upload, and always fill in the **alt text**. Whatever you type in the image’s **Title** box appears as a **caption** under it. Upload the best-quality photo you have; the site makes small, fast versions for phones automatically.
-- **Internal links:** select text, click the link button, and paste a path:
+- **Headings:** use `##` for main sections and `###` for subsections. Don’t use `#`, because the title already is the H1. If you do, it’s demoted automatically.
+- **Images:** `![alt text](/assets/blog/uploads/photo.jpg "Caption")`. Always write the alt text; the quoted caption is optional.
+- **Internal links:** `[link text](path)`, where the path is one of:
   - another article: `/blog/how-to-ask-photography-clients-for-referrals/`
   - early access / sign-up: `/early-access.html`
   - features: `/#features`
@@ -46,15 +81,16 @@ No code or HTML is needed to write, schedule, update or remove an article.
 
 ### Updating, unpublishing and scheduling
 
-- **Update an article:** open it, edit, and Save. If the change is meaningful, also set **Last updated**, which tells Google the content is fresh.
-- **Unpublish:** set Status to **Archived** (or **Draft**) and Save. The page, its sitemap entry and its search result are removed on the next build.
-- **Schedule:** set Status to **Published** with a future **Publish date**. Until then it isn’t on the site at all.
+- **Update an article:** open the file, click the pencil icon, edit, and commit. If the change is meaningful, add a line such as `updated: 2026-11-02T09:00:00+01:00` under `date`, which tells Google the content is fresh.
+- **Unpublish:** change `status` to `archived` (or `draft`) and commit. The page, its sitemap entry and its search result are removed on the next build.
+- **Schedule:** set `status: published` with a future `date`. Until then it isn’t on the site at all.
+- **Change a URL:** rename the file. The old URL stops working, so avoid this once an article has been shared.
 
 ### Categories, calls to action and settings
 
-- **Categories:** add or rename them here. Keep the list short. A category page (ndylens.com/blog/category/…) only exists once it has at least one published article.
-- **Calls to action:** reusable end-of-article boxes. Editing one updates every article that uses it.
-- **Settings → Blog settings:** the blog page’s title and description, articles per page, default author and default call to action.
+- **Categories:** one file each in `_data/categories/`, with `name` and `description`. The file name is what articles use in `category:`. Keep the list short. A category page (ndylens.com/blog/category/…) only exists once it has at least one published article.
+- **Calls to action:** one file each in `_data/ctas/`, with `heading`, `text`, `button_label` and `button_link`. Editing one updates every article that uses it.
+- **Blog settings:** `_data/blog.yml` holds the blog page’s title and description, articles per page, default author and default call to action.
 
 ---
 
@@ -74,16 +110,7 @@ The custom domain is kept because `CNAME` is copied into the build.
 
 ### 2. Give the content person access
 
-The CMS saves articles to this repository, so each editor needs a **GitHub account with write access** (**Settings → Collaborators → Add people**).
-
-**Option A — quick start (no extra setup).** On the admin sign-in screen, the editor clicks **Sign In with Token**, follows the link to create a GitHub token with the pre-selected permissions, and pastes it in. It stays signed in on that browser.
-
-**Option B — a normal “Sign in with GitHub” button (recommended).** This takes about 15 minutes. It uses a small free Cloudflare Worker, and the site is already on Cloudflare.
-
-1. Deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) to Cloudflare Workers using its “Deploy” button.
-2. Create a GitHub OAuth App (**GitHub → Settings → Developer settings → OAuth Apps**). Set the Homepage URL to `https://www.ndylens.com` and the Callback URL to `https://<your-worker>.workers.dev/callback`.
-3. Add the app’s client ID and secret to the worker as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`, and set `ALLOWED_DOMAINS` to `www.ndylens.com`.
-4. In `admin/config.yml`, uncomment `base_url:` and set it to the worker URL.
+Articles are files in this repository, so each writer needs a **GitHub account with write access**: **Settings → Collaborators → Add people**.
 
 ### 3. Google Search Console
 
@@ -110,7 +137,7 @@ The CMS saves articles to this repository, so each editor needs a **GitHub accou
 ## How it works (for developers)
 
 - **Build:** [Eleventy](https://www.11ty.dev/) builds the blog into `_site/`. The hand-written pages (`index.html`, `early-access.html`, `privacy.html`, `terms.html`) are copied as-is, not templated.
-- **CMS:** [Sveltia CMS](https://sveltiacms.app/) at `/admin/` (config: `admin/config.yml`) commits Markdown to `blog/posts/` and images to `assets/blog/uploads/`.
+- **Content:** Markdown files in `blog/posts/`, with images in `assets/blog/uploads/`.
 - **Deploy:** GitHub Actions builds on every push and hourly, and deploys to GitHub Pages. The hourly run only deploys when the sitemap would change, i.e. when a scheduled post has come due.
 
 | Path | Purpose |
@@ -119,7 +146,7 @@ The CMS saves articles to this repository, so each editor needs a **GitHub accou
 | `blog/posts/posts.11tydata.js` | Publishing rules, SEO fields, BlogPosting/Breadcrumb JSON-LD. |
 | `_config/posts.js` | `isLive` (published and date reached), reading time, related posts. |
 | `_config/markdown.js` | One H1 per page, heading ids, `![alt](src "caption")` → `<figure>`. |
-| `_data/blog.yml`, `_data/categories/`, `_data/ctas/` | Settings, categories, calls to action (all CMS-editable). |
+| `_data/blog.yml`, `_data/categories/`, `_data/ctas/` | Settings, categories, calls to action. |
 | `_includes/` | Layouts and partials. |
 | `blog/index.njk`, `blog/category.njk`, `blog/search.njk`, `blog/feed.njk` | Listing (paginated), category pages, search, RSS. |
 | `sitemap.njk`, `robots.njk`, `404.njk` | Sitemap, robots.txt, not-found page. |

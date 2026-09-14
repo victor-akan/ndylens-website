@@ -1,10 +1,10 @@
-// Defaults for every file in blog/posts/ — i.e. every article the CMS writes.
+// Defaults for every file in blog/posts/ — i.e. every article.
 import { isLive } from "../../_config/posts.js";
 
 export default {
   layout: "layouts/post.njk",
   eleventyComputed: {
-    // The URL is the file name, which is the slug chosen in the CMS:
+    // The file name is the URL slug:
     // /blog/how-to-get-more-repeat-photography-clients/
     // Drafts, archived posts and not-yet-due scheduled posts get no page.
     permalink: (data) => (isLive(data) ? `/blog/${data.page.fileSlug}/` : false),

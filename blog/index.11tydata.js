@@ -1,5 +1,5 @@
 // The blog home: /blog/, /blog/page/2/, … Page size comes from the
-// "Blog settings" screen in the CMS (_data/blog.yml).
+// posts_per_page in _data/blog.yml.
 import fs from "node:fs";
 import * as yaml from "js-yaml";
 
