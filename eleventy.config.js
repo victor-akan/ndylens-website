@@ -29,6 +29,8 @@ export default function (eleventyConfig) {
     "blog.css",
     "CNAME",
     ".nojekyll",
+    "favicon.ico",
+    "favicon.png",
     "assets/images",
     "assets/fonts",
     "assets/blog/uploads",
