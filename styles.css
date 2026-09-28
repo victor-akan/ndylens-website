@@ -723,3 +723,8 @@ body.spots-sold-out .live-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(2
    snap — a hard colour change on type the eye is mid-sentence on is jarring. */
 .hero-title [data-hl]{transition:color .8s cubic-bezier(.4,0,.2,1)}
 @media (prefers-reduced-motion:reduce){ .hero-title [data-hl]{transition:none} }
+
+/* "No card needed" under the early-access price. The FAQ says this too, but the
+   objection lands at the price, and nobody reads a FAQ to be reassured. */
+.old-price{margin:10px 0 6px}
+.no-card{color:var(--fog);font-size:13px;line-height:1.5;margin:0 0 22px}
