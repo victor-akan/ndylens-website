@@ -1,5 +1,5 @@
 const SHEETS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbxnnuml5LHAQEza3F7LB54WV3OkZzV7UfOn_TJ9zDkCQbvgWwC_kA_TdnH46-NB32Jq/exec";
+  "https://script.google.com/macros/s/AKfycbyGBXy3bwitRJQbPUbgDOUrdnjSdMdQy8WhsyFw-gBZBJvNmezr4jYylcze_EK_toGZ/exec";
 
 /* Total early-access places. Used only as the no-JS / offline fallback —
    the live number comes from the Apps Script "spots" endpoint. Keep it
