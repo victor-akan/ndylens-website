@@ -821,10 +821,12 @@ if (leadForm && leadSubmit) {
    // seconds, which is long enough to read the whole headline and look away,
    // and the caret fades out while it rests so the hero is completely still
    // most of the time. One phrase every eight seconds or so, not every three.
-  const HOLD = 5600;    // how long a finished phrase sits there
-  const GAP  = 420;     // beat between deleting and typing
-  const DEL  = 46;      // ms per character removed
-  const TYPE = 74;      // ms per character added
+  // Timed against the longest phrase, 24 characters: 4.0s resting, 0.8s to
+  // delete, 0.3s beat, 1.8s to type the next one. A 6.9s cycle.
+  const HOLD = 4000;    // how long a finished phrase sits there
+  const GAP  = 300;     // beat between deleting and typing
+  const DEL  = 33;      // ms per character removed  -> 0.8s
+  const TYPE = 64;      // ms per character added, plus jitter -> 75ms avg, 1.8s
 
   let i = 0, timer = null, running = false;
 
@@ -856,7 +858,7 @@ if (leadForm && leadSubmit) {
     }
     live.textContent = word.slice(0, t.length + 1);
     // A little jitter stops it sounding like a machine.
-    wait(TYPE + Math.random() * 26, () => write(word, done));
+    wait(TYPE + Math.random() * 22, () => write(word, done));
   }
 
   function cycle() {
@@ -873,7 +875,7 @@ if (leadForm && leadSubmit) {
     running = true;
     title.classList.add("is-typing");
     title.classList.add("is-resting");
-    wait(HOLD + 2600, cycle);   // let the real headline be read first
+    wait(HOLD + 3000, cycle);   // let the real headline be read first
   }
 
   function stop(restore) {
