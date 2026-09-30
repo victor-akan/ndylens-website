@@ -787,3 +787,110 @@ if (leadForm && leadSubmit) {
     }
   });
 }
+
+/* ── Hero headline: the last phrase deletes itself and retypes ───────────────
+   The question never changes. Only what the client is being lost TO does, and
+   every phrase is one of the occasions NDYLens exists to catch, so the headline
+   makes the argument instead of just moving.
+
+   Three things keep it from being annoying. The page at rest shows the sentence
+   exactly as written, and the effect only begins after a long first hold, so a
+   screenshot or a quick visitor sees the real headline. The block's height is
+   pinned to its tallest phrase, so nothing below it ever jumps. And it stops
+   entirely when the tab is hidden or the hero is scrolled past. */
+(function heroTypewriter() {
+  const live  = document.querySelector('.hero-title [data-hl="2"] .type-live');
+  const ask   = document.querySelector(".hero-ask");
+  const title = document.querySelector(".hero-title");
+  if (!live || !ask || !title) return;
+
+  const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const FIRST = live.textContent.trim();
+  const PHRASES = [
+    FIRST,
+    "at their next birthday?",
+    "on their anniversary?",
+    "when the baby arrives?",
+    "for their next shoot?",
+  ];
+  // Never longer than what ships in the HTML, so the question can never take an
+  // extra line on a narrow phone.
+  const LONGEST = PHRASES.reduce((a, b) => (b.length > a.length ? b : a), "");
+
+  const HOLD = 2600;    // how long a finished phrase sits there
+  const GAP  = 280;     // beat between deleting and typing
+  const DEL  = 32;      // ms per character removed
+  const TYPE = 58;      // ms per character added
+
+  let i = 0, timer = null, running = false;
+
+  // Pin the block to its tallest phrase so the paragraph below never moves.
+  function pin() {
+    const keep = live.textContent;
+    ask.style.minHeight = "";
+    live.textContent = LONGEST;
+    const h = ask.getBoundingClientRect().height;
+    live.textContent = keep;
+    ask.style.minHeight = h + "px";
+  }
+
+  const wait = (ms, fn) => { timer = setTimeout(fn, ms); };
+
+  function erase(done) {
+    const t = live.textContent;
+    if (!t.length) return void wait(GAP, done);
+    live.textContent = t.slice(0, -1);
+    wait(DEL, () => erase(done));
+  }
+
+  function write(word, done) {
+    const t = live.textContent;
+    if (t.length >= word.length) return void wait(HOLD, done);
+    live.textContent = word.slice(0, t.length + 1);
+    // A little jitter stops it sounding like a machine.
+    wait(TYPE + Math.random() * 34, () => write(word, done));
+  }
+
+  function cycle() {
+    if (!running) return;
+    erase(() => {
+      if (!running) return;
+      i = (i + 1) % PHRASES.length;
+      write(PHRASES[i], cycle);
+    });
+  }
+
+  function start() {
+    if (running || reduceMq.matches) return;
+    running = true;
+    title.classList.add("is-typing");
+    wait(HOLD + 1400, cycle);   // let the real headline be read first
+  }
+
+  function stop(restore) {
+    running = false;
+    clearTimeout(timer);
+    if (restore) { live.textContent = FIRST; i = 0; title.classList.remove("is-typing"); }
+  }
+
+  pin();
+  let rz;
+  window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(pin, 180); });
+
+  // Only while it is actually on screen, and only while the tab is in front.
+  let onScreen = true;
+  document.addEventListener("visibilitychange", () => {
+    document.hidden ? stop(false) : (onScreen && start());
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries[0].isIntersecting;
+      onScreen && !document.hidden ? start() : stop(false);
+    }, { threshold: 0.2 }).observe(title);
+  } else {
+    start();
+  }
+
+  reduceMq.addEventListener("change", () => (reduceMq.matches ? stop(true) : start()));
+})();
