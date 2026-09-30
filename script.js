@@ -817,10 +817,14 @@ if (leadForm && leadSubmit) {
   // extra line on a narrow phone.
   const LONGEST = PHRASES.reduce((a, b) => (b.length > a.length ? b : a), "");
 
-  const HOLD = 2600;    // how long a finished phrase sits there
-  const GAP  = 280;     // beat between deleting and typing
-  const DEL  = 32;      // ms per character removed
-  const TYPE = 58;      // ms per character added
+  // Paced to be read, not watched. A finished phrase sits for nearly five
+   // seconds, which is long enough to read the whole headline and look away,
+   // and the caret fades out while it rests so the hero is completely still
+   // most of the time. One phrase every eight seconds or so, not every three.
+  const HOLD = 5600;    // how long a finished phrase sits there
+  const GAP  = 420;     // beat between deleting and typing
+  const DEL  = 46;      // ms per character removed
+  const TYPE = 74;      // ms per character added
 
   let i = 0, timer = null, running = false;
 
@@ -837,6 +841,7 @@ if (leadForm && leadSubmit) {
   const wait = (ms, fn) => { timer = setTimeout(fn, ms); };
 
   function erase(done) {
+    title.classList.remove("is-resting");
     const t = live.textContent;
     if (!t.length) return void wait(GAP, done);
     live.textContent = t.slice(0, -1);
@@ -845,10 +850,13 @@ if (leadForm && leadSubmit) {
 
   function write(word, done) {
     const t = live.textContent;
-    if (t.length >= word.length) return void wait(HOLD, done);
+    if (t.length >= word.length) {
+      title.classList.add("is-resting");   // phrase complete: go completely still
+      return void wait(HOLD, done);
+    }
     live.textContent = word.slice(0, t.length + 1);
     // A little jitter stops it sounding like a machine.
-    wait(TYPE + Math.random() * 34, () => write(word, done));
+    wait(TYPE + Math.random() * 26, () => write(word, done));
   }
 
   function cycle() {
@@ -864,7 +872,8 @@ if (leadForm && leadSubmit) {
     if (running || reduceMq.matches) return;
     running = true;
     title.classList.add("is-typing");
-    wait(HOLD + 1400, cycle);   // let the real headline be read first
+    title.classList.add("is-resting");
+    wait(HOLD + 2600, cycle);   // let the real headline be read first
   }
 
   function stop(restore) {

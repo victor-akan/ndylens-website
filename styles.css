@@ -740,6 +740,11 @@ body.spots-sold-out .live-dot{background:var(--gold);box-shadow:0 0 0 3px rgba(2
 .hero-title.is-typing .type-caret{
   display:inline-block;width:.055em;height:.78em;margin-left:.05em;
   vertical-align:-.04em;background:currentColor;border-radius:1px;
-  animation:typeBlink 1.05s step-end infinite}
+  animation:typeBlink 1.05s step-end infinite;
+  transition:opacity .5s ease}
+/* While a phrase rests the caret fades away, so for the five seconds someone
+   is actually reading the headline there is no movement on the page at all.
+   A caret blinking under a finished sentence is the part that nags. */
+.hero-title.is-typing.is-resting .type-caret{animation:none;opacity:0}
 @keyframes typeBlink{0%,100%{opacity:.9}50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){ .hero-title.is-typing .type-caret{display:none} }
