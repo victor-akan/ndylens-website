@@ -18,7 +18,7 @@ seo:
   description: "Learn how to convert WhatsApp photography enquiries into bookings with better first replies, clear pricing, helpful follow-ups and simple next steps."
   canonical: ""
   noindex: false
-cta: whatsapp-follow-up
+cta: default
 related:
   - "photography-enquiry-form-questions-that-save-time"
   - "how-to-qualify-photography-leads-before-sending-your-price-list"
