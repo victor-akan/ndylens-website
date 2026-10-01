@@ -18,7 +18,11 @@ if (unrelated.length) fail(`Unrelated files changed: ${unrelated.join(", ")}`);
 const articles = changed.filter((file) => /^blog\/posts\/[^/]+\.md$/.test(file));
 if (articles.length !== 1) fail(`Expected exactly one changed article, found ${articles.length}`);
 const imageChanges = changed.filter((file) => file.startsWith("assets/blog/uploads/"));
-if (imageChanges.length !== 1) fail(`Expected exactly one changed featured image, found ${imageChanges.length}`);
+if (imageChanges.length > 1) fail(`Expected at most one changed featured image, found ${imageChanges.length}`);
+const addedArticles = execFileSync("git", ["diff", "--name-only", "--diff-filter=A", `${base}...${head}`], { encoding: "utf8" })
+  .trim().split("\n").filter(Boolean);
+const isNewArticle = addedArticles.includes(articles[0]);
+if (isNewArticle && imageChanges.length !== 1) fail("New article requires one changed featured image");
 
 const allPosts = fs.readdirSync(path.join(root, "blog/posts")).filter((f) => f.endsWith(".md"));
 const slugs = allPosts.map((f) => path.basename(f, ".md"));
@@ -46,7 +50,7 @@ for (const file of articles) {
   for (const related of data.related) if (!exists(`blog/posts/${related}.md`)) fail(`${file}: missing related article ${related}`);
   const imagePath = String(data.featured_image).replace(/^\//, "");
   if (!exists(imagePath)) fail(`${file}: featured image does not exist: ${imagePath}`);
-  if (!imageChanges.includes(imagePath)) fail(`${file}: featured image is not the article image added in this PR`);
+  if (imageChanges.length && !imageChanges.includes(imagePath)) fail(`${file}: changed image is not the article featured image`);
   if (!/^\/assets\/blog\/uploads\/[a-z0-9-]+\.(webp|jpg|jpeg|png)$/.test(data.featured_image)) fail(`${file}: invalid featured image path`);
   if (!body.match(/\n##\s+/)) fail(`${file}: article needs H2 sections`);
   if (!body.match(/\[[^\]]+\]\([^\)]+\)/)) fail(`${file}: article needs contextual links`);
@@ -83,4 +87,4 @@ for (const file of articles) {
   }
 }
 
-console.log(`Validated ${articles[0]} and ${imageChanges[0]}`);
+console.log(`Validated ${articles[0]}${imageChanges.length ? ` and ${imageChanges[0]}` : " with its existing featured image"}`);
