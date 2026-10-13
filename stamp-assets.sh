@@ -25,6 +25,10 @@ import hashlib, pathlib, re
 root = pathlib.Path(".")
 pages = sorted(root.glob("*.html"))
 targets = [pathlib.Path("styles.css"), pathlib.Path("script.js")]
+# The root favicons were missing here until 2026-10-13, so their ?v= was a hand-typed constant that
+# never changed when the files did - leaving the browser tab icon, the one asset browsers cache
+# hardest, as the only thing on the site exempt from the cache-busting this script exists to do.
+targets += [pathlib.Path("favicon.ico"), pathlib.Path("favicon.png")]
 targets += sorted(root.glob("assets/images/*.[jpwa]*"))   # jpg jpeg png webp avif
 targets += sorted(root.glob("assets/fonts/*.woff2"))
 
@@ -40,8 +44,10 @@ for page in pages:
         # match the path only where it is a real URL: preceded by =" or a
         # srcset comma-space, and followed by an optional old stamp then a
         # quote, space (srcset descriptor) or comma.
-        pat = re.compile(r'(?<=[="\s,])' + re.escape(path) + r'(\?v=[0-9a-f]{8})?(?=["\s,])')
-        s, n = pat.subn(path + "?v=" + h, s)
+        # The leading slash is optional and preserved: the favicons are referenced root-relative
+        # ("/favicon.ico"), and without this the lookbehind sees "/" and never matches them.
+        pat = re.compile(r'(?<=[="\s,])(/?)' + re.escape(path) + r'(\?v=[0-9a-f]{8})?(?=["\s,])')
+        s, n = pat.subn(lambda m: m.group(1) + path + "?v=" + h, s)
         stamped += n
     if s != original:
         page.write_text(s, encoding="utf-8")
