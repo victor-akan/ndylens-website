@@ -715,6 +715,21 @@ if (leadForm) {
     if (event.target.classList.contains("hpot")) return;
     formStarted = true;
     Track.send("form_start", "field: " + (event.target.name || "unknown"));
+
+    // Meta gets the same moment as a custom event. While applications are still a
+    // trickle, a Leads campaign has almost nothing to learn from - a handful of Lead
+    // events a week is below what the algorithm needs - so FormStart gives it a far
+    // more frequent upper-funnel signal pointing at the same intent.
+    //
+    // Hooked HERE rather than on its own input listener, so it inherits the two
+    // guards this handler already has: it cannot fire twice, and it never fires for
+    // the honeypot field - which only a bot ever touches, and which would otherwise
+    // teach Meta that bots are the audience to find.
+    try {
+      if (typeof window.fbq === "function") window.fbq("trackCustom", "FormStart");
+    } catch {
+      /* analytics is never worth breaking the form over */
+    }
   };
   leadForm.addEventListener("input", markStarted, true);
   leadForm.addEventListener("change", markStarted, true);
