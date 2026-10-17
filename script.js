@@ -851,6 +851,30 @@ if (leadForm && leadSubmit) {
     const succeed = () => {
       formSubmitted = true;
       Track.send("form_submit_ok", payload.photographyType || "(not stated)");
+
+      // Tell Meta an application actually happened. This is the ONLY place it fires -
+      // on a confirmed success, never on pressing the button - so a validation failure
+      // or a dead request never counts as a lead.
+      //
+      // Why it matters: the pixel's PageView tells Meta that someone arrived, which it
+      // can already see. It cannot tell Meta WHICH click became an application, so a
+      // campaign has nothing to optimise toward except the cheapest possible tap. On
+      // 16-17 Oct that produced 581 ad visitors and one application, while 147 organic
+      // visitors produced nine. `Lead` is the signal that closes that loop.
+      //
+      // Guarded: an ad blocker (or Meta's script simply failing) must never take the
+      // confirmation message down with it - fbq is absent far more often than not.
+      try {
+        if (typeof window.fbq === "function") {
+          window.fbq("track", "Lead", {
+            content_name: "early-access",
+            content_category: payload.photographyType || "(not stated)",
+          });
+        }
+      } catch {
+        /* analytics is never worth breaking a submission over */
+      }
+
       const inbox = payload.email ? " to " + payload.email : "";
       setLeadStatus(
         "Application received. We’ve sent a confirmation" + inbox +
