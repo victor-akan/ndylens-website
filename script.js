@@ -472,9 +472,19 @@ document.addEventListener(
   true
 );
 
-/* ── Scroll depth on the landing page ──────────────────────────────
-   Tells you how far people actually get before they leave. */
-if (!document.body.classList.contains("form-page")) {
+/* ── Scroll depth, on EVERY page ────────────────────────────────────
+   Tells you how far people actually get before they leave.
+
+   This block used to be wrapped in `if (!form-page)`, which quietly meant
+   the one page the ads send everyone to was the one page nobody was
+   watching. Two days of paid traffic duly reported "0 of 581 scrolled" —
+   not because nobody scrolled, but because nothing was measuring. A sensor
+   that is switched off reads EXACTLY like a visitor who did nothing, and
+   that is the most expensive kind of wrong: it points the fix at the page
+   when the problem might be the ad, or the other way round. */
+let maxScrollPct = 0;
+
+(() => {
   const marks = [25, 50, 75, 100];
   const hit = {};
   let ticking = false;
@@ -485,6 +495,7 @@ if (!document.body.classList.contains("form-page")) {
     const scrollable = doc.scrollHeight - window.innerHeight;
     if (scrollable <= 0) return;
     const pct = Math.min(100, Math.round((window.scrollY / scrollable) * 100));
+    if (pct > maxScrollPct) maxScrollPct = pct;
     marks.forEach((m) => {
       if (pct >= m && !hit[m]) {
         hit[m] = true;
@@ -502,7 +513,90 @@ if (!document.body.classList.contains("form-page")) {
     },
     { passive: true }
   );
-}
+})();
+
+/* ── Time actually spent on the page ────────────────────────────────
+   The missing sensor. Without it, someone who bounced in two seconds and
+   someone who read the whole pitch and decided against it leave an
+   IDENTICAL record — one page_view and nothing after it — and those two
+   need opposite fixes (change the ad vs change the page). The site has
+   never been able to tell them apart.
+
+   VISIBLE time, not wall-clock. Nearly all of this traffic arrives in the
+   Instagram/Facebook in-app browser, where people flick back to the feed
+   constantly; a plain setTimeout would happily count a page parked in the
+   background as reading. The clock stops whenever the page is hidden and
+   resumes when it comes back.
+
+   Two shapes on purpose. The marks fire as they are passed, so even if the
+   exit beacon is dropped there is still evidence of how long someone
+   stayed; page_exit then carries the exact seconds and how far they got. */
+(() => {
+  const MARKS = [10, 30, 60, 120];
+  let visibleMs = 0;
+  let since = document.visibilityState === "visible" ? performance.now() : null;
+  let next = 0;
+  let timer = null;
+
+  const seconds = () =>
+    Math.round(
+      (visibleMs + (since === null ? 0 : performance.now() - since)) / 1000
+    );
+
+  const tick = () => {
+    timer = null;
+    while (next < MARKS.length && seconds() >= MARKS[next]) {
+      Track.send("page_engaged", MARKS[next] + "s");
+      next++;
+    }
+    arm();
+  };
+
+  // Only ever one pending timer, and none at all once the last mark is past
+  // or while the page is hidden — otherwise a long session in a background
+  // tab wakes up once a second forever for nothing.
+  const arm = () => {
+    if (timer !== null || next >= MARKS.length || since === null) return;
+    timer = window.setTimeout(tick, 1000);
+  };
+  arm();
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      if (since !== null) {
+        visibleMs += performance.now() - since;
+        since = null;
+      }
+      if (timer !== null) {
+        window.clearTimeout(timer);
+        timer = null;
+      }
+    } else if (since === null) {
+      since = performance.now();
+      arm();
+    }
+  });
+
+  // One row per visit carrying the real figures. pagehide is the only
+  // "leaving" event the mobile in-app browsers fire reliably, and it can
+  // fire more than once, so this sends at most once.
+  //
+  // Deliberately NOT also sent on visibilitychange→hidden: on a phone that
+  // fires every time someone switches app, so the dwell figure would be
+  // frozen at the first interruption rather than the real total. The marks
+  // above are the safety net if a pagehide beacon is ever lost; Track's own
+  // visibilitychange handler already flushes them.
+  let sent = false;
+  window.addEventListener("pagehide", () => {
+    if (sent) return;
+    sent = true;
+    Track.send(
+      "page_exit",
+      seconds() + "s · " + maxScrollPct + "% scrolled",
+      "beacon"
+    );
+  });
+})();
 
 /* ===================================================================
    LIVE SPOTS COUNTER

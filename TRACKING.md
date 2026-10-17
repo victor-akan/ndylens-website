@@ -32,9 +32,11 @@ Events captured:
 | Event | Fires when |
 | --- | --- |
 | `page_view` | any page loads |
-| `scroll_depth` | 25 / 50 / 75 / 100% of the landing page |
+| `scroll_depth` | 25 / 50 / 75 / 100% of **any** page, application page included |
+| `page_engaged` | 10 / 30 / 60 / 120 seconds of *visible* time on the page |
+| `page_exit` | leaving — `detail` carries the exact seconds and furthest scroll |
 | `cta_click` | any "Get early access" button — the `detail` column says which one |
-| `form_view` | the application page loads |
+| `form_view` | the application page loads — **on load**, not on reaching the form |
 | `form_start` | first keystroke in any field |
 | `form_step` | furthest section reached (1–3) |
 | `form_validation_fail` | submit blocked — `detail` names the offending field |
@@ -43,6 +45,14 @@ Events captured:
 
 Every event carries the traffic source, device, viewport, and a random
 session id, so the funnel can be split by where people came from.
+
+**Reading these honestly.** `form_view` fires when the application page
+*loads*, so for anyone who arrives straight on that page — which is where
+the ads point — it is a duplicate of `page_view`, not evidence that someone
+reached the form. `form_start` (first field focused) is the first event that
+proves a human engaged with it. And until 2026-10-17 `scroll_depth` was
+switched off on the application page, so no scroll data exists there before
+that date; absent is not the same as zero.
 
 ## The early-access spots
 
