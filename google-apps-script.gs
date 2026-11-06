@@ -32,7 +32,7 @@ const VISIT_HEADERS = ["Timestamp", "Visitor ID", "Host", "Page", "Referrer"];
 
 /* Total early-access places. This is the single source of truth — the
    emails and the website counter both read from it. */
-const TOTAL_SPOTS = 50;
+const TOTAL_SPOTS = 100;
 
 /* Statuses that free a spot back up. Anything else counts as taken. */
 const NON_COUNTING_STATUSES = ["rejected", "withdrawn", "declined", "duplicate", "test"];
@@ -550,7 +550,7 @@ function notifyApplicant_(data) {
       '</div>' +
 
       '<p style="margin:0 0 10px"><b>What happens next</b></p>' +
-      '<p style="margin:0 0 16px">Someone from our team will reach out on WhatsApp or by email with the ' +
+      '<p style="margin:0 0 16px">Someone from our team will reach out on WhatsApp or by email ' +
       'to get your account set up. We work through applications in the order ' +
       'they arrive.' + (spotsLine ? ' ' + spotsLine : '') + '</p>' +
 
