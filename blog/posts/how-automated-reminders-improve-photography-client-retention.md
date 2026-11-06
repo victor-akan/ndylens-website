@@ -18,7 +18,7 @@ seo:
   description: "See how automated reminders improve photography client retention through better timing, consistent service and relevant follow-ups that support repeat bookings."
   canonical: ""
   noindex: false
-cta: whatsapp-follow-up
+cta: default
 related:
   - "how-automated-follow-ups-save-photographers-time"
   - "how-to-remember-every-clients-important-dates"
