@@ -78,11 +78,34 @@ const HEADERS = [
   "status",
   "notes",
   "visitorId",
-  "topNeed",             // appended last: row 1 is rewritten to match this
-                         // list, so inserting mid-way would relabel every
-                         // column of every lead already recorded. This one
-                         // belongs beside "needs" logically; it goes here
-                         // instead, for exactly that reason.
+
+  /* ── Three orphan columns, AH to AJ. Read this before touching the list. ──
+     The Leads sheet has 36 columns but this list had 33, so AH, AI and AJ sat
+     outside what ensureHeader_ writes and kept old headers reading "status",
+     "notes" and "visitorId" - duplicates of AE, AF and AG. They hold data:
+     checked 2026-11-07, AH holds "applied" / "test" for the early rows.
+
+     That means the sheet is three columns wider than this list thinks, and the
+     early rows' tail data sits three columns right of the header naming it.
+     The damage predates this change and is NOT repaired here: moving 64 rows
+     of live data is a migration, not a column addition.
+
+     What matters is that ensureHeader_ rewrites row 1 to match THIS list. With
+     34 entries it would have renamed AH from "status" to "topNeed" while AH
+     still held the status values, so the new column would have read "applied"
+     for every historical row. Naming the three explicitly keeps every existing
+     column where it is and pushes topNeed into AK, which is empty on every row.
+
+     Nothing ever writes to these three: no payload has a legacy* key, so
+     HEADERS.map leaves them blank on new rows. They exist to hold the place. */
+  "legacyStatus",
+  "legacyNotes",
+  "legacyVisitorId",
+
+  // Appended last, after the orphans. Row 1 is rewritten to match this list, so
+  // inserting mid-way would relabel every column of every lead already recorded.
+  // topNeed belongs beside "needs" logically; it goes here for exactly that reason.
+  "topNeed",
 ];
 
 /* sourceBucket/sourceDetail are FIRST touch — where this visitor originally
