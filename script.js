@@ -778,6 +778,73 @@ if (leadForm) {
   });
 }
 
+/* ── The forced-choice question ────────────────────────────────────────────────
+   "What would you most like NDYLens to help you with?" is a multi-select, and a
+   multi-select cannot rank anything: people tick four or five, so it reports what
+   they recognise rather than what they would pay for. This asks them to spend their
+   one choice, and offers only what they already ticked, so it reads as a follow-up
+   instead of a second shopping list.
+
+   Rules:
+     0 ticked  → hidden, nothing to answer
+     1 ticked  → hidden, and that single need IS the answer (see the submit handler);
+                 asking someone to pick one of one is noise
+     2+ ticked → shown, one radio per ticked option, and required by the handler
+
+   Re-rendered on every change so unticking an option removes it here too, and a
+   selection that is still valid survives the re-render.                            */
+const topNeedGroup = document.getElementById("top-need-group");
+const topNeedLabel = document.getElementById("top-need-label");
+const topNeedOptions = document.getElementById("top-need-options");
+
+function checkedNeeds() {
+  if (!leadForm) return [];
+  return Array.from(
+    leadForm.querySelectorAll('input[name="needs"]:checked')
+  ).map((box) => box.value);
+}
+
+function renderTopNeed() {
+  if (!topNeedGroup || !topNeedOptions || !topNeedLabel) return;
+  const needs = checkedNeeds();
+
+  // Remember the current pick so re-rendering does not silently clear a valid answer.
+  const previous = String(
+    (leadForm.querySelector('input[name="topNeed"]:checked') || {}).value || ""
+  );
+
+  if (needs.length < 2) {
+    topNeedGroup.hidden = true;
+    topNeedOptions.replaceChildren();
+    return;
+  }
+
+  topNeedLabel.textContent =
+    "You picked " + needs.length +
+    ". If you could only have one of them on day one, which would it be?*";
+
+  topNeedOptions.replaceChildren(
+    ...needs.map((value) => {
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "topNeed";
+      input.value = value;
+      if (value === previous) input.checked = true;
+      label.append(input, document.createTextNode(" " + value));
+      return label;
+    })
+  );
+  topNeedGroup.hidden = false;
+}
+
+if (leadForm) {
+  leadForm.addEventListener("change", (event) => {
+    if (event.target && event.target.name === "needs") renderTopNeed();
+  });
+  renderTopNeed();   // in case a browser restored ticked boxes on a back-navigation
+}
+
 if (leadForm && leadSubmit) {
   leadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -806,6 +873,20 @@ if (leadForm && leadSubmit) {
       return;
     }
 
+    // With a single need there is no choice to make, so that need IS the answer and the
+    // question was never shown. With two or more, the pick is required.
+    const topNeed =
+      needs.length === 1 ? needs[0] : String(formData.get("topNeed") || "");
+    if (!topNeed) {
+      Track.send("form_validation_fail", "topNeed");
+      setLeadStatus("Please choose the one thing you would want first.", "err");
+      if (topNeedOptions) {
+        const first = topNeedOptions.querySelector("input");
+        if (first) first.focus();
+      }
+      return;
+    }
+
     const attribution = getLeadAttribution();
     const payload = {
       timestamp: new Date().toISOString(),
@@ -820,6 +901,7 @@ if (leadForm && leadSubmit) {
       clientCount: String(formData.get("clientCount") || ""),
       currentWorkflow: String(formData.get("currentWorkflow") || ""),
       needs: needs.join(", "),
+      topNeed: topNeed,
       interestLevel: String(formData.get("interestLevel") || ""),
       message: needs.join(", "),
       pageUrl: window.location.href,

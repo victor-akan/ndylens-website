@@ -30,7 +30,7 @@
   <link rel="icon" href="/favicon.ico?v=14c42734" sizes="any" />
   <link rel="icon" type="image/png" href="/favicon.png?v=5ea05f4a" sizes="48x48" />
   <!-- Only the display face is preloaded. It renders the H1, which is the LCP
-       element; Inter is fetched by styles.css?v=62eab834 at normal priority. Preloading
+       element; Inter is fetched by styles.css at normal priority. Preloading
        both measurably slowed LCP on a throttled mobile connection because the
        two high-priority font requests competed with the stylesheet. -->
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-var.woff2?v=b9625584" crossorigin />
@@ -73,6 +73,18 @@
               <label>Studio / business name*<input type="text" name="businessName" required /></label>
               <div class="field-group"><p class="field-label">What type of photography do you offer? Select all that apply.</p><div class="check-grid"><label><input type="checkbox" name="photographyType" value="Weddings" /> Weddings</label><label><input type="checkbox" name="photographyType" value="Birthdays & events" /> Birthdays &amp; events</label><label><input type="checkbox" name="photographyType" value="Portraits" /> Portraits</label><label><input type="checkbox" name="photographyType" value="Maternity / family" /> Maternity / family</label><label><input type="checkbox" name="photographyType" value="Newborn / baby" /> Newborn / baby</label><label><input type="checkbox" name="photographyType" value="Commercial / corporate" /> Commercial / corporate</label><label><input type="checkbox" name="photographyType" value="Other" /> Other</label></div></div>
               <div class="field-group"><p class="field-label">What would you most like NDYLens to help you with?*</p><div class="check-grid"><label><input type="checkbox" name="needs" value="Managing client information" /> Managing client information</label><label><input type="checkbox" name="needs" value="Managing bookings" /> Managing bookings</label><label><input type="checkbox" name="needs" value="Gallery delivery" /> Gallery delivery</label><label><input type="checkbox" name="needs" value="Following up with past clients" /> Following up with past clients</label><label><input type="checkbox" name="needs" value="Getting more repeat bookings" /> Getting more repeat bookings</label><label><input type="checkbox" name="needs" value="WhatsApp automation" /> WhatsApp automation</label><label><input type="checkbox" name="needs" value="Tracking payments and revenue" /> Tracking payments and revenue</label><label><input type="checkbox" name="needs" value="Managing my photography business in one place" /> Managing my photography business in one place</label><label><input type="checkbox" name="needs" value="Other" /> Other</label></div></div>
+              <!-- The forced choice. Built by script.js from whatever they ticked above, because the
+                   multi-select answer cannot rank anything: most people tick four or five, so it
+                   tells us what they recognise, not what they would pay for. Hidden until there are
+                   at least two needs to choose between, and when only one is ticked that one is sent
+                   as the answer without asking. The radios are NOT marked required: this group is
+                   `hidden` most of the time, and a required control inside a hidden container makes
+                   the browser refuse to submit with "not focusable" and no visible reason. script.js
+                   validates it instead, the same way the needs question already does. -->
+              <div class="field-group" id="top-need-group" hidden>
+                <p class="field-label" id="top-need-label"></p>
+                <div class="check-grid" id="top-need-options"></div>
+              </div>
               <label>How interested are you in using NDYLens with your existing clients?*<select name="interestLevel" required><option value="">Select one</option><option>Very interested</option><option>Interested</option><option>I’m curious but want to learn more</option></select></label>
             </fieldset>
 
@@ -86,6 +98,6 @@
       </div>
     </section>
   </main>
-  <script src="script.js?v=d5380bf6"></script>
+  <script src="script.js?v=5d23cfe5"></script>
 </body>
 </html>

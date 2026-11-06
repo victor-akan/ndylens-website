@@ -41,13 +41,23 @@ stamped = 0
 for page in pages:
     s = original = page.read_text(encoding="utf-8")
     for path, h in digests.items():
-        # match the path only where it is a real URL: preceded by =" or a
-        # srcset comma-space, and followed by an optional old stamp then a
+        # Match the path only where it is a real URL: right after a quote (src="x.js" and the
+        # first entry of a srcset) or after a srcset comma. Then an optional old stamp, then a
         # quote, space (srcset descriptor) or comma.
+        #
+        # The prefix is CAPTURED and re-emitted rather than matched with a lookbehind. The old
+        # lookbehind allowed any whitespace, which made a plain space enough, so prose in an HTML
+        # comment matched: "is fired from script.js when ..." became
+        # "is fired from script.js?v=5d23cfe5 when ...", and picked up a fresh hash on every run.
+        # Harmless inside a comment, but it contradicted the line above and added noise to every
+        # deploy diff. A variable-width lookbehind is not allowed in Python's re, hence the capture.
+        #
         # The leading slash is optional and preserved: the favicons are referenced root-relative
-        # ("/favicon.ico"), and without this the lookbehind sees "/" and never matches them.
-        pat = re.compile(r'(?<=[="\s,])(/?)' + re.escape(path) + r'(\?v=[0-9a-f]{8})?(?=["\s,])')
-        s, n = pat.subn(lambda m: m.group(1) + path + "?v=" + h, s)
+        # ("/favicon.ico"), and without this the match would stop at the "/" and never fire.
+        pat = re.compile(
+            r'''(=["']|,\s*|["'])(/?)''' + re.escape(path) + r'(\?v=[0-9a-f]{8})?(?=["\s,])'
+        )
+        s, n = pat.subn(lambda m: m.group(1) + m.group(2) + path + "?v=" + h, s)
         stamped += n
     if s != original:
         page.write_text(s, encoding="utf-8")

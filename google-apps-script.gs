@@ -77,9 +77,12 @@ const HEADERS = [
   "sessionId",
   "status",
   "notes",
-  "visitorId",           // appended last: row 1 is rewritten to match this
+  "visitorId",
+  "topNeed",             // appended last: row 1 is rewritten to match this
                          // list, so inserting mid-way would relabel every
-                         // column of every lead already recorded.
+                         // column of every lead already recorded. This one
+                         // belongs beside "needs" logically; it goes here
+                         // instead, for exactly that reason.
 ];
 
 /* sourceBucket/sourceDetail are FIRST touch — where this visitor originally
@@ -365,6 +368,7 @@ function notifyLead_(data) {
     ["Approx. clients", data.clientCount],
     ["Current workflow", data.currentWorkflow],
     ["What they want help with", data.needs || data.message],
+    ["If they could only have ONE", data.topNeed],
     ["Interest level", data.interestLevel],
     ["Source", source],
     ["Page", data.pageUrl],
@@ -779,6 +783,33 @@ function rebuildDashboard() {
       out.push([k, r.views, r.ctaClicks, r.formViews, r.formStarts, r.submissions, pct(r.submissions, r.views)]);
     });
 
+  /* The forced choice, ranked. This is the reason the question exists: the
+     multi-select "needs" column cannot be ranked, because most people tick
+     four or five of the nine. Counted from the Leads sheet rather than from
+     events, because the answer is part of the application, not a behaviour.
+
+     Appended AFTER the traffic-source table on purpose, so the hardcoded bold
+     rows below (4, 9, 20, 21) still point at the headings they were written
+     for. The heading row for this block is tracked instead of hardcoded. */
+  const topNeedCounts = countTopNeeds_();
+  const topNeedTotal = Object.keys(topNeedCounts).reduce(function (sum, k) {
+    return sum + topNeedCounts[k];
+  }, 0);
+  out.push(["", ""]);
+  const topNeedHeadingRow = out.length + 1;
+  out.push(["MOST URGENT NEED (one pick per applicant)", ""]);
+  if (!topNeedTotal) {
+    out.push(["Nobody has answered this yet", ""]);
+  } else {
+    out.push(["Need", "Picked it first", "Share"]);
+    Object.keys(topNeedCounts)
+      .sort(function (a, b) { return topNeedCounts[b] - topNeedCounts[a]; })
+      .forEach(function (k) {
+        out.push([k, topNeedCounts[k], pct(topNeedCounts[k], topNeedTotal)]);
+      });
+    out.push(["Answered", topNeedTotal, ""]);
+  }
+
   const width = 7;
   const padded = out.map(function (r) {
     const copy = r.slice();
@@ -792,9 +823,39 @@ function rebuildDashboard() {
     sh.getRange(row, 1, 1, width).setFontWeight("bold");
   });
   sh.getRange(21, 1, 1, width).setFontWeight("bold");
+  sh.getRange(topNeedHeadingRow, 1, 1, width).setFontWeight("bold");
   sh.setColumnWidth(1, 260);
   sh.setColumnWidth(2, 120);
   return "Dashboard rebuilt";
+}
+
+/* Tally of the forced-choice answer across every application.
+
+   Looks the column up by NAME rather than by position. The column is appended at
+   the end of HEADERS today, but that is a detail of how the sheet grew, not
+   something this count should depend on. Rows recorded before the question
+   existed have an empty cell and are skipped, so the share is a share of people
+   who were actually asked, not of all leads ever. */
+function countTopNeeds_() {
+  const sheet = getSpreadsheet_().getSheetByName(SHEET_NAME);
+  const counts = {};
+  if (!sheet || sheet.getLastRow() < 2) return counts;
+
+  const header = sheet
+    .getRange(1, 1, 1, sheet.getLastColumn())
+    .getValues()[0]
+    .map(function (c) { return String(c || "").trim(); });
+  const col = header.indexOf("topNeed") + 1;
+  if (!col) return counts;
+
+  sheet
+    .getRange(2, col, sheet.getLastRow() - 1, 1)
+    .getValues()
+    .forEach(function (r) {
+      const v = String(r[0] || "").trim();
+      if (v) counts[v] = (counts[v] || 0) + 1;
+    });
+  return counts;
 }
 
 function biggestDrop_(f) {
