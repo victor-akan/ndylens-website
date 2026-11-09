@@ -38,9 +38,29 @@ const TOTAL_SPOTS = 100;
 const NON_COUNTING_STATUSES = ["rejected", "withdrawn", "declined", "duplicate", "test"];
 
 // ── Lead email notification ──────────────────────────────────────────────
-// Every new lead emails NOTIFY_TO, copying NOTIFY_CC. Comma-separated, no spaces issues.
+// Every new lead emails NOTIFY_TO, copying NOTIFY_CC. Comma-separated, no spaces.
+//
+// WHO IS ON THIS LIST AND WHY. A lead email carries a real person's name, phone number and email,
+// so this list is the whole access-control story for new leads. Everyone here is an active admin
+// of the internal "NDYLens Studio" team; a name that stops being on that team should come off here
+// in the same breath.
+//
+//   connect@              the shared inbox, the real destination
+//   victorakan70@         Victor
+//   obidinmadumebi@       Dumebi
+//   dvdchkwm@             Emeka    (Emeka David Chukwuma)
+//   danisonunyime@        Imani    (Unyime "Imani" Ekpo)
+//   uosapphy@             Sapphire (Umoru Sapphire)
+//
+// Added Emeka, Imani and Sapphire 2026-11-09 at Victor's request.
 const NOTIFY_TO = "connect@ndylens.com";
-const NOTIFY_CC = "victorakan70@gmail.com,obidinmadumebi@gmail.com";
+const NOTIFY_CC = [
+  "victorakan70@gmail.com",
+  "obidinmadumebi@gmail.com",
+  "dvdchkwm@gmail.com",
+  "danisonunyime@gmail.com",
+  "uosapphy@gmail.com",
+].join(",");
 
 /* NOTE: "status" and "notes" are appended at the END on purpose.
    Inserting them mid-list would shift every existing row's data. */
